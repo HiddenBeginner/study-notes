@@ -1,0 +1,10 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: contents/intro
+parts:
+- caption: 강화학습 논문 정리
+  chapters:
+  - file: contents/rl_papers/AlphaGoZero.md
+  
