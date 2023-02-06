@@ -1,0 +1,542 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>AlphaGo Zero &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="공부 기록" href="../intro.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습 논문 정리
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   AlphaGo Zero
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/AlphaGoZero.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/rl_papers/AlphaGoZero.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monte-carlo-tree-search-mcts">
+   Monte Carlo Tree Search (MCTS)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#select">
+     Select
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expand-and-evaluation">
+     Expand and evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#backup">
+     Backup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#play">
+     Play
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#self-play">
+   Self-play
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>AlphaGo Zero</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#monte-carlo-tree-search-mcts">
+   Monte Carlo Tree Search (MCTS)
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#select">
+     Select
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expand-and-evaluation">
+     Expand and evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#backup">
+     Backup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#play">
+     Play
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#self-play">
+   Self-play
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="alphago-zero">
+<h1>AlphaGo Zero<a class="headerlink" href="#alphago-zero" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>제목: Mastering the Game of Go without Human Knowledge</p></li>
+<li><p>저자:Silver, David, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, et al, <em>DeepMind</em></p></li>
+<li><p>링크: <a class="reference external" href="https://doi.org/10.1038/nature24270">https://doi.org/10.1038/nature24270</a></p></li>
+<li><p>키워드: AlphaGo Zero</p></li>
+</ul>
+<hr class="docutils" />
+<p>AlphaGo Zero에는 크게 두 가지 과정이 있다.</p>
+<ol class="simple">
+<li><p>자기 자신과 실제 바둑을 두는 단계인 self-play 단계</p></li>
+<li><p>Self-play 단계에서 각 수를 두기 위해 바둑을 시뮬레이션해보는 단계 MCTS</p></li>
+</ol>
+<p>Self-play는 에이전트가 자기 자신과 바둑을 한 수씩 두는 단계이다. 한 self-play에서의 상태들의 sequence를 <span class="math notranslate nohighlight">\(s_0, s_1, s_2, \ldots, s_T\)</span>라고 하자.
+각 수를 어디에 둘지는 현재 상태에서 MCTS로 시뮬레이션을 돌려보고 결정된다. 먼저 MCTS를 정리해보자</p>
+<section id="monte-carlo-tree-search-mcts">
+<h2>Monte Carlo Tree Search (MCTS)<a class="headerlink" href="#monte-carlo-tree-search-mcts" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>Self-play의 각 상태 <span class="math notranslate nohighlight">\(s_t\)</span>에서 MCTS를 이용하여 시뮬레이션이 돌아간다. 한 시뮬레이션에서 1,600번 바둑을 둔다. 이 시뮬레이션으로부터 다음 행동을 샘플링할 분포인 <span class="math notranslate nohighlight">\(\mathbf{\pi}_t\)</span>가 만들어진다. 취할 수 있는 행동은 <span class="math notranslate nohighlight">\(19 \times 19 + 1 = 392\)</span> 가지이다 (+1은 턴 넘기기).</p></li>
+<li><p>시뮬레이션 트리의 루트 노드는 <span class="math notranslate nohighlight">\(s_t\)</span>이다. 트리의 각 노드 <span class="math notranslate nohighlight">\(s\)</span>에는 각 행동마다 엣지가 있는 상태이다. 각 엣지마다 4개의 statistics가 저장되어 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+    \left\{ Q(s, a), W(s, a), N(s, a), P(s, a) \right\}
+    \]</div>
+</li>
+</ul>
+<section id="select">
+<h3>Select<a class="headerlink" href="#select" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p>각 노드 <span class="math notranslate nohighlight">\(s\)</span>에서 UCB을 사용하여 행동을 선택한다.</p>
+<div class="math notranslate nohighlight">
+\[
+    a=\operatorname{argmax} \left( Q(s,a)+U(s,a) \right), \quad U(s,a)=c_{\text{puct}}P(s,a)\frac{\sqrt{\sum_b N(s,b)}}{(1 + N(s,a))},
+    \]</div>
+<p>이때, <span class="math notranslate nohighlight">\(c_{\text{puct}}\)</span>는 탐색 정도를 결정하는 하이퍼 파라미터이다.</p>
+</li>
+<li><p>루트 노드에서 시작하여 위의 방법으로 행동을 선택하는 것을 <span class="math notranslate nohighlight">\(L\)</span>번 반복하자.</p></li>
+</ul>
+</section>
+<section id="expand-and-evaluation">
+<h3>Expand and evaluation<a class="headerlink" href="#expand-and-evaluation" title="Permalink to this headline">#</a></h3>
+<ul>
+<li><p>Select를 통해 만든 하나의 트리의 리프 노드를 <span class="math notranslate nohighlight">\(s_L\)</span>이라 하자. 우선, <span class="math notranslate nohighlight">\(f_{\theta}(s_L) = (\mathbf{p}, v)\)</span>를 계산해준다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(s_L\)</span>에 각 행동마다 엣지를 달아주고, 엣지의 statistics를 다음과 같이 초기화해주자 (<span class="math notranslate nohighlight">\(s_t = s_0\)</span>일 때, 그 이후로는 만들었던 트리를 사용한다).</p>
+<div class="math notranslate nohighlight">
+\[
+    \left\{ Q(s, a)=0, W(s, a)=0, N(s, a)=0, P(s, a)=p_a \right\},
+    \]</div>
+<p>이때, <span class="math notranslate nohighlight">\(p_a\)</span>는 <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>의 <span class="math notranslate nohighlight">\(a\)</span>번 째 원소이다.</p>
+</li>
+</ul>
+</section>
+<section id="backup">
+<h3>Backup<a class="headerlink" href="#backup" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(s_L\)</span>부터 시작하며 모든 엣지에 대한 statistics을 업데이트해준다.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(N(s, a) = N(s, a)+1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(W(s, a) = W(s, a) + v\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(Q(s, a) = \frac{W(s, a)}{N(s,a)}\)</span></p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="play">
+<h3>Play<a class="headerlink" href="#play" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Backup이 끝나면 <span class="math notranslate nohighlight">\(\pi(a|s_t)=\frac{N(s_t, a)^{1/\tau}}{\sum_b N(s_t,b)^{1/\tau}}\)</span>을 기반으로 행동한다.</p></li>
+</ul>
+</section>
+</section>
+<section id="self-play">
+<h2>Self-play<a class="headerlink" href="#self-play" title="Permalink to this headline">#</a></h2>
+<p>self-play로 <span class="math notranslate nohighlight">\(s_0, s_1, s_2, \ldots, s_T\)</span>만들고, 이겼는지 졌는지 판단해서 <span class="math notranslate nohighlight">\(r_T \in \left\{-1 ,1 \right\}\)</span> 설정. 이 <span class="math notranslate nohighlight">\(r_T\)</span>는 모든 <span class="math notranslate nohighlight">\(t\)</span>에 대해서 <span class="math notranslate nohighlight">\(z_t\)</span>가 된다. <span class="math notranslate nohighlight">\((s, \mathbf{\pi}, z)\)</span>가 데이터가 된다. <span class="math notranslate nohighlight">\(f_{\theta}(s_t) = (\mathbf{p}, v)\)</span>일 때, 다음 손실 함수를 사용해서 파라미터 업데이트</p>
+<div class="math notranslate nohighlight">
+\[
+(z-v)^2 + \mathbf{\pi}^\top\log\mathbf{p}+c\lVert \theta\rVert^2
+\]</div>
+<ul class="simple">
+<li><p>각 입력 <span class="math notranslate nohighlight">\(s\)</span>는 <span class="math notranslate nohighlight">\(19 \times 19 \times 17\)</span> 텐서. 나의 돌만 표시한 행렬과 상대방의 돌만 표시한 행렬 각각 과거 8개 그래서 총 16개. 그리고 마지막 하나는 내가 검은돌이면 1이고 흰돌이면 0.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/rl_papers"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">공부 기록</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
