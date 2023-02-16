@@ -1,0 +1,548 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>SUNRISE &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="AlphaGo Zero" href="AlphaGoZero.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습 논문 정리
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   SUNRISE
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/SUNRISE.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="headerbtn__text-container">open issue</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/rl_papers/SUNRISE.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weighted-bellman-backups">
+   Weighted Bellman Backups
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bootstrap-with-random-initialization">
+   Bootstrap with random initialization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ucb-exploration">
+   UCB exploration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#algorithm">
+   Algorithm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#result">
+   Result
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>SUNRISE</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#weighted-bellman-backups">
+   Weighted Bellman Backups
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bootstrap-with-random-initialization">
+   Bootstrap with random initialization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#ucb-exploration">
+   UCB exploration
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#algorithm">
+   Algorithm
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#result">
+   Result
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="sunrise">
+<h1>SUNRISE<a class="headerlink" href="#sunrise" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>제목: SUNRISE: A Simple Unified Framework for Ensemble Learning in Deep Reinforcement Learning</p></li>
+<li><p>저자: Lee, Kimin, Michael Laskin, Aravind Srinivas, and Pieter Abbeel, <em>UC Berkeley</em></p></li>
+<li><p>연도: 2021년</p></li>
+<li><p>학술대회:International Conference on Machine Learning</p></li>
+<li><p>링크: <a class="reference external" href="https://proceedings.mlr.press/v139/lee21g.html">https://proceedings.mlr.press/v139/lee21g.html</a></p></li>
+<li><p>키워드: Agent ensemble, Uncertainty, Off-policy, Model-free, Discrete &amp; continouse action space</p></li>
+</ul>
+<br>
+<hr class="docutils" />
+<p>SUNRISE에는 <span class="math notranslate nohighlight">\(N\)</span>개의 Soft Actor-critic (SAC) 에이전트가 있다 (SAC는 하나의 예시이며, Rainbow DQN 등을 사용할 수도 있다.). 즉, <span class="math notranslate nohighlight">\(N\)</span>개의 정책과 Q-네트워크 <span class="math notranslate nohighlight">\(\left\{ Q_{\theta_i}, \pi_{\phi_i} \right\}_{i=1}^{N}\)</span>가 있다. 참고로 실험에서 <span class="math notranslate nohighlight">\(N=5\)</span>이다. 네트워크 파라미터 <span class="math notranslate nohighlight">\(\theta_i, \phi_i\)</span>들은 모두 서로 다르게 랜덤 초기화된다. 이렇게 다수개의 네트워크를 사용하여 본 논문에서는 다음 세 가지를 제안한다.</p>
+<ol class="simple">
+<li><p>Weighted Bellman Backups</p>
+<ul class="simple">
+<li><p>Q-네트워크 학습시, 각 transition에서 발생한 TD error에 가중치를 부여하여 업데이트</p></li>
+</ul>
+</li>
+<li><p>Bootstrap with random initialization</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(N\)</span>개의 정책 네트워크 및 Q-네트워크를 서로 다른 파라미터로 초기화시키기 때문에 다양한 관점을 가진 네트워크를 얻을 수 있다.</p></li>
+<li><p>Replay buffer는 공유하지만, 에이전트마다 각 샘플을 사용할지 안 할지 마스킹하여 에이전트마다 다른 데이터를 가지고 학습된다.</p></li>
+</ul>
+</li>
+<li><p>UCB exploration</p>
+<ul class="simple">
+<li><p>행동을 선택할 때 Q-network 값의 평균과 분산을 UCB로</p></li>
+</ul>
+</li>
+</ol>
+<br>
+<hr class="docutils" />
+<section id="weighted-bellman-backups">
+<h2>Weighted Bellman Backups<a class="headerlink" href="#weighted-bellman-backups" title="Permalink to this headline">#</a></h2>
+<p>일반적인 SAC는 다음 Bellman error를 최소화시키는 방법으로 Q-네트워크를 학습시킨다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_Q(\tau_t, \theta) = \left( Q_{\theta} (s_t, a_t) - r_t + \gamma \bar{V}(s_{t+1})\right)^2,
+\]</div>
+<p>이때, <span class="math notranslate nohighlight">\(\tau_t=(s_t, a_t, r_t, s_{t+1})\)</span>는 하나의 transition이고, <span class="math notranslate nohighlight">\(\bar{V}(s_t) = \mathbb{E}_{a_t \sim \pi_{\phi}}\left[ Q_{\bar{\theta}}(s_t, a_t) - \alpha \log \pi_{\phi}(a_t | s_t)\right]\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>는 temperature 하이퍼파라미터이다.</p>
+<p>SUNRISE에서는 <span class="math notranslate nohighlight">\(i\)</span>번째 Q-네트워크를 학습시키기 위해 다음과 같은 weighted Bellman backup을 사용한다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_{WQ}(\tau_t, \theta_i) = w(s_{t+1}, a_{t+1})\left( Q_{\theta} (s_t, a_t) - r_t + \gamma \bar{V}(s_{t+1})\right)^2,
+\]</div>
+<p>이때, 가중치 함수 <span class="math notranslate nohighlight">\(w(s, a)\)</span>는 다음과 같이 정의된다.</p>
+<div class="math notranslate nohighlight">
+\[
+w(s, a) = \sigma \left( - \bar{Q}_{\text{std}}(s, a) * T\right) + 0.5,
+\]</div>
+<p>여기서 <span class="math notranslate nohighlight">\(T&gt;0\)</span>은 tempertature 하이퍼파라미터이고, <span class="math notranslate nohighlight">\(\sigma\)</span>는 시그모이드 함수이다. <span class="math notranslate nohighlight">\(\bar{Q}_{\text{std}}(s, a)\)</span>는 <span class="math notranslate nohighlight">\(N\)</span>개의 <span class="math notranslate nohighlight">\(Q_{\theta_i}(s, a)\)</span>들에 대한 표본표준편차이다. 표준편차는 항상 양수이기 때문에 <span class="math notranslate nohighlight">\(- \bar{Q}_{\text{std}}(s, a) * T\)</span>는 항상 음수이고, 따라서 <span class="math notranslate nohighlight">\(\sigma \left( - \bar{Q}_{\text{std}}(s, a) * T\right)\)</span>는 0과 0.5 사이의 값을 갖는다. 여기에 0.5를 더해주었으니 <span class="math notranslate nohighlight">\(w(s, a)\)</span>는 0.5와 1 사이의 값을 갖는다. 경험적 (emperically) 으로 가중치 함수를 이렇게 디자인했다고 한다. 표준편차 클 수록 샘플에 낮은 가중치를 부여하고, 표준편차가 작을수록 높은 가중치를 부여한다. 표준편차가 크다는 것을 Q-함수 추정값에 많은 잡음 (noise)이 들어갔다고 생각하여 낮은 가중치를 주는 것이다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="bootstrap-with-random-initialization">
+<h2>Bootstrap with random initialization<a class="headerlink" href="#bootstrap-with-random-initialization" title="Permalink to this headline">#</a></h2>
+<p>네트워크 파라미터 <span class="math notranslate nohighlight">\(\theta_i, \phi_i\)</span>들은 모두 서로 다르게 랜덤 초기화하고, 각 에이전트를 서로 다른 샘플로 학습을 시킨다. Replay buffer는 공유하지만 각 transition <span class="math notranslate nohighlight">\(\tau_t=(s_t, a_t, r_t, s_{t+1})\)</span>를 버퍼에 넣기 전에 에이전트마다 해당 <span class="math notranslate nohighlight">\(\tau_t\)</span>를 사용할지 안 할지를 결정하는 bootstrap 마스크 <span class="math notranslate nohighlight">\(M_t = \{ m_{t, i} \}_{i=1}^{N}\)</span>를 만들어서 넣는다. 각 타임스탭 <span class="math notranslate nohighlight">\(t\)</span>에서 각 에이전트 <span class="math notranslate nohighlight">\(i\)</span>마다 <span class="math notranslate nohighlight">\(\beta\)</span>를 파라미터로 갖는 Bernouli 분포에서 <span class="math notranslate nohighlight">\(m_{t,i} \in \{ 0,1\}\)</span>를 샘플링한다. 정책 네트워크 및 Q-네트워크 업데이트시 손실함수를 만들 때 각 에러에 <span class="math notranslate nohighlight">\(m_{t,i} \in \{ 0,1\}\)</span>를 에러에 곱해줘서 손실함수에 기여하거나 기여할 수 없게 만든다. 그런데 <span class="math notranslate nohighlight">\(\beta=1\)</span>일 때 성능이 좋았다고 한다. 즉, 그냥 데이터 다 사용하는게 좋다고 한다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="ucb-exploration">
+<h2>UCB exploration<a class="headerlink" href="#ucb-exploration" title="Permalink to this headline">#</a></h2>
+<p>매 타임스탭 <span class="math notranslate nohighlight">\(t\)</span>에서 다음과 같이 행동을 고른다.</p>
+<div class="math notranslate nohighlight">
+\[
+a_t = \operatorname*{argmax}_{a} \left\{ Q_{\text{mean}}(s_t, a) + \lambda Q_{\text{std}}(s_t, a) \right\},
+\]</div>
+<p><span class="math notranslate nohighlight">\(Q_{\text{mean}}\)</span>와 <span class="math notranslate nohighlight">\(Q_{\text{std}}\)</span>는 각각 <span class="math notranslate nohighlight">\(N\)</span>개의 <span class="math notranslate nohighlight">\(Q_{\theta_i}(s_t, a)\)</span>들에 대한 표본 평균과 표본 표준편차이다. 표준편차가 클수록 탐색이 덜 된 상태-행동 순서쌍으로 보고 탐색을 하게 만든다. <span class="math notranslate nohighlight">\(Q_{\theta_i}(s_t, a)\)</span>들이 점점 수렴하게 되어 표준편차가 작아지면 <span class="math notranslate nohighlight">\(Q_{\text{mean}}(s_t, a)\)</span>가 큰 행동을 취하게 된다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="algorithm">
+<h2>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">#</a></h2>
+<p><img alt="../img/sunrise_algorithm.png" src="../../_images/sunrise_algorithm.png" /></p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="result">
+<h2>Result<a class="headerlink" href="#result" title="Permalink to this headline">#</a></h2>
+<p><img alt="../img/sunrise_result.png" src="../../_images/sunrise_result.png" /></p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
+<p>Lee, Kimin, Michael Laskin, Aravind Srinivas, and Pieter Abbeel. “SUNRISE: A Simple Unified Framework for Ensemble Learning in Deep Reinforcement Learning.” In Proceedings of the 38th International Conference on Machine Learning, 6131–41. PMLR, 2021. <a class="reference external" href="https://proceedings.mlr.press/v139/lee21g.html">https://proceedings.mlr.press/v139/lee21g.html</a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/rl_papers"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="AlphaGoZero.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">AlphaGo Zero</p>
+        </div>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
