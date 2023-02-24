@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>AlphaGo Zero &#8212; 공부 기록</title>
+    <title>Define-and-run vs Define-by-run &#8212; 공부 기록</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -50,12 +50,9 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="SUNRISE" href="SUNRISE.html" />
-    <link rel="prev" title="공부 기록" href="../intro.html" />
+    <link rel="prev" title="SUNRISE" href="../rl_papers/SUNRISE.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -120,14 +117,14 @@ const thebe_selector_output = ".output, .cell_output"
   강화학습 논문 정리
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
    AlphaGo Zero
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="SUNRISE.html">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
    SUNRISE
   </a>
  </li>
@@ -137,9 +134,9 @@ const thebe_selector_output = ".output, .cell_output"
   잡학사전
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Define-and-run vs Define-by-run
   </a>
  </li>
@@ -207,7 +204,7 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/AlphaGoZero.html&body=Your%20issue%20content%20here."
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/miscellaneous/define_and_by_run.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="bottom"
@@ -229,7 +226,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/contents/rl_papers/AlphaGoZero.md"
+        <a href="../../_sources/contents/miscellaneous/define_and_by_run.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -289,35 +286,18 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#monte-carlo-tree-search-mcts">
-   Monte Carlo Tree Search (MCTS)
+  <a class="reference internal nav-link" href="#define-and-run">
+   Define-and-run
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#select">
-     Select
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#expand-and-evaluation">
-     Expand and evaluation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#backup">
-     Backup
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#play">
-     Play
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#self-play">
-   Self-play
+  <a class="reference internal nav-link" href="#define-by-run">
+   Define-by-run
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   마치며
   </a>
  </li>
 </ul>
@@ -329,7 +309,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>AlphaGo Zero</h1>
+                <h1>Define-and-run vs Define-by-run</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -340,35 +320,18 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#monte-carlo-tree-search-mcts">
-   Monte Carlo Tree Search (MCTS)
+  <a class="reference internal nav-link" href="#define-and-run">
+   Define-and-run
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#select">
-     Select
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#expand-and-evaluation">
-     Expand and evaluation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#backup">
-     Backup
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#play">
-     Play
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#self-play">
-   Self-play
+  <a class="reference internal nav-link" href="#define-by-run">
+   Define-by-run
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   마치며
   </a>
  </li>
 </ul>
@@ -381,88 +344,48 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="alphago-zero">
-<h1>AlphaGo Zero<a class="headerlink" href="#alphago-zero" title="Permalink to this headline">#</a></h1>
-<ul class="simple">
-<li><p>제목: Mastering the Game of Go without Human Knowledge</p></li>
-<li><p>저자:Silver, David, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, et al, <em>DeepMind</em></p></li>
-<li><p>링크: <a class="reference external" href="https://doi.org/10.1038/nature24270">https://doi.org/10.1038/nature24270</a></p></li>
-<li><p>키워드: AlphaGo Zero</p></li>
-</ul>
+  <section class="tex2jax_ignore mathjax_ignore" id="define-and-run-vs-define-by-run">
+<h1>Define-and-run vs Define-by-run<a class="headerlink" href="#define-and-run-vs-define-by-run" title="Permalink to this headline">#</a></h1>
+<p>&lt;밑바닥부터 시작하는 딥러닝3&gt;을 읽다가 내용이 너무 좋아서 정리했습니다.</p>
+<p>딥러닝 프레임워크, 더 일반적으로는 자동 미분 (auto-differentiation) 프레임워크는 크게 2가지 방식으로 구현되어 있다. 이 두 가지 방식은 계산 그래프 (computational graph)가 정의되는 시점으로 구분된다. 첫 번째 define-and-run은 계산 그래프가 먼저 정의된 상태에서 데이터가 흘러들어간다. 반면, define-by-run은 데이터가 흘러가면서 계산 그래프가 정의된다.</p>
+<br>
 <hr class="docutils" />
-<p>AlphaGo Zero에는 크게 두 가지 과정이 있다.</p>
-<ol class="simple">
-<li><p>자기 자신과 실제 바둑을 두는 단계인 self-play 단계</p></li>
-<li><p>Self-play 단계에서 각 수를 두기 위해 바둑을 시뮬레이션해보는 단계 MCTS</p></li>
-</ol>
-<p>Self-play는 에이전트가 자기 자신과 바둑을 한 수씩 두는 단계이다. 한 self-play에서의 상태들의 sequence를 <span class="math notranslate nohighlight">\(s_0, s_1, s_2, \ldots, s_T\)</span>라고 하자.
-각 수를 어디에 둘지는 현재 상태에서 MCTS로 시뮬레이션을 돌려보고 결정된다. 먼저 MCTS를 정리해보자</p>
-<section id="monte-carlo-tree-search-mcts">
-<h2>Monte Carlo Tree Search (MCTS)<a class="headerlink" href="#monte-carlo-tree-search-mcts" title="Permalink to this headline">#</a></h2>
-<ul>
-<li><p>Self-play의 각 상태 <span class="math notranslate nohighlight">\(s_t\)</span>에서 MCTS를 이용하여 시뮬레이션이 돌아간다. 한 시뮬레이션에서 1,600번 바둑을 둔다. 이 시뮬레이션으로부터 다음 행동을 샘플링할 분포인 <span class="math notranslate nohighlight">\(\mathbf{\pi}_t\)</span>가 만들어진다. 취할 수 있는 행동은 <span class="math notranslate nohighlight">\(19 \times 19 + 1 = 392\)</span> 가지이다 (+1은 턴 넘기기).</p></li>
-<li><p>시뮬레이션 트리의 루트 노드는 <span class="math notranslate nohighlight">\(s_t\)</span>이다. 트리의 각 노드 <span class="math notranslate nohighlight">\(s\)</span>에는 각 행동마다 엣지가 있는 상태이다. 각 엣지마다 4개의 statistics가 저장되어 있다.</p>
-<div class="math notranslate nohighlight">
-\[
-    \left\{ Q(s, a), W(s, a), N(s, a), P(s, a) \right\}
-    \]</div>
-</li>
-</ul>
-<section id="select">
-<h3>Select<a class="headerlink" href="#select" title="Permalink to this headline">#</a></h3>
-<ul>
-<li><p>각 노드 <span class="math notranslate nohighlight">\(s\)</span>에서 UCB을 사용하여 행동을 선택한다.</p>
-<div class="math notranslate nohighlight">
-\[
-    a=\operatorname{argmax} \left( Q(s,a)+U(s,a) \right), \quad U(s,a)=c_{\text{puct}}P(s,a)\frac{\sqrt{\sum_b N(s,b)}}{(1 + N(s,a))},
-    \]</div>
-<p>이때, <span class="math notranslate nohighlight">\(c_{\text{puct}}\)</span>는 탐색 정도를 결정하는 하이퍼 파라미터이다.</p>
-</li>
-<li><p>루트 노드에서 시작하여 위의 방법으로 행동을 선택하는 것을 <span class="math notranslate nohighlight">\(L\)</span>번 반복하자.</p></li>
-</ul>
+<section id="define-and-run">
+<h2>Define-and-run<a class="headerlink" href="#define-and-run" title="Permalink to this headline">#</a></h2>
+<p>Define-and-run은 정적 계산 그래프 방식이라고도 부른다. 가장 대표적인 정적 계산 그래프 방식으로 텐서플로우가 있다. 정적 계산 그래프 방식에서는 먼저 사용자가 계산 그래프를 정의해줘야 한다. 그래프를 만드는 동안 실제 데이터 (수치)가 아닌 기호를 사용하여 코딩을 해야 하는데, 이와 같은 방식을 기호 프로그래밍 (symbolic programming)이라고 한다. 가상의 수도 코드는 다음과 같다 (밑바닥부터 시작하는 딥러닝3에서 발췌).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 계산 그래프 정의</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">Variable</span><span class="p">(</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">c</span> <span class="o">+</span> <span class="n">Constant</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># 계산 그래프 컴파일</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+<span class="c1"># 데이터 흘려보내기</span>
+<span class="n">d</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+</pre></div>
+</div>
+<br>
+<p>위의 <code class="docutils literal notranslate"><span class="pre">#</span> <span class="pre">계산</span> <span class="pre">그래프</span> <span class="pre">정의</span></code> 단계를 보면, 수치와 수치 사이의 연산이 아니라 <code class="docutils literal notranslate"><span class="pre">a</span></code>와 <code class="docutils literal notranslate"><span class="pre">b</span></code> 변수를 사용하여 기호와 기호 사이의 연산으로 구현되어 있다. 프레임워크 자체의 규칙을 따라서 계산 그래프를 만들어야하기 때문에 규칙에 익숙해지기까지 오랜 시간이 필요하다. 예를 들어, 조건문을 필요로 하는 계산 그래프를 만들 때 프로그래밍 언어의 <code class="docutils literal notranslate"><span class="pre">if</span></code>문을 사용하는 것이 아니라 프레임워크 자체의 함수를 사용해야 한다. 텐서플로우 같은 경우 <code class="docutils literal notranslate"><span class="pre">tf.cond</span></code> 함수가 이에 해당한다.</p>
+<br>
+<p>정적 계산 그래프 방식의 장점으로 계산 그래프를 직접 만들기 때문에 연산 과정을 최적화할 수 있는 여지가 있다는 것이다. 즉, 연산 성능이 더 좋을 수 있다. 또한 만든 모델을 서빙 (배포)하는 것이 용이하다는 장점도 있다. 예를 들어, 파이썬에서 텐서플로우로 계산 그래프를 정의했다고 하자. 이 계산 그래프를 다른 기기/언어에 호환가능하도록 컴파일할 수 있을 것이다.</p>
+<br>
+<p>정적 계산 그래프 방식은 디버깅이 어렵다는 단점이 있다. 버그는 데이터를 흘려보낼 때 발견되지만 문제의 원인은 주로 “계산 그래프 정의”에 있는 경우가 대부분이기 때문이다. 위에서 언급했듯이 프레임워크만의 규칙을 공부해야 한다는 것도 큰 단점이다.</p>
+<br>
 </section>
-<section id="expand-and-evaluation">
-<h3>Expand and evaluation<a class="headerlink" href="#expand-and-evaluation" title="Permalink to this headline">#</a></h3>
-<ul>
-<li><p>Select를 통해 만든 하나의 트리의 리프 노드를 <span class="math notranslate nohighlight">\(s_L\)</span>이라 하자. 우선, <span class="math notranslate nohighlight">\(f_{\theta}(s_L) = (\mathbf{p}, v)\)</span>를 계산해준다.</p></li>
-<li><p><span class="math notranslate nohighlight">\(s_L\)</span>에 각 행동마다 엣지를 달아주고, 엣지의 statistics를 다음과 같이 초기화해주자 (<span class="math notranslate nohighlight">\(s_t = s_0\)</span>일 때, 그 이후로는 만들었던 트리를 사용한다).</p>
-<div class="math notranslate nohighlight">
-\[
-    \left\{ Q(s, a)=0, W(s, a)=0, N(s, a)=0, P(s, a)=p_a \right\},
-    \]</div>
-<p>이때, <span class="math notranslate nohighlight">\(p_a\)</span>는 <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>의 <span class="math notranslate nohighlight">\(a\)</span>번 째 원소이다.</p>
-</li>
-</ul>
+<hr class="docutils" />
+<section id="define-by-run">
+<h2>Define-by-run<a class="headerlink" href="#define-by-run" title="Permalink to this headline">#</a></h2>
+<p>Define-by-run은 동적 계산 그래프 방식이라고도 한다. 2015년 Chainer에 의해 처음 제창되었고, 이후 대표적인 프레임워크로는 파이토치, MXNet, DyNet 등이 있다. 동적 계산 그래프 방식에서는 데이터가 forward하는 동안에 거쳤던 연산과 결과물을 연결(참조)하며 계산 그래프가 만들어진다. 주로 연결 리스트 자료구조를 이용해서 구현된다.</p>
+<br>
+<p>동적 계산 그래프 방식의 장점은 프레임워크 자체 규칙을 배우지 않아도 된다. 기존 프로그래밍 언어 (파이썬)으로 연산을 정의함으로서 계산 그래프를 만들 수 있다. 파이썬 구문 (<code class="docutils literal notranslate"><span class="pre">if</span></code>문 등)을 사용해서 연산을 할 수도 있다. 그리고 디버깅에도 유리하다. 디버깅 메세지가 우리가 익숙한 형태로 나오기 때문이다.</p>
+<br>
 </section>
-<section id="backup">
-<h3>Backup<a class="headerlink" href="#backup" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(s_L\)</span>부터 시작하며 모든 엣지에 대한 statistics을 업데이트해준다.</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(N(s, a) = N(s, a)+1\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(W(s, a) = W(s, a) + v\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(Q(s, a) = \frac{W(s, a)}{N(s,a)}\)</span></p></li>
-</ul>
-</li>
-</ul>
-</section>
-<section id="play">
-<h3>Play<a class="headerlink" href="#play" title="Permalink to this headline">#</a></h3>
-<ul class="simple">
-<li><p>Backup이 끝나면 <span class="math notranslate nohighlight">\(\pi(a|s_t)=\frac{N(s_t, a)^{1/\tau}}{\sum_b N(s_t,b)^{1/\tau}}\)</span>을 기반으로 행동한다.</p></li>
-</ul>
-</section>
-</section>
-<section id="self-play">
-<h2>Self-play<a class="headerlink" href="#self-play" title="Permalink to this headline">#</a></h2>
-<p>self-play로 <span class="math notranslate nohighlight">\(s_0, s_1, s_2, \ldots, s_T\)</span>만들고, 이겼는지 졌는지 판단해서 <span class="math notranslate nohighlight">\(r_T \in \left\{-1 ,1 \right\}\)</span> 설정. 이 <span class="math notranslate nohighlight">\(r_T\)</span>는 모든 <span class="math notranslate nohighlight">\(t\)</span>에 대해서 <span class="math notranslate nohighlight">\(z_t\)</span>가 된다. <span class="math notranslate nohighlight">\((s, \mathbf{\pi}, z)\)</span>가 데이터가 된다. <span class="math notranslate nohighlight">\(f_{\theta}(s_t) = (\mathbf{p}, v)\)</span>일 때, 다음 손실 함수를 사용해서 파라미터 업데이트</p>
-<div class="math notranslate nohighlight">
-\[
-(z-v)^2 + \mathbf{\pi}^\top\log\mathbf{p}+c\lVert \theta\rVert^2
-\]</div>
-<ul class="simple">
-<li><p>각 입력 <span class="math notranslate nohighlight">\(s\)</span>는 <span class="math notranslate nohighlight">\(19 \times 19 \times 17\)</span> 텐서. 나의 돌만 표시한 행렬과 상대방의 돌만 표시한 행렬 각각 과거 8개 그래서 총 16개. 그리고 마지막 하나는 내가 검은돌이면 1이고 흰돌이면 0.</p></li>
-</ul>
+<hr class="docutils" />
+<section id="id1">
+<h2>마치며<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>두 가지 방식에는 장,단점이 있기 때문에 어느 것이 더 좋다고 할 수 없다. 두 방식 모두를 지원하는 프레임워크도 많다고 한다. 파이토치에서도 TorchScript라는 것을 사용하면 정적 계산 그래프 방식도 할 수 있다고 한다. 텐서플로우는 2.0부터 eager execution이라는 동적 계산 그래프 방식이 표준으로 채택 되었다고 한다.</p>
 </section>
 </section>
 
@@ -479,7 +402,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./contents/rl_papers"
+            path: "./contents/miscellaneous"
         },
         predefinedOutput: true
     }
@@ -493,19 +416,12 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../rl_papers/SUNRISE.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">공부 기록</p>
+            <p class="prev-next-title">SUNRISE</p>
         </div>
-    </a>
-    <a class='right-next' id="next-link" href="SUNRISE.html" title="next page">
-    <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">SUNRISE</p>
-    </div>
-    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
