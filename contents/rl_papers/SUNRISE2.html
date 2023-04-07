@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Dreamer" href="DreamerV1.html" />
-    <link rel="prev" title="AlphaGo Zero" href="AlphaGoZero.html" />
+    <link rel="prev" title="SUNRISE" href="SUNRISE.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -126,6 +126,11 @@ const thebe_selector_output = ".output, .cell_output"
    AlphaGo Zero
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    SUNRISE
@@ -134,18 +139,6 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="DreamerV1.html">
    Dreamer
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
-  머신러닝/딥러닝 근본적 내용들
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
-   Beyond BatchNorm
   </a>
  </li>
 </ul>
@@ -211,6 +204,35 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/contents/rl_papers/SUNRISE2.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -224,7 +246,7 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/SUNRISE.html&body=Your%20issue%20content%20here."
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/SUNRISE2.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="bottom"
@@ -246,7 +268,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/contents/rl_papers/SUNRISE.md"
+        <a href="../../_sources/contents/rl_papers/SUNRISE2.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -257,7 +279,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.md</span>
+<span class="headerbtn__text-container">.ipynb</span>
 </a>
 
       </li>
@@ -305,6 +327,11 @@ title="Print to PDF"
     </div>
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rl-10">
+   RL 논문 리뷰 스터디 10기 발표 자료
+  </a>
+ </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#weighted-bellman-backups">
    Weighted Bellman Backups
@@ -354,6 +381,11 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rl-10">
+   RL 논문 리뷰 스터디 10기 발표 자료
+  </a>
+ </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#weighted-bellman-backups">
    Weighted Bellman Backups
@@ -406,6 +438,28 @@ title="Print to PDF"
 </ul>
 <br>
 <hr class="docutils" />
+<section id="rl-10">
+<h2>RL 논문 리뷰 스터디 10기 발표 자료<a class="headerlink" href="#rl-10" title="Permalink to this headline">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span>
+
+<span class="n">IFrame</span><span class="p">(</span><span class="s2">&quot;../img/sunrise.pdf&quot;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<iframe
+    width="600"
+    height="300"
+    src="../img/sunrise.pdf"
+    frameborder="0"
+    allowfullscreen
+
+></iframe>
+</div></div>
+</div>
 <p>SUNRISE에는 <span class="math notranslate nohighlight">\(N\)</span>개의 Soft Actor-critic (SAC) 에이전트가 있다 (SAC는 하나의 예시이며, Rainbow DQN 등을 사용할 수도 있다.). 즉, <span class="math notranslate nohighlight">\(N\)</span>개의 정책과 Q-네트워크 <span class="math notranslate nohighlight">\(\left\{ Q_{\theta_i}, \pi_{\phi_i} \right\}_{i=1}^{N}\)</span>가 있다. 참고로 실험에서 <span class="math notranslate nohighlight">\(N=5\)</span>이다. 네트워크 파라미터 <span class="math notranslate nohighlight">\(\theta_i, \phi_i\)</span>들은 모두 서로 다르게 랜덤 초기화된다. 이렇게 다수개의 네트워크를 사용하여 본 논문에서는 다음 세 가지를 제안한다.</p>
 <ol class="simple">
 <li><p>Weighted Bellman Backups</p>
@@ -426,6 +480,7 @@ title="Print to PDF"
 </li>
 </ol>
 <br>
+</section>
 <hr class="docutils" />
 <section id="weighted-bellman-backups">
 <h2>Weighted Bellman Backups<a class="headerlink" href="#weighted-bellman-backups" title="Permalink to this headline">#</a></h2>
@@ -511,11 +566,11 @@ a_t = \operatorname*{argmax}_{a} \left\{ Q_{\text{mean}}(s_t, a) + \lambda Q_{\t
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="AlphaGoZero.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="SUNRISE.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">AlphaGo Zero</p>
+            <p class="prev-next-title">SUNRISE</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="DreamerV1.html" title="next page">

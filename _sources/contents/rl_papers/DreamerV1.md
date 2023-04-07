@@ -74,7 +74,7 @@ V_{\lambda} (s_\tau):= (1-\lambda)\sum_{n=1}^{H-1}\lambda^{n-1} V_{N}^n(s_\tau) 
 $$
 
 $$
-V_{N}^{k} (s_\tau) := \mathbb{E}_{q_{\theta}, q_{\phi}} \left[ \sum_{n=\tau}^{h-1} \gamma^{n-\tau} r_n + \gamma^{h-\tau}v_{\psi}(s_h) \right], \quad \text{where} \quad h=\min(\tau+k,t+H) \; \rightarrow k-\text{step} \; \text{return}
+V_{N}^{k} (s_\tau) := \mathbb{E}_{q_{\theta}, q_{\phi}} \left[ \sum_{n=\tau}^{h-1} \gamma^{n-\tau} r_n + \gamma^{h-\tau}v_{\psi}(s_h) \right], 
 $$
 
 정책 네트워크 $q_{\phi}$는 $\text{TD}(\lambda)$ 타겟을 최대화하는 방향으로 학습된다. 이때, online learning과 다른 부분이 있다. 실제 환경과 상호작용을 하며 만든 데이터의 경우 $s_{\tau}, r_{\tau}$가 transition probability density 및 reward function으로부터 샘플링되기 때문에 직접적으로 $\text{TD}(\lambda)$ 타겟을 최대화시킬 수 없다. $\text{TD}(\lambda)$ 안에 파라미터 $\phi$가 없기 때문이다. 하지만 latent model dynamics를 사용할 경우 trajectory를 만드는 동안 취했던 행동들 덕분에  $\text{TD}(\lambda)$ 타겟 안에 파라미터 $\phi$가 존재한다. 따라서 reparameterization trick과 함께 $v_{\psi}(s_t)$을 최대화 할 수 있다.

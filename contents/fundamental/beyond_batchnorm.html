@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>AlphaGo Zero &#8212; 공부 기록</title>
+    <title>Beyond BatchNorm &#8212; 공부 기록</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,8 +54,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="SUNRISE" href="SUNRISE.html" />
-    <link rel="prev" title="공부 기록" href="../intro.html" />
+    <link rel="next" title="Define-and-run vs Define-by-run" href="../miscellaneous/define_and_by_run.html" />
+    <link rel="prev" title="Dreamer" href="../rl_papers/DreamerV1.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -120,19 +120,19 @@ const thebe_selector_output = ".output, .cell_output"
   강화학습 논문 정리
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
    AlphaGo Zero
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="SUNRISE.html">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
    SUNRISE
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="DreamerV1.html">
+  <a class="reference internal" href="../rl_papers/DreamerV1.html">
    Dreamer
   </a>
  </li>
@@ -142,9 +142,9 @@ const thebe_selector_output = ".output, .cell_output"
   머신러닝/딥러닝 근본적 내용들
  </span>
 </p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Beyond BatchNorm
   </a>
  </li>
@@ -224,7 +224,7 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/AlphaGoZero.html&body=Your%20issue%20content%20here."
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/fundamental/beyond_batchnorm.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="bottom"
@@ -246,7 +246,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/contents/rl_papers/AlphaGoZero.md"
+        <a href="../../_sources/contents/fundamental/beyond_batchnorm.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -306,35 +306,28 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#monte-carlo-tree-search-mcts">
-   Monte Carlo Tree Search (MCTS)
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#select">
-     Select
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#expand-and-evaluation">
-     Expand and evaluation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#backup">
-     Backup
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#play">
-     Play
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#self-play">
-   Self-play
+  <a class="reference internal nav-link" href="#stable-forward-propagation">
+   Stable Forward Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#informative-forward-propagation">
+   Informative Forward Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stable-backward-propagation">
+   Stable Backward Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
   </a>
  </li>
 </ul>
@@ -346,7 +339,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>AlphaGo Zero</h1>
+                <h1>Beyond BatchNorm</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -357,35 +350,28 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#monte-carlo-tree-search-mcts">
-   Monte Carlo Tree Search (MCTS)
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#select">
-     Select
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#expand-and-evaluation">
-     Expand and evaluation
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#backup">
-     Backup
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#play">
-     Play
-    </a>
-   </li>
-  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#self-play">
-   Self-play
+  <a class="reference internal nav-link" href="#stable-forward-propagation">
+   Stable Forward Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#informative-forward-propagation">
+   Informative Forward Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stable-backward-propagation">
+   Stable Backward Propagation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reference">
+   Reference
   </a>
  </li>
 </ul>
@@ -398,88 +384,80 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="alphago-zero">
-<h1>AlphaGo Zero<a class="headerlink" href="#alphago-zero" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="beyond-batchnorm">
+<h1>Beyond BatchNorm<a class="headerlink" href="#beyond-batchnorm" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>제목: Mastering the Game of Go without Human Knowledge</p></li>
-<li><p>저자:Silver, David, Julian Schrittwieser, Karen Simonyan, Ioannis Antonoglou, Aja Huang, Arthur Guez, Thomas Hubert, et al, <em>DeepMind</em></p></li>
-<li><p>링크: <a class="reference external" href="https://doi.org/10.1038/nature24270">https://doi.org/10.1038/nature24270</a></p></li>
-<li><p>키워드: AlphaGo Zero</p></li>
+<li><p>제목: Beyond BatchNorm: Towards a Unified Understanding of Normalization in Deep Learning</p></li>
+<li><p>저자: Lubana, Ekdeep S, Robert Dick, and Hidenori Tanaka</p></li>
+<li><p>연도: 2021년</p></li>
+<li><p>학술대회: NeurIPS</p></li>
+<li><p>링크: <a class="reference external" href="https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html">https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html</a></p></li>
+<li><p>키워드: Batch normalization, group normalization</p></li>
 </ul>
+<br>
 <hr class="docutils" />
-<p>AlphaGo Zero에는 크게 두 가지 과정이 있다.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>BatchNorm, LayerNorm, InstanceNorm, GroupNorm 등 normalization layers을 이해하기 위한 많은 연구들이 있었다. 하지만 해당 연구들은 normalization layer들의 일반적인 원리와 효과를 설명하기 보다는 개별 normalization layer를 분석하는데 지나지 않았다.</p>
+<p>Normalization layers는 크게 2가지로 분류될 수 있다.</p>
 <ol class="simple">
-<li><p>자기 자신과 실제 바둑을 두는 단계인 self-play 단계</p></li>
-<li><p>Self-play 단계에서 각 수를 두기 위해 바둑을 시뮬레이션해보는 단계 MCTS</p></li>
+<li><p>Activation-based normalizers</p>
+<ul class="simple">
+<li><p>Activation space (레이어의 입력)에 적용되는 normalizers로서, BatchNorm, LayerNorm, InstanceNorm, GroupNorm 등이 이에 속한다.</p></li>
+</ul>
+</li>
+<li><p>Parametric-based normalizers</p>
+<ul class="simple">
+<li><p>네트워크 파라미터에 적용되는 normalizers로서 Weight Normalization, Scaled Weight Standardization 등이 이에 해당한다.</p></li>
+</ul>
+</li>
 </ol>
-<p>Self-play는 에이전트가 자기 자신과 바둑을 한 수씩 두는 단계이다. 한 self-play에서의 상태들의 sequence를 <span class="math notranslate nohighlight">\(s_0, s_1, s_2, \ldots, s_T\)</span>라고 하자.
-각 수를 어디에 둘지는 현재 상태에서 MCTS로 시뮬레이션을 돌려보고 결정된다. 먼저 MCTS를 정리해보자</p>
-<section id="monte-carlo-tree-search-mcts">
-<h2>Monte Carlo Tree Search (MCTS)<a class="headerlink" href="#monte-carlo-tree-search-mcts" title="Permalink to this headline">#</a></h2>
-<ul>
-<li><p>Self-play의 각 상태 <span class="math notranslate nohighlight">\(s_t\)</span>에서 MCTS를 이용하여 시뮬레이션이 돌아간다. 한 시뮬레이션에서 1,600번 바둑을 둔다. 이 시뮬레이션으로부터 다음 행동을 샘플링할 분포인 <span class="math notranslate nohighlight">\(\mathbf{\pi}_t\)</span>가 만들어진다. 취할 수 있는 행동은 <span class="math notranslate nohighlight">\(19 \times 19 + 1 = 392\)</span> 가지이다 (+1은 턴 넘기기).</p></li>
-<li><p>시뮬레이션 트리의 루트 노드는 <span class="math notranslate nohighlight">\(s_t\)</span>이다. 트리의 각 노드 <span class="math notranslate nohighlight">\(s\)</span>에는 각 행동마다 엣지가 있는 상태이다. 각 엣지마다 4개의 statistics가 저장되어 있다.</p>
-<div class="math notranslate nohighlight">
-\[
-    \left\{ Q(s, a), W(s, a), N(s, a), P(s, a) \right\}
-    \]</div>
-</li>
-</ul>
-<section id="select">
-<h3>Select<a class="headerlink" href="#select" title="Permalink to this headline">#</a></h3>
-<ul>
-<li><p>각 노드 <span class="math notranslate nohighlight">\(s\)</span>에서 UCB을 사용하여 행동을 선택한다.</p>
-<div class="math notranslate nohighlight">
-\[
-    a=\operatorname{argmax} \left( Q(s,a)+U(s,a) \right), \quad U(s,a)=c_{\text{puct}}P(s,a)\frac{\sqrt{\sum_b N(s,b)}}{(1 + N(s,a))},
-    \]</div>
-<p>이때, <span class="math notranslate nohighlight">\(c_{\text{puct}}\)</span>는 탐색 정도를 결정하는 하이퍼 파라미터이다.</p>
-</li>
-<li><p>루트 노드에서 시작하여 위의 방법으로 행동을 선택하는 것을 <span class="math notranslate nohighlight">\(L\)</span>번 반복하자.</p></li>
-</ul>
-</section>
-<section id="expand-and-evaluation">
-<h3>Expand and evaluation<a class="headerlink" href="#expand-and-evaluation" title="Permalink to this headline">#</a></h3>
-<ul>
-<li><p>Select를 통해 만든 하나의 트리의 리프 노드를 <span class="math notranslate nohighlight">\(s_L\)</span>이라 하자. 우선, <span class="math notranslate nohighlight">\(f_{\theta}(s_L) = (\mathbf{p}, v)\)</span>를 계산해준다.</p></li>
-<li><p><span class="math notranslate nohighlight">\(s_L\)</span>에 각 행동마다 엣지를 달아주고, 엣지의 statistics를 다음과 같이 초기화해주자 (<span class="math notranslate nohighlight">\(s_t = s_0\)</span>일 때, 그 이후로는 만들었던 트리를 사용한다).</p>
-<div class="math notranslate nohighlight">
-\[
-    \left\{ Q(s, a)=0, W(s, a)=0, N(s, a)=0, P(s, a)=p_a \right\},
-    \]</div>
-<p>이때, <span class="math notranslate nohighlight">\(p_a\)</span>는 <span class="math notranslate nohighlight">\(\mathbf{p}\)</span>의 <span class="math notranslate nohighlight">\(a\)</span>번 째 원소이다.</p>
-</li>
-</ul>
-</section>
-<section id="backup">
-<h3>Backup<a class="headerlink" href="#backup" title="Permalink to this headline">#</a></h3>
+<br>
+<p>이 논문에서는 잘 알려진 BatchNorm의 성질을 다른 normalization layers로 확장하여 이해하는 것을 목표로 한다. 논문에서 다음 세 가지 성질을 분석하였다.</p>
+<ol class="simple">
+<li><p>Stable Forward Propagation</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(s_L\)</span>부터 시작하며 모든 엣지에 대한 statistics을 업데이트해준다.</p>
-<ul>
-<li><p><span class="math notranslate nohighlight">\(N(s, a) = N(s, a)+1\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(W(s, a) = W(s, a) + v\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(Q(s, a) = \frac{W(s, a)}{N(s,a)}\)</span></p></li>
+<li><p>Activation-based normalizers들은  ResNets에서 activations들의 분산이 무작정 커지는 것을 방지할 수 있었다. 이는 parametric normalizers에서는 볼 수 없는 성질이다.</p></li>
 </ul>
 </li>
-</ul>
-</section>
-<section id="play">
-<h3>Play<a class="headerlink" href="#play" title="Permalink to this headline">#</a></h3>
+<li><p>Informative Forward Propagation</p>
 <ul class="simple">
-<li><p>Backup이 끝나면 <span class="math notranslate nohighlight">\(\pi(a|s_t)=\frac{N(s_t, a)^{1/\tau}}{\sum_b N(s_t,b)^{1/\tau}}\)</span>을 기반으로 행동한다.</p></li>
+<li><p>다른 입력 데이터에 대해서는 다른 activation을 만드는 능력이 있다. 즉, 데이터를 잘 구분되게 만드는 능력이 있다. GroupNorm의 group 수에 따라 이 정도가 달라진다.</p></li>
 </ul>
-</section>
-</section>
-<section id="self-play">
-<h2>Self-play<a class="headerlink" href="#self-play" title="Permalink to this headline">#</a></h2>
-<p>self-play로 <span class="math notranslate nohighlight">\(s_0, s_1, s_2, \ldots, s_T\)</span>만들고, 이겼는지 졌는지 판단해서 <span class="math notranslate nohighlight">\(r_T \in \left\{-1 ,1 \right\}\)</span> 설정. 이 <span class="math notranslate nohighlight">\(r_T\)</span>는 모든 <span class="math notranslate nohighlight">\(t\)</span>에 대해서 <span class="math notranslate nohighlight">\(z_t\)</span>가 된다. <span class="math notranslate nohighlight">\((s, \mathbf{\pi}, z)\)</span>가 데이터가 된다. <span class="math notranslate nohighlight">\(f_{\theta}(s_t) = (\mathbf{p}, v)\)</span>일 때, 다음 손실 함수를 사용해서 파라미터 업데이트</p>
-<div class="math notranslate nohighlight">
-\[
-(z-v)^2 + \mathbf{\pi}^\top\log\mathbf{p}+c\lVert \theta\rVert^2
-\]</div>
+</li>
+<li><p>Stable Backward Propagation</p>
 <ul class="simple">
-<li><p>각 입력 <span class="math notranslate nohighlight">\(s\)</span>는 <span class="math notranslate nohighlight">\(19 \times 19 \times 17\)</span> 텐서. 나의 돌만 표시한 행렬과 상대방의 돌만 표시한 행렬 각각 과거 8개 그래서 총 16개. 그리고 마지막 하나는 내가 검은돌이면 1이고 흰돌이면 0.</p></li>
+<li><p>InstanceNorm와 같이 단일 데이터 또는 단일 채널 (feature) 내에서 normalization을 하는 방법은 gradient explosion을 겪을 수 있다.</p></li>
 </ul>
+</li>
+</ol>
+</section>
+<hr class="docutils" />
+<section id="stable-forward-propagation">
+<h2>Stable Forward Propagation<a class="headerlink" href="#stable-forward-propagation" title="Permalink to this headline">#</a></h2>
+<p>Normalization layers를 사용하면 레이어를 통과함에 따라 activations의 variance가 지수적으로 증폭되는 것을 방지할 수 있다고 한다. Activations을 계속 normalization 해주니 평범한 CNN에 대해서는 당연한 사실이다. 하지만, ResNet에 대해서는 residual path 때문에 당연하지 않을 수 있다. 다른 논문에서는 레이어를 지남에 따라 activations의 평균 분산이 지수적으로 증가하지만 않으면 stable 순전파가 가능하다는 것이 입증되었고, 이 논문에서는 activation-based normalizers을 사용하면 ResNet에서 레이어를 지남에 따라 activations의 분산이 선형적으로 증가하는 것을 보였다. 이는 parametric-based normalizers는 없는 기능이다.</p>
+</section>
+<hr class="docutils" />
+<section id="informative-forward-propagation">
+<h2>Informative Forward Propagation<a class="headerlink" href="#informative-forward-propagation" title="Permalink to this headline">#</a></h2>
+<p>이 section은 normalization layers가 유용한 정보를 순전파할 수 있다는 것에 관해 설명한다. 유용한 정보가 무엇인지 설명하기 위해 딥러닝이 겪는 <strong>rank collapse</strong> 문제를 먼저 설명하면 좋을 것 같다. Rank collapse란 서로 다른 입력 데이터가 레이어를 통과할 수록 서로 비슷한 activation를 갖게 되는 문제이다. 이 문제를 경험적으로 보이기 위하여 다양한 CNN의 linear classifier 직전 레이어의 activations 사이의 코사인 유사도와 학습 성능을 시각화하면 다음과 같았다. Activations 사이의 코사인 유사도가 높을수록 모델의 훈련 성능이 떨어지는 것을 확인할 수 있었다. 훈련 성능을 보여준 이유는 rank collapse에 의한 평균 훈련 속도가 저하되는 것을 보이기 위함이다 (그림 설명 참조).</p>
+<a class="reference internal image-reference" href="../../_images/beyond_bn_fig5.png"><img alt="fig5" class="align-center" src="../../_images/beyond_bn_fig5.png" style="width: 250px;" /></a>
+<br>
+<p>Normalization layers가 서로 다른 입력 데이터에 대해서 서로 다른 activations을 만드는 효과가 있다고 한다. BatchNorm에 대해서는 이미 이 효과가 입증되었다고 한다 [2]. BatchNorm은 임의 초기화된 네트워크의 classifier 직전 레이어의 activations들의 covariance matrix <span class="math notranslate nohighlight">\(Y Y^\top\)</span>가 최소 <span class="math notranslate nohighlight">\(\Omega(\sqrt{\textit{width}})\)</span>만큼 큰 rank를 갖는다는 것이 증명되었다. 여기서 width는 fc layer이전 CNN 레이어의 너비 (채널 수)를 의미한다. 선형대수에 의하면 Covariance matrix의 rank는 correlation matrix <span class="math notranslate nohighlight">\(Y^\top Y\)</span>와 같기 때문에 correlation matrix의 rank 또한 크다는 것이다. 참고로 rank가 크다는 것은 해당 matrix의 basis가 서로 다른 방향을 갖고 있는 것을 의미한다. 즉, BatchNorm은 다양한 activations 만들어내는 효과가 있다.</p>
+<p>위 내용은 다른 논문에서 BatchNorm에 대해서만 증명된 것이고, 이 논문에서는 이를 확장하여 GroupNorm에 대해서도 비슷한 성질이 있는 것을 증명하였다. GroupNorm에 대해서는 fc layer 직전 레이어의 activations들의 covarianace matrix가  최소 <span class="math notranslate nohighlight">\(\Omega(\sqrt{\textit{width}/\textit{Group Size}})\)</span>의 랭크를 갖는다고 한다.</p>
+</section>
+<hr class="docutils" />
+<section id="stable-backward-propagation">
+<h2>Stable Backward Propagation<a class="headerlink" href="#stable-backward-propagation" title="Permalink to this headline">#</a></h2>
+<p>이전 두 섹션은 normalization layers들의 장점에 대해 다뤘다면, 이번 섹션은 normalization layer가 겪는 문제에 대해서 다룬다. 이 부분도 정말 신기하다. 최근에 입증된 사실로, BatchNorm을 사용하는 네트워크의 경우 학습 초기에 네트워크가 깊을수록 앞단 레이어의 gradient의 norm이 exploding 할 수 있다는 것이다.</p>
+<p>BatchNorm이 있을 경우 로스에 대한 한 레이어의 activation의 그레디언트에 activation의 표준 편차의 역수텀이 붙게 된다. 네트워크 파라미터가 평균이 0인 Gaussian 분포에서 샘플링되었을 경우 학습 초기 activations의 표준 편차가 1보다 작다고 한다. 그러면 표준편차의 역수를 1보다 커진다. 매 레이어마다 그레디언트가 역전파되면서 1보다 큰 값이 곱해져서 네트워크의 앞단의 그레디언트가 증폭되게 된다고 한다.</p>
+<p>이 논문에 따르면 GroupNorm의 group size가 클수록 이 문제가 완화된다고 한다. 따라서 Gropu size가 1인 케이스인 InstanceNorm의 경우 깊은 네트워크일수록 학습이 굉장히 불안정해지게 된다고 한다.</p>
+</section>
+<hr class="docutils" />
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
+<p>[1] Lubana, Ekdeep S, Robert Dick, and Hidenori Tanaka. “Beyond BatchNorm: Towards a Unified Understanding of Normalization in Deep Learning.” In Advances in Neural Information Processing Systems, 34:4778–91. Curran Associates, Inc., 2021. <a class="reference external" href="https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html">https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html</a>.</p>
+<p>[2] Daneshmand, Hadi, Jonas Kohler, Francis Bach, Thomas Hofmann, and Aurelien Lucchi. “Batch Normalization Provably Avoids Ranks Collapse for Randomly Initialised Deep Networks.” In Advances in Neural Information Processing Systems, edited by H. Larochelle, M. Ranzato, R. Hadsell, M. F. Balcan, and H. Lin, 33:18387–98. Curran Associates, Inc., 2020. <a class="reference external" href="https://proceedings.neurips.cc/paper/2020/file/d5ade38a2c9f6f073d69e1bc6b6e64c1-Paper.pdf">https://proceedings.neurips.cc/paper/2020/file/d5ade38a2c9f6f073d69e1bc6b6e64c1-Paper.pdf</a>.</p>
 </section>
 </section>
 
@@ -496,7 +474,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./contents/rl_papers"
+            path: "./contents/fundamental"
         },
         predefinedOutput: true
     }
@@ -510,17 +488,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../rl_papers/DreamerV1.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">공부 기록</p>
+            <p class="prev-next-title">Dreamer</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="SUNRISE.html" title="next page">
+    <a class='right-next' id="next-link" href="../miscellaneous/define_and_by_run.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">SUNRISE</p>
+        <p class="prev-next-title">Define-and-run vs Define-by-run</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

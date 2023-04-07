@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Define-and-run vs Define-by-run" href="../miscellaneous/define_and_by_run.html" />
+    <link rel="next" title="Beyond BatchNorm" href="../fundamental/beyond_batchnorm.html" />
     <link rel="prev" title="SUNRISE" href="SUNRISE.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -134,6 +134,18 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Dreamer
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  머신러닝/딥러닝 근본적 내용들
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+   Beyond BatchNorm
   </a>
  </li>
 </ul>
@@ -445,7 +457,7 @@ V_{\lambda} (s_\tau):= (1-\lambda)\sum_{n=1}^{H-1}\lambda^{n-1} V_{N}^n(s_\tau) 
 \]</div>
 <div class="math notranslate nohighlight">
 \[
-V_{N}^{k} (s_\tau) := \mathbb{E}_{q_{\theta}, q_{\phi}} \left[ \sum_{n=\tau}^{h-1} \gamma^{n-\tau} r_n + \gamma^{h-\tau}v_{\psi}(s_h) \right], \quad \text{where} \quad h=\min(\tau+k,t+H) \; \rightarrow k-\text{step} \; \text{return}
+V_{N}^{k} (s_\tau) := \mathbb{E}_{q_{\theta}, q_{\phi}} \left[ \sum_{n=\tau}^{h-1} \gamma^{n-\tau} r_n + \gamma^{h-\tau}v_{\psi}(s_h) \right], 
 \]</div>
 <p>정책 네트워크 <span class="math notranslate nohighlight">\(q_{\phi}\)</span>는 <span class="math notranslate nohighlight">\(\text{TD}(\lambda)\)</span> 타겟을 최대화하는 방향으로 학습된다. 이때, online learning과 다른 부분이 있다. 실제 환경과 상호작용을 하며 만든 데이터의 경우 <span class="math notranslate nohighlight">\(s_{\tau}, r_{\tau}\)</span>가 transition probability density 및 reward function으로부터 샘플링되기 때문에 직접적으로 <span class="math notranslate nohighlight">\(\text{TD}(\lambda)\)</span> 타겟을 최대화시킬 수 없다. <span class="math notranslate nohighlight">\(\text{TD}(\lambda)\)</span> 안에 파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>가 없기 때문이다. 하지만 latent model dynamics를 사용할 경우 trajectory를 만드는 동안 취했던 행동들 덕분에  <span class="math notranslate nohighlight">\(\text{TD}(\lambda)\)</span> 타겟 안에 파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>가 존재한다. 따라서 reparameterization trick과 함께 <span class="math notranslate nohighlight">\(v_{\psi}(s_t)\)</span>을 최대화 할 수 있다.</p>
 <div class="math notranslate nohighlight">
@@ -504,10 +516,10 @@ V_{N}^{k} (s_\tau) := \mathbb{E}_{q_{\theta}, q_{\phi}} \left[ \sum_{n=\tau}^{h-
             <p class="prev-next-title">SUNRISE</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../miscellaneous/define_and_by_run.html" title="next page">
+    <a class='right-next' id="next-link" href="../fundamental/beyond_batchnorm.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Define-and-run vs Define-by-run</p>
+        <p class="prev-next-title">Beyond BatchNorm</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
