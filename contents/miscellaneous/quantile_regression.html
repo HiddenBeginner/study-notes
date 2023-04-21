@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Wasserstein distance를 구현적 관점에서 알아보기" href="wasserstein_distance.html" />
+    <link rel="prev" title="Wasserstein distance 구현하기" href="wasserstein_distance.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -116,6 +116,23 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  머신러닝/딥러닝 근본적 내용들
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamental/230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   강화학습 논문 정리
  </span>
 </p>
@@ -138,18 +155,6 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  머신러닝/딥러닝 근본적 내용들
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
-   Beyond BatchNorm
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
   잡학사전
  </span>
 </p>
@@ -161,7 +166,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="wasserstein_distance.html">
-   Wasserstein distance를 구현적 관점에서 알아보기
+   Wasserstein distance 구현하기
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -378,7 +383,7 @@ title="Print to PDF"
 <section id="quantile">
 <h2>Quantile이란?<a class="headerlink" href="#quantile" title="Permalink to this headline">#</a></h2>
 <p>확률 변수 <span class="math notranslate nohighlight">\(X\)</span>가 있다고 하자. 그리고 확률 변수 <span class="math notranslate nohighlight">\(X\)</span>의 누적분포함수 (CDF)를 <span class="math notranslate nohighlight">\(F_X\)</span>라고 하자.
-<span class="math notranslate nohighlight">\(F_X(x)\)</span>는 확률 변수가 <span class="math notranslate nohighlight">\(X\)</span>가 <span class="math notranslate nohighlight">\(x\)</span>보다 작을 확률으로 정의된다. 즉, <span class="math notranslate nohighlight">\(F_X(x):=\operatorname{Pr}[X \le x]\)</span> 이다.
+<span class="math notranslate nohighlight">\(F_X(x)\)</span>는 확률 변수가 <span class="math notranslate nohighlight">\(X\)</span>가 <span class="math notranslate nohighlight">\(x\)</span>보다 작을 확률로 정의된다. 즉, <span class="math notranslate nohighlight">\(F_X(x):=\operatorname{Pr}[X \le x]\)</span> 이다.
 한편, 0과 1사이의 값 <span class="math notranslate nohighlight">\(\tau\)</span>에 대하여, 확률 변수 <span class="math notranslate nohighlight">\(X\)</span>의 <span class="math notranslate nohighlight">\(\tau\)</span>-quantile은 CDF 값이 <span class="math notranslate nohighlight">\(\tau\)</span>가 되는 <span class="math notranslate nohighlight">\(x\)</span> 값을 의미한다.
 즉, <span class="math notranslate nohighlight">\(x=F^{-1}_X(\tau)\)</span>이다. 물론, CDF의 역함수가 정의되지 않을 수 있기 때문에 여기서 <span class="math notranslate nohighlight">\(F_X^{-1}\)</span>는 조금 다르게 정의된다.</p>
 <div class="math notranslate nohighlight">
@@ -386,6 +391,7 @@ title="Print to PDF"
 <p>CDF에서 확률이 유지되는 평평한 부분 때문에 역함수가 정의되지 않는 것인데, 평평한 부분의 시작점을 선택하여 해결한다는 의미이다.</p>
 <br>
 </section>
+<hr class="docutils" />
 <section id="id1">
 <h2>Quantile Regression<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <p>Quantile regression은  <span class="math notranslate nohighlight">\(\tau \in [0, 1]\)</span>가 주어졌을 때, <span class="math notranslate nohighlight">\(\tau\)</span>-quantile 값인 <span class="math notranslate nohighlight">\(F^{-1}_X(\tau)\)</span>를 찾는 문제이다. 지금부터 <span class="math notranslate nohighlight">\(\tau\)</span>-quantile 값을 찾는 방법을 만들어보자.
@@ -440,7 +446,9 @@ G(m) &amp; = &amp; (\tau -1)\displaystyle\int_{-\infty}^{m} (x - m) f_X(x) \, dx
 \[
 q_X (\tau)  =  \operatorname*{argmin}_m \mathbb{E}_{X}\left[\rho_\tau(X - m) \right].
  \]</div>
+<br>
 </section>
+<hr class="docutils" />
 <section id="id2">
 <h2>참고문헌<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>[1] <a class="reference external" href="https://en.wikipedia.org/wiki/Quantile_function">https://en.wikipedia.org/wiki/Quantile_function</a></p>
@@ -478,7 +486,7 @@ q_X (\tau)  =  \operatorname*{argmin}_m \mathbb{E}_{X}\left[\rho_\tau(X - m) \ri
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Wasserstein distance를 구현적 관점에서 알아보기</p>
+            <p class="prev-next-title">Wasserstein distance 구현하기</p>
         </div>
     </a>
 </div>

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Wasserstein distance를 구현적 관점에서 알아보기 &#8212; 공부 기록</title>
+    <title>Wasserstein distance 구현하기 &#8212; 공부 기록</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -54,6 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Quantile Regression" href="quantile_regression.html" />
     <link rel="prev" title="Define-and-run vs Define-by-run" href="define_and_by_run.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -116,6 +117,18 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  머신러닝/딥러닝 근본적 내용들
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   강화학습 논문 정리
  </span>
 </p>
@@ -138,18 +151,6 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  머신러닝/딥러닝 근본적 내용들
- </span>
-</p>
-<ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
-   Beyond BatchNorm
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
- <span class="caption-text">
   잡학사전
  </span>
 </p>
@@ -161,7 +162,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Wasserstein distance를 구현적 관점에서 알아보기
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="quantile_regression.html">
+   Quantile Regression
   </a>
  </li>
 </ul>
@@ -381,7 +387,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Wasserstein distance를 구현적 관점에서 알아보기</h1>
+                <h1>Wasserstein distance 구현하기</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -436,7 +442,7 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="wasserstein-distance">
-<h1>Wasserstein distance를 구현적 관점에서 알아보기<a class="headerlink" href="#wasserstein-distance" title="Permalink to this headline">#</a></h1>
+<h1>Wasserstein distance 구현하기<a class="headerlink" href="#wasserstein-distance" title="Permalink to this headline">#</a></h1>
 <p>이름부터 무시무시한 Wassertstein distance. 이름만 무서우면 다행이지만 이 녀석의 정의 또한 무섭다.
 Wasserstein distance는 두 확률 분포 사이의 거리를 측정할 때 사용된다.
 그런데 우리가 실제로 갖고 있는 것은 어느 확률 분포에서 샘플링된지 모르는 데이터셋이며, 두 데이터셋 사이의 Wasserstein distance를 구하는 것이 목표이다.
@@ -834,6 +840,13 @@ CDF는 정의역의 모든 값에 대해 정의가 되는 반면 우리는 각 �
             <p class="prev-next-subtitle">previous</p>
             <p class="prev-next-title">Define-and-run vs Define-by-run</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="quantile_regression.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Quantile Regression</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>

@@ -3,7 +3,7 @@
 ## Quantile이란?
 
 확률 변수 $X$가 있다고 하자. 그리고 확률 변수 $X$의 누적분포함수 (CDF)를 $F_X$라고 하자. 
-$F_X(x)$는 확률 변수가 $X$가 $x$보다 작을 확률으로 정의된다. 즉, $F_X(x):=\operatorname{Pr}[X \le x]$ 이다. 
+$F_X(x)$는 확률 변수가 $X$가 $x$보다 작을 확률로 정의된다. 즉, $F_X(x):=\operatorname{Pr}[X \le x]$ 이다. 
 한편, 0과 1사이의 값 $\tau$에 대하여, 확률 변수 $X$의 $\tau$-quantile은 CDF 값이 $\tau$가 되는 $x$ 값을 의미한다. 
 즉, $x=F^{-1}_X(\tau)$이다. 물론, CDF의 역함수가 정의되지 않을 수 있기 때문에 여기서 $F_X^{-1}$는 조금 다르게 정의된다. 
 
@@ -11,6 +11,8 @@ $$F_X^{-1}(p) := \inf \left\{ x: F_X(x) \ge p \right\}.$$
 CDF에서 확률이 유지되는 평평한 부분 때문에 역함수가 정의되지 않는 것인데, 평평한 부분의 시작점을 선택하여 해결한다는 의미이다.  
 
 <br>
+
+---
 
 ## Quantile Regression
 
@@ -78,6 +80,9 @@ $$
 q_X (\tau)  =  \operatorname*{argmin}_m \mathbb{E}_{X}\left[\rho_\tau(X - m) \right].
  $$
 
+<br>
+
+---
 
 ## 참고문헌
 
