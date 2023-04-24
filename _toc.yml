@@ -4,7 +4,20 @@
 format: jb-book
 root: contents/intro
 parts:
+- caption: 머신러닝/딥러닝 근본적 내용들
+  chapters:
+  - file: contents/fundamental/beyond_batchnorm.md
+  - file: contents/fundamental/230420_ulc.md
 - caption: 강화학습 논문 정리
   chapters:
   - file: contents/rl_papers/AlphaGoZero.md
-  
+  - file: contents/rl_papers/SUNRISE.md
+  - file: contents/rl_papers/DreamerV1.md
+- caption: 잡학사전
+  chapters:
+  - file: contents/miscellaneous/define_and_by_run.md
+  - file: contents/miscellaneous/wasserstein_distance.ipynb
+  - file: contents/miscellaneous/quantile_regression.ipynb
+- caption: 튜토리얼
+  chapters:
+  - file: contents/tutorials/2023-04-20_CartRacing-v2_DQN.ipynb
