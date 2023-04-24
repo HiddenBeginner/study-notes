@@ -2,6 +2,8 @@
 # coding: utf-8
 
 # # Control CartRacing-v2 environment using DQN from scratch
+# 
+# This tut
 
 # In[1]:
 
@@ -469,9 +471,10 @@ def animate(imgs, video_name, _return=True):
         return Video(video_name)
 
 
-# In[2]:
+# In[ ]:
 
 
-from IPython.display import Video
-Video('../img/CartRacing-v2_DQN.webm')
+animate(frames)
 
+
+# <img src='../img/CartRacing-v2_DQN.gif'></img>
