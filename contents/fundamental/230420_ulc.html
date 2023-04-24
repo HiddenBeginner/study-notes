@@ -176,6 +176,18 @@ const thebe_selector_output = ".output, .cell_output"
   </a>
  </li>
 </ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
 
     </div>
 </nav></div>
@@ -352,6 +364,11 @@ title="Print to PDF"
      모델의 Epistemic uncertainty 추정하기
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#epistemic-uncertainty-clean-noisy">
+     손실과 epistemic uncertainty를 고려한 clean/noisy 데이터 분류
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -408,6 +425,11 @@ title="Print to PDF"
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#id1">
      모델의 Epistemic uncertainty 추정하기
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#epistemic-uncertainty-clean-noisy">
+     손실과 epistemic uncertainty를 고려한 clean/noisy 데이터 분류
     </a>
    </li>
   </ul>
@@ -504,6 +526,9 @@ MC-Dropout은 dropout의 랜덤성을 이용한 것으로, 각 데이터 <span c
 \[\hat{y}_i = \frac{1}{T} \sum_{t=1}^{T} \operatorname{softmax}(f(x_i, W_t)),\]</div>
 <p>이때, <span class="math notranslate nohighlight">\(W_t\)</span>는 입력할 때마다 드랍아웃이 적용된 파라미터라고 생각하면 된다.
 이렇게 나온 <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>의 엔트로피를 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>에 대한 모델의 epistemic uncertainty <span class="math notranslate nohighlight">\(\epsilon_i\)</span>로 정의했다.</p>
+</section>
+<section id="epistemic-uncertainty-clean-noisy">
+<h3>손실과 epistemic uncertainty를 고려한 clean/noisy 데이터 분류<a class="headerlink" href="#epistemic-uncertainty-clean-noisy" title="Permalink to this headline">#</a></h3>
 </section>
 </section>
 <hr class="docutils" />
