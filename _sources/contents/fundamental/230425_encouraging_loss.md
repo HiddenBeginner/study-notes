@@ -125,8 +125,36 @@ $$\mathcal{N}_{\text{CEL}}=
 
 ## 4. 실험 결과
 
-추가될 예저엉
+수행한 실험은 다음과 같다.
+- **Image Recognition** CIFAR10, CIFAR100, ImageNet을 ResNet50과 EfficientNet-B0으로 훈련
+- **Graph Classification** PROTEINS, NCI1을 GCN으로 훈련
+- **Machin Translation** De-En, Fr-En을 Transformer로 훈련
 
+다양한 LE 값에 대해서 실험을 진행하였으며, 각 테스크별 가장 좋은 LE 값에 대한 결과는 다음과 같다.
+베이스라인 모델들이 제공하는 하이퍼파라미터와 똑같은 하이퍼파라미터를 사용했는데도, 성능 향상이 꽤 있는 편이다.
+
+```{figure} ../img/230425_el_result1.png
+---
+name: el_result1
+width: 400px
+---
+```
+
+<br>
+
+다양한 LE에 대해서 수행한 실험 결과는 다음과 같다.
+
+```{figure} ../img/230425_el_result2.png
+---
+name: el_result2
+---
+```
+
+<br>
+
+CE의 그레디언트에 $(p-1)$이 포함되어 있기 때문에 학습이 진행될수록 그레디언트의 크기가 작아져서, learning rate가 감소하는 효과가 있다. 하지마 EL는 그레디언트에 $p$텀이 제거되어서 CE와 비교했을 때 더 큰 그레디언트 크기를 갖는다. 따라서 베이스라인의 learning rate보다 더 작은 learning rate를 사용하는 것이 좋고, LE가 1이 아니라 0.5와 0.75일 때 더 잘 작동하는 이유라고 한다.
+
+<br>
 
 ---
 
