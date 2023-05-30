@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Uncertainty-aware Label Correction &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Encouraging Loss" href="230425_encouraging_loss.html" />
+    <link rel="prev" title="Beyond BatchNorm" href="beyond_batchnorm.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/core/230420_ulc.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/core/230420_ulc.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rethinking-label-correction-framework">
+   2. Rethinking Label Correction Framework
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-imbalance">
+     2.1 Class imbalance 데이터의 손실의 분포
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#epistemic-uncertainty">
+     2.2 Epistemic uncertainty에 의한 손실 분포
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#method">
+   3. Method
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.1 모델의 Epistemic uncertainty 추정하기
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#epistemic-uncertainty-clean-noisy">
+     3.2 손실과 epistemic uncertainty를 고려한 clean/noisy 데이터 분류
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clean-noisy">
+     3.3 Clean / noisy 데이터 분류 이후 과정
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#aleatoric-uncertainty-aware-learning">
+     3.4 Aleatoric Uncertainty-aware Learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     3.5 알고리즘
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   4. 참고문헌
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Uncertainty-aware Label Correction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rethinking-label-correction-framework">
+   2. Rethinking Label Correction Framework
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#class-imbalance">
+     2.1 Class imbalance 데이터의 손실의 분포
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#epistemic-uncertainty">
+     2.2 Epistemic uncertainty에 의한 손실 분포
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#method">
+   3. Method
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     3.1 모델의 Epistemic uncertainty 추정하기
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#epistemic-uncertainty-clean-noisy">
+     3.2 손실과 epistemic uncertainty를 고려한 clean/noisy 데이터 분류
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#clean-noisy">
+     3.3 Clean / noisy 데이터 분류 이후 과정
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#aleatoric-uncertainty-aware-learning">
+     3.4 Aleatoric Uncertainty-aware Learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     3.5 알고리즘
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   4. 참고문헌
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="uncertainty-aware-label-correction">
+<h1>Uncertainty-aware Label Correction<a class="headerlink" href="#uncertainty-aware-label-correction" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>제목: Uncertainty-Aware Learning against Label Noise on Imbalanced Datasets</p></li>
+<li><p>저자: Huang, Yingsong, Bing Bai, Shengwei Zhao, Kun Bai, Fei Wang, <em>Tencent</em></p></li>
+<li><p>연도: 2022년</p></li>
+<li><p>학술대회: AAAI</p></li>
+<li><p>링크: <a class="reference external" href="https://arxiv.org/abs/2207.05471">https://arxiv.org/abs/2207.05471</a></p></li>
+<li><p>키워드: Learning against label noise, Class imbalance, Uncertainty</p></li>
+</ul>
+<hr class="docutils" />
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>많은 데이터에 레이블링을 하기 위하여 크라우드소싱, 검색 엔진, 자동 레이블링 등을 사용하다 보면 레이블링이 잘못될 수 있다.
+이러한 label noise는 모델에 잘못된 정보를 전달하기 때문에 모델의 성능에 악영향을 미친다.
+학습 동안에 noisy label을 찾아내고, 손실함수 또는 레이블을 수정하여 학습하는 방법을 <em>noise-robust learning</em> 이라고 한다.</p>
+<p>많은 noise-robust learning 알고리즘들은 뉴럴 네트워크의 <em>memorization effect</em> [2] 성질로부터 아이디어를 얻었다.
+뉴럴 네트워크는 학습 초기에는 올바르게 레이블링된 데이터의 패턴을 학습하고, 이후에 점점 잘못 레이블링된 데이터를 기억한다고 한다.
+따라서 학습 초기에 손실값이 작은 데이터를 clean 데이터로 간주한다. Clean 데이터와 noisy label 데이터의 손실함수의 분포가 다르다는 점을 이용한 것이다.
+기존 방법론들은 성공적이었지만, class imbalance가 있을 경우 작동하지 않을 수 있다.
+Clean한 데이터라도 major class의 데이터와 minor class의 데이터의 손실함수의 분포가 다르기 때문이다.
+따라서, 손실함수 분포의 차이가 class imbalance에 의한 것인지, noise label에 의한 것인지 알 수 없다.</p>
+<p>한편, 모델의 예측에는 2가지 불확실성이 있다. Epistemic uncertainty와 aleatoric uncertainty이다.
+aleatoric uncertainty은 데이터의 노이즈 때문에 발생하는 어쩔 수 없이 발생하는 불확실성이다.
+Label noise가 포함되어 있다면 aleatoric uncertainty가 발생한다.
+한편, 모델 자체의 inductive bias나 over/underfitting 등에 의해 발생하는 불확실성을 epistemic uncertainty라고 한다.
+주어진 데이터에 대한 모델의 예측값에 불확실성이 epistemic uncertainty인지 aleatoric uncertainty인지 구별할 수 있어야 한다.</p>
+<p>이 논문에서는 uncertainty를 고려하여 class imbalance에서 잘 작동하는 noise correction 방법론인 Uncertainty-aware Label Correction (ULC)을 제시한다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="rethinking-label-correction-framework">
+<h2>2. Rethinking Label Correction Framework<a class="headerlink" href="#rethinking-label-correction-framework" title="Permalink to this headline">#</a></h2>
+<p>이번 섹션에서는 기존의 label correction 방법론들이 class imbalance 세팅에서 왜 잘 작동하지 않는지 empirically 알아본다.</p>
+<section id="class-imbalance">
+<h3>2.1 Class imbalance 데이터의 손실의 분포<a class="headerlink" href="#class-imbalance" title="Permalink to this headline">#</a></h3>
+<p>논문 [3]에 따르면, 뉴럴 네트워크의 classifier층의 파라미터의 norm은 각 클래스의 데이터 개수와 상관 관계가 있다고 한다.
+즉, majority 클래스에 대한 노드로 연결된 파라미터들은 큰 스케일을 갖고, minority 클래스에 대한 노드로 연결된 파라미터들은 작은 스케일은 갖는다는 것이다.
+따라서, majority 클래스의 데이터는 큰 logit을 갖고 작은 loss를 가지며, minority 클래스의 데이터는 작은 logit을 갖고 큰 loss를 갖는다고 한다.
+즉, 클래스별로 손실의 분포가 달라지게 된다.</p>
+<figure class="align-default" id="ulc-loss-distribution">
+<a class="reference internal image-reference" href="../../_images/ulc_loss_distribution.png"><img alt="../../_images/ulc_loss_distribution.png" src="../../_images/ulc_loss_distribution.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">Inter-class loss distribution discrepancy</span><a class="headerlink" href="#ulc-loss-distribution" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>위 그림에서 사용된 실험에 대한 설명은 잠깐 미뤄두고, 그림만 해석해보자.
+전체 데이터를 클래스별로 clean 데이터와 noisy 데이터로 나눈 후 손실의 히스토그램을 그려보면 파스텔 색상의 히스토그램들이 나오게 된다.
+Majority 클래스의 noisy 데이터의 손실 분포 (노란색)와 minority 클래스의 clean 데이터의 손실 분포 (파란색)가 겹치게 된다.
+만약 클래스를 고려하지 않고 손실 값만으로 noisy 데이터를 색출하려고 하면, minor 클래스의 clean 데이터가 noisy 데이터로 간주될 수 있다.
+실제로 클래스 구별 없이 전체 데이터에 대한 손실 히스토그램에 two-component Gaussian Mixture Model (GMM)을 적합시켜 그린 것이 각각 파란색 별과 빨간색 점선 그래프로 나타난다 (individual PDF). Minority 클래스의 많은 clean 데이터들이 noisy 데이터로 분류될 것이다.</p>
+<p>참고로 위 그림에서는 CIFAR10 데이터에서 0번 클래스와 3번 클래스의 데이터가 사용됐고, 데이터의 비율은 1:10으로 샘플링되었다.
+클래스별로 50%의 데이터가 잘못된 레이블을 갖고 있다 (noisy label이 많은 감이 있다). PreAct ResNet-18라는 네트워크를 30 epochs 학습한 상황이다.</p>
+<br>
+</section>
+<section id="epistemic-uncertainty">
+<h3>2.2 Epistemic uncertainty에 의한 손실 분포<a class="headerlink" href="#epistemic-uncertainty" title="Permalink to this headline">#</a></h3>
+<p>위에서 clean 데이터와 noisy 데이터가 갖는 손실 분포가 다르다는 것을 알아보았다.
+이제 손실을 기반으로 주어진 데이터가 clean 데이터인지 noisy 데이터인지 분류하면 될 것 같지만, 한 가지 더 고려해야 할 것이 있다.
+바로 모델 자체가 갖고 있는 불확실성이다.</p>
+<figure class="align-default" id="ulc-predicted-loss-distribution">
+<a class="reference internal image-reference" href="../../_images/ulc_predicted_loss_distribution.png"><img alt="../../_images/ulc_predicted_loss_distribution.png" src="../../_images/ulc_predicted_loss_distribution.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">Effect of epistemic uncertainty</span><a class="headerlink" href="#ulc-predicted-loss-distribution" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>위의 왼쪽 그림은 90%의 noisy label을 포함한 데이터를 30 epochs 학습된 모델로 손실 값을 구하여 히스토그램을 그린 것이다.
+파스텔톤 히스토그램은 clean 및 noisy 데이터의 손실 히스토그램이다. 그리고 파란색 및 빨간색 점선이 GMM으로 노이즈 모델링을 한 것이다.
+Clean 데이터와 noisy 데이터의 손실 구간이 겹치기 때문에 적합시킨 GMM 또한 clean 영역과 noisy 영역이 많이 겹치게 된다.</p>
+<p>위의 오른쪽 그림은 이후 논문에서 epistemic uncertainty와 loss 값 모두를 사용하여 GMM을 적합한 결과이다.
+파스텔톤 세모와 네모가 데이터를 의미하고, 파란색 및 빨간색 점선이 적합한 GMM의 각 mode에 대한 결정 경계인 것 같다 (그림에 대한 상세 설명이 부족하다).</p>
+<br>
+</section>
+</section>
+<hr class="docutils" />
+<section id="method">
+<h2>3. Method<a class="headerlink" href="#method" title="Permalink to this headline">#</a></h2>
+<p>기존의 연구들은 각 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>가 clean label을 갖는지 또는 noisy label을 갖는지 분류하기 위하여 데이터의 손실 <span class="math notranslate nohighlight">\(l_i\)</span>를 사용했다. 즉, <span class="math notranslate nohighlight">\(l_i\)</span>가 주어졌을 때, 데이터의 레이블이 clean할 확률 <span class="math notranslate nohighlight">\(p(\tilde{y}_i = y_i^{*}|l_i)\)</span>을 모델링했다. <span class="math notranslate nohighlight">\(\tilde{y}_i\)</span>는 observed label으로 clean할 수도, noisy할 수도 있다. <span class="math notranslate nohighlight">\(y_i^{*}\)</span>는 true label으로 일반적으로 알 수 없다. <span class="math notranslate nohighlight">\(p(\tilde{y}_i = y_i^{*}|l_i)\)</span>은 two-component Gaussian Mixture Model (GMM) 모델링된다. Two-component GMM을 <span class="math notranslate nohighlight">\(\left\{l
+_i \right\}_{i=1}^{N}\)</span>에 대해 적합시키면 두 모드의 평균 <span class="math notranslate nohighlight">\(\mu_0\)</span>와 <span class="math notranslate nohighlight">\(\mu_1\)</span>이 나오며 (<span class="math notranslate nohighlight">\(\mu_0 \le \mu_1\)</span>), 주어진 손실에 대해 <span class="math notranslate nohighlight">\(p(\mu_0 | l_i)\)</span>가 특정 threshold <span class="math notranslate nohighlight">\(\tau\)</span>를 넘으면 clean 데이터로 간주한다.</p>
+<p>이 논문에서는 위 과정에 모델의 epistemic uncertainty <span class="math notranslate nohighlight">\(\epsilon_i\)</span>를 고려하여 clean label 확률 <span class="math notranslate nohighlight">\(p(\tilde{y}_i = y_i^{*}|l_i, \epsilon_i)\)</span>을 모델링한다. 그리고 GMM을 모든 데이터의 손실에 대해서 적합시키는 것이 각 클래스별로 나눠서 적합시키게 된다.</p>
+<br>
+<section id="id1">
+<h3>3.1 모델의 Epistemic uncertainty 추정하기<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
+<p>모델의 epistemic uncertainty를 추정하기 위해서 MC-Dropout을 사용했다고 한다.
+MC-Dropout은 dropout의 랜덤성을 이용한 것으로, 각 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 드랍아웃이 적용된 상태의 네트워크에 <span class="math notranslate nohighlight">\(T\)</span>번 입력시킨다.
+드랍아웃이 적용된 상태이기 때문에 똑같은 데이터를 입력하더라도 매번 다른 결과가 나올 것이다.
+<span class="math notranslate nohighlight">\(T\)</span>개의 예측을 평균 내린 것을 integrated prediction <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>으로 사용한다. 즉,</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_i = \frac{1}{T} \sum_{t=1}^{T} \operatorname{softmax}(f(x_i, W_t)),\]</div>
+<br>
+<p>이때, <span class="math notranslate nohighlight">\(W_t\)</span>는 입력할 때마다 드랍아웃이 적용된 파라미터라고 생각하면 된다. 참고로 실험에서 <span class="math notranslate nohighlight">\(T=10\)</span>이고, 드랍아웃 비율은 <span class="math notranslate nohighlight">\(0.3\)</span>이다. 이렇게 나온 <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>의 엔트로피를 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>에 대한 모델의 epistemic uncertainty <span class="math notranslate nohighlight">\(\epsilon_i\)</span>로 정의했다.</p>
+<br>
+</section>
+<section id="epistemic-uncertainty-clean-noisy">
+<h3>3.2 손실과 epistemic uncertainty를 고려한 clean/noisy 데이터 분류<a class="headerlink" href="#epistemic-uncertainty-clean-noisy" title="Permalink to this headline">#</a></h3>
+<p>데이터 <span class="math notranslate nohighlight">\(x_i\)</span>마다 손실 <span class="math notranslate nohighlight">\(l_i\)</span>와 epistemic uncertainty <span class="math notranslate nohighlight">\(\epsilon_i\)</span>를 구하게 되면, 이제 이를 바탕으로 주어진 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>가 clean label을 가질 확률 <span class="math notranslate nohighlight">\(p(\tilde{y}_i = y_i^{*}|l_i, \epsilon_i)\)</span>을 구해야 한다. 이때, <span class="math notranslate nohighlight">\(l_i\)</span>와 <span class="math notranslate nohighlight">\(\epsilon_i\)</span>가 어떻게 연관되어 있는지 알아내기 어렵기 때문에 논문에서는 독립적이라고 가정했다. 그리고 <a class="reference internal" href="#ulc-predicted-loss-distribution"><span class="std std-numref">Fig. 2</span></a>의 (b)처럼 epistemic uncertainty와 <span class="math notranslate nohighlight">\(p(\tilde{y}_i = y_i^{*}|l_i, \epsilon_i)\)</span>가 negative correlate 되어 있는 것을 실험적으로 알 수 있었다. 이 논문에서는 이 2가지 가정으로 다음과 같이 확률을 모델링했다.</p>
+<div class="math notranslate nohighlight">
+\[\omega_i = p(\tilde{y}_i = y_i^{*}|l_i, \epsilon_i) = (1-\epsilon_i)^r p(\tilde{y}_i = y_i^{*}|l_i)^{1-r},\]</div>
+<br>
+<p>이때, <span class="math notranslate nohighlight">\(p(\tilde{y}_i = y_i^{*}|l_i)\)</span>는 위에서 설명했던 것처럼 two-component GMM이되, 각 클래스별로 적합된 것이다. <span class="math notranslate nohighlight">\(r\)</span>은 하이퍼파라미터로서 실험에서는 <span class="math notranslate nohighlight">\(0.1\)</span>을 사용했다. 이렇게 구한 <span class="math notranslate nohighlight">\(\omega_i\)</span>에 대해서 특정 threshold <span class="math notranslate nohighlight">\(\tau\)</span>를 기준을 넘으면 clean 데이터로 간주하였다. 실험에서는 <span class="math notranslate nohighlight">\(\tau=0.5\)</span> 또는 <span class="math notranslate nohighlight">\(\tau=0.6\)</span>을 사용했다.</p>
+<br>
+</section>
+<section id="clean-noisy">
+<h3>3.3 Clean / noisy 데이터 분류 이후 과정<a class="headerlink" href="#clean-noisy" title="Permalink to this headline">#</a></h3>
+<p>주어진 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>가 <span class="math notranslate nohighlight">\(\omega_i\)</span>를 기준으로 clean 데이터로 분류되면, 다음과 같이 label을 수정해준다. 레이블로 0 또는 1 같은 극단적인 값을 사용하기 보다는 label smoothing처럼 소수를 사용하여 robust하게 만들기 위함인 것 같다.</p>
+<div class="math notranslate nohighlight">
+\[y_i = \omega_i \tilde{y_i} + (1-\omega_i) \hat{y}_i,\]</div>
+<br>
+<p>이때, <span class="math notranslate nohighlight">\(\tilde{y_i}\)</span>는 observed label이고, <span class="math notranslate nohighlight">\(\hat{y}_i\)</span>은 MC Dropout으로 구한 integrated prediction이다. 그리고 이 데이터는 clean 훈련 데이터셋 <span class="math notranslate nohighlight">\(\tilde{\mathcal{X}}\)</span>에 저장한다</p>
+<p>한편, 주어진 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>가 <span class="math notranslate nohighlight">\(\omega_i\)</span>를 기준으로 noisy 데이터로 분류되면, 해당 데이터의 레이블을 아예 없애 버리고 noisy unlabeled 데이터셋 <span class="math notranslate nohighlight">\(\tilde{\mathcal{U}}\)</span> 모아 놓는다.</p>
+<br>
+</section>
+<section id="aleatoric-uncertainty-aware-learning">
+<h3>3.4 Aleatoric Uncertainty-aware Learning<a class="headerlink" href="#aleatoric-uncertainty-aware-learning" title="Permalink to this headline">#</a></h3>
+<p>이 논문에서는 위 과정을 거치고서도 남아 있는 residual noise를 걱정한다. 이 residual noise 때문에 발생한 불확실성을 aleatoric uncertainty로 보고, 이를 완화시킨다. 완화시키는 법은 간단하다. 레이블에 노이즈가 있을 것이기 때문에, 모델의 출력에 노이즈를 추가하여 여러 출력물은 만들고 이를 평균하여 최종 예측을 만들어내는 것이다. 아까 봤던 MC Dropout과 비슷하다.</p>
+<div class="math notranslate nohighlight">
+\[\hat{y}_i^{(t)} = \operatorname{softmax} \left( (I + \delta) f_W(x_i) + \delta^{x_i} \right), \; \text{for } t=1,2,\ldots,T \]</div>
+<br>
+<p><span class="math notranslate nohighlight">\(\delta\)</span>와 <span class="math notranslate nohighlight">\(\delta^{x_i}\)</span>는 각각 정규분포 <span class="math notranslate nohighlight">\(\mathcal{N}(0, \sigma)\)</span>와 <span class="math notranslate nohighlight">\(\mathcal{N}(0, \sigma^{x_i})\)</span>에서 샘플링되며, <span class="math notranslate nohighlight">\(\sigma\)</span>와 <span class="math notranslate nohighlight">\(\sigma^{x_i}\)</span> 역시 학습되는 파라미터이다. <span class="math notranslate nohighlight">\(\delta\)</span>와 <span class="math notranslate nohighlight">\(\delta^{x_i}\)</span>를 <span class="math notranslate nohighlight">\(T\)</span>번 샘플링하여 <span class="math notranslate nohighlight">\(T\)</span>개의 corrupted predictions을 만들고, 이를 평균애서 최종 결과물로 사용한다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{l}_x(W)=-\frac{1}{|\hat{\mathcal{X}}|}\sum_{x_i \in \hat{\mathcal{X}}} y_i^\top \log \frac{1}{T} \sum_{t=1}^{T} \hat{y_i}^{(t)}.
+\]</div>
+<br>
+</section>
+<section id="id2">
+<h3>3.5 알고리즘<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
+<p>위의 내용을 바탕으로 이 논문은 다음 2가지를 반복한다.</p>
+<ol class="simple">
+<li><p>각 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>의 <span class="math notranslate nohighlight">\(\omega_i\)</span>를 사용하여 clean dataset <span class="math notranslate nohighlight">\(\hat{\mathcal{X}}\)</span>과 unlabeled dataset <span class="math notranslate nohighlight">\(\hat{\mathcal{U}}\)</span>로 나눈다.</p></li>
+<li><p>Semi-supervised learning을 한다.</p>
+<ul class="simple">
+<li><p>손실함수 <span class="math notranslate nohighlight">\(\mathcal{L}=\mathcal{L}_x + \lambda_u \mathcal{L}_u,\)</span> where</p></li>
+<li><p>지도학습 손실함수 <span class="math notranslate nohighlight">\(\mathcal{L}_x=-\frac{1}{| \hat{\mathcal{X}}|}\sum\limits_{(x_i, y_i) \in \hat{\mathcal{X}}}y_i^\top \log \frac{1}{T}\left( \sum\limits_{t=1}^{T} \hat{y}_i^{(t)} \right),\)</span></p></li>
+<li><p>SSL 손실함수 <span class="math notranslate nohighlight">\(\mathcal{L}_u=\frac{1}{\hat{\mathcal{U}}}\sum\limits_{(x_i, y_i) \in \hat{\mathcal{U}}}\lVert y_i - \frac{1}{T} \sum\limits_{t=1}^{T}\hat{y}_i^{(t)}\rVert^2_2.\)</span></p></li>
+</ul>
+</li>
+</ol>
+<p>사실 SSL 손실함수에서 <span class="math notranslate nohighlight">\(y_i\)</span>가 어떻게 결정되었는지는 본 논문에는 나와 있지 않은데, DevideMix라는 논문을 따라서 만들어진 것으로 생각된다.</p>
+<br>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h2>4. 참고문헌<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>[1] Huang, Yingsong, Bing Bai, Shengwei Zhao, Kun Bai, and Fei Wang. “Uncertainty-Aware Learning against Label Noise on Imbalanced Datasets.” Proceedings of the AAAI Conference on Artificial Intelligence 36, no. 6 (June 28, 2022): 6960–69. <a class="reference external" href="https://doi.org/10.1609/aaai.v36i6.20654">https://doi.org/10.1609/aaai.v36i6.20654</a>.</p>
+<p>[2] Arpit, D.; Jastrzebski, S.; Ballas, N.; Krueger, D.; Bengio, E.; Kanwal, M. S.; Maharaj, T.; Fischer, A.; Courville, A. C.; Bengio, Y.; and Lacoste-Julien, S. 2017. A Closer Look at Memorization in Deep Networks. In Proceedings of the 34th International Conference on Machine Learning (ICML 2017), 233–242.</p>
+<p>[3] Kang, B.; Xie, S. Rohrbach, M.; Yan, Z.; Gordo, A.; Feng, J.; and Kalantidis, Y. 2020. Decoupling Representation and Classifier for Long-Tailed Recognition. In The 8th International Conference on Learning Representations (ICLR 2020)</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/core"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="beyond_batchnorm.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Beyond BatchNorm</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="230425_encouraging_loss.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Encouraging Loss</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

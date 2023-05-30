@@ -1,0 +1,611 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Encouraging Loss &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Elementary Folklore Construction" href="230523_folklore_constructions.html" />
+    <link rel="prev" title="Uncertainty-aware Label Correction" href="230420_ulc.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/core/230425_encouraging_loss.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/core/230425_encouraging_loss.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploring-theoretical-issues-of-ce-loss">
+   2. Exploring Theoretical Issues of CE Loss
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#method">
+   3. Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4. 실험 결과
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   5. 참고문헌
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Encouraging Loss</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   1. Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#exploring-theoretical-issues-of-ce-loss">
+   2. Exploring Theoretical Issues of CE Loss
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#method">
+   3. Method
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   4. 실험 결과
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   5. 참고문헌
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="encouraging-loss">
+<h1>Encouraging Loss<a class="headerlink" href="#encouraging-loss" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>제목: Well-Classified Examples Are Underestimated in Classification with Deep Neural Networks</p></li>
+<li><p>저자:  Zhao, Guangxiang, Wenkai Yang, Xuancheng Ren, Lei Li, Yunfang Wu, Xu Sun, <em>Peking University</em></p></li>
+<li><p>연도: 2022년</p></li>
+<li><p>학술대회: AAAI</p></li>
+<li><p>링크: <a class="reference external" href="https://arxiv.org/abs/2110.06537">https://arxiv.org/abs/2110.06537</a></p></li>
+<li><p>키워드: Cross-entropy loss</p></li>
+</ul>
+<hr class="docutils" />
+<section id="introduction">
+<h2>1. Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
+<p>분류 문제를 풀 때 떠오르는 흔한 상식 중 하나는 다음과 같다.</p>
+<ul class="simple">
+<li><p>이미 잘 분류된 데이터보다 잘 분류되지 않은 데이터를 더 학습해야 한다.</p></li>
+<li><p>결정 경계에서 먼 데이터보다 가까운 데이터를 더 학습해야 한다.</p></li>
+</ul>
+<p>하지만 이 논문에서는 cross-entropy loss를 사용할 경우, 이미 잘 분류된 데이터, 더 정확히는 모델이 높은 confidence로 예측하는 데이터의 손실 함수에 기여하는 정도가 점점 줄어드는 것을 역전파 관점에서 보인다. 그리고 이를 해결하기 위해 이미 잘 분류된 데이터에 보너스를 부여하는 Encouraging Loss (EL)은 제안한다.</p>
+<p>참고로, 잘 분류된 데이터와 모델 학습 사이의 관계를 역전파 관점 외에 다른 두 관점으로도 설명을 하지만, 이 리뷰에서는 내게 익숙한 역전파 관점에서만 정리해본다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="exploring-theoretical-issues-of-ce-loss">
+<h2>2. Exploring Theoretical Issues of CE Loss<a class="headerlink" href="#exploring-theoretical-issues-of-ce-loss" title="Permalink to this headline">#</a></h2>
+<p>이 논문에서는 우리에게 아주 익숙한 분류 모델을 다룬다. 데이터 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>에 대해서 뉴럴 네트워크가 출력 logit을 <span class="math notranslate nohighlight">\(f_\theta(\mathbf{x})\)</span>라고 표기한다. 그리고 그 중 <span class="math notranslate nohighlight">\(y\)</span>번 째 원소를 <span class="math notranslate nohighlight">\(f_\theta(\mathbf{x})[y]\)</span>로 표기한다. Logit에 softmax 함수를 씌워서 만든 확률 분포를</p>
+<div class="math notranslate nohighlight">
+\[p_\theta(\mathbf{x})[y]=\operatorname{softmax}(f_\theta(\mathbf{x}))[y]=\frac{\exp (f_\theta(\mathbf{x})[y])}{\sum_{y'}\exp (f_\theta(\mathbf{x})[y'])},\]</div>
+<p>으로 표기한다.</p>
+<br>
+<p><span class="math notranslate nohighlight">\(p_{\theta}(\mathbf{x})[y]\)</span>를 <span class="math notranslate nohighlight">\(f_\theta(\mathbf{x})[y]\)</span>에 대해서 그레디언트를 구하면 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \,p_{\theta}(\mathbf{x})[y]}{\partial \, f_{\theta}(\mathbf{x})[y]} = p_{\theta}(\mathbf{x})[y] ( 1- p_{\theta}(\mathbf{x})[y]).\]</div>
+<br>
+<p>한편, 두 이산 확률 분포 <span class="math notranslate nohighlight">\(p\)</span>와 <span class="math notranslate nohighlight">\(q\)</span>의 cross-entropy는 다음과 같이 정의된다.</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{CE}(p, q):=\sum_{x \in \Omega} p(x)\log q(x).\]</div>
+<p>분류 모델 훈련시, 확률 분포 <span class="math notranslate nohighlight">\(p\)</span>는 정답 클래스에만 확률 1이고 나머지는 확률이 0이다. <span class="math notranslate nohighlight">\(q\)</span>에 모델이 출력한 확률 분포 <span class="math notranslate nohighlight">\(p_\theta\)</span>을 대입해서 간소화하면 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\operatorname{CE}(p, q):= \log p_\theta(\mathbf{x})[y].\]</div>
+<br>
+<p>Cross-entropy에 마이너스를 붙인 손실 함수를 최적화하여 구한 파라미터는 negative log-likelihood estimation과 동일하다.</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{L}_{\text{NLL}} := - \log p_\theta (y | \mathcal{x})= \log p_\theta(\mathbf{x})[y].\]</div>
+<br>
+<p><span class="math notranslate nohighlight">\(\mathcal{L}_{\text{NLL}}\)</span>을 <span class="math notranslate nohighlight">\(p_\theta(\mathbf{x})[y]\)</span>에 대해서 미분하면 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \, \mathcal{L}_{\text{NLL}}}{\partial \, p_{\theta}(\mathbf{x})[y]} = -\frac{1}{p_{\theta}(\mathbf{x})[y]}.\]</div>
+<br>
+<p>지금부터 별다른 언급이 있지 않으면 데이터 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>에 대한 정답 레이블 <span class="math notranslate nohighlight">\(y\)</span>에 대해 모델이 출력한 확률 <span class="math notranslate nohighlight">\(p_{\theta}(\mathbf{x})[y]\)</span>을 간단히 <span class="math notranslate nohighlight">\(p\)</span>라고 표기할 것이다. 이 논문에서는 <span class="math notranslate nohighlight">\(\partial \mathcal{N}/\partial p=-\frac{1}{p}\)</span>를 <strong>steepness of loss</strong>라고 정의하였다. <span class="math notranslate nohighlight">\(p\)</span>가 작을수록 손실함수에 대한 미분값이 크기 때문에 잘못 예측된 데이터일수록 손실 함수에 더 크게 관여하게 된다.</p>
+<br>
+<p>한편, 손실함수의 파라미터 <span class="math notranslate nohighlight">\(\theta\)</span>에 대한 그레디언트는 연쇄 법칙에 의하여 다음과 같이 계산된다.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}_{\text{NLL}}}{\partial \theta}=\frac{\partial \mathcal{L}_{\text{NLL}}}{\partial p}\frac{\partial p}{\partial f_\theta (\mathbf{x})}\frac{\partial f_\theta (\mathbf{x})}{\partial\theta}=(p-1) \frac{\partial f_\theta (\mathbf{x})}{\partial\theta}.\]</div>
+<p><span class="math notranslate nohighlight">\(p\)</span>값이 클수록, 즉 모델이 확신을 갖고 예측할수록, 파라미터에 대한 그레디언트가 0이 된다. 따라서 잘 분류된 데이터일수록 모델 파라미터 업데이트에 기여하지 않게 된다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="method">
+<h2>3. Method<a class="headerlink" href="#method" title="Permalink to this headline">#</a></h2>
+<p>위에서 관찰한 내용을 바탕으로 이 논문에서는 잘 분류된 데이터에 보너스 점수를 주는 Encouraging Loss (EL)을 제시한다. 간단하다.</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{N}_{\text{EL}}=- \log p_{\theta}(\mathbf{x})[y] + \log (1-p_{\theta}(\mathbf{x})[y]).\]</div>
+<br>
+<p><span class="math notranslate nohighlight">\(\log (1-p_{\theta}(\mathbf{x})[y])\)</span> 항을 보너스 항이라고 부른다. <span class="math notranslate nohighlight">\(p_{\theta}(\mathbf{x})[y]\)</span>가 1에 가까울수록 보너스 항이 <span class="math notranslate nohighlight">\(\log 0\)</span>에 가까워져 손실함수가 훨씬 감소하게 된다. 개인적인 생각으로는 이 손실함수를 사용하면 모델의 예측값이 훨씬 극단적으로 1에 가까워질 것 같다. Overconfident한 모델로 수렴할 수 있지 않을까 싶다. <span class="math notranslate nohighlight">\(p\)</span> 값에 따른 EL 손실의 양상을 나타내면 다음 그림과 같다.</p>
+<figure class="align-default" id="el-el">
+<a class="reference internal image-reference" href="../../_images/230425_el_el.png"><img alt="../../_images/230425_el_el.png" src="../../_images/230425_el_el.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">.</span><a class="headerlink" href="#el-el" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<br>
+<p>이 손실함수의 좋은 점이 파라미터에 대한 그레디언트가 다음과 같이 더 이상 <span class="math notranslate nohighlight">\(p\)</span>에 의존적이지 않게 된다. 따라서 데이터를 얼마나 확신을 갖고 예측했느냐에 상관 없이 모델 파라미터 업데이트에 기여할 수 있게 된다.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial \mathcal{L}_{\text{EL}}}{\partial \theta}=-1 \cdot \frac{\partial f_\theta (\mathbf{x})}{\partial\theta}.\]</div>
+<br>
+<p>한편, <a class="reference internal" href="#el-el"><span class="std std-numref">Fig. 3</span></a>의 두 번째 그림이 보여주는 것처럼 <span class="math notranslate nohighlight">\(p\)</span>가 1에 가까워질수록 보너스 항이 음의 무한대에 가까워지게 된다. 이를 방지하기 위하여 기존 보너스 항의 완화된 형태인 conservative bonus 항도 제안하고 있다. Conservative bonus 항은 <span class="math notranslate nohighlight">\(p\)</span>의 값이 정해진 <span class="math notranslate nohighlight">\(LE\)</span>보다 작을 경우 기존 <span class="math notranslate nohighlight">\(\log (1-p)\)</span> 보너스를 갖고,  <span class="math notranslate nohighlight">\(LE\)</span>보다 클경우 <span class="math notranslate nohighlight">\(p=LE\)</span>에서의 <span class="math notranslate nohighlight">\(\log (1-p)\)</span>의 접선에 해당하는 보너스를 갖게 된다. 참고로 LE는 Log Ends, 즉 로그가 끝나는 점이라는 의미이다. LE 값에 따른 conservative bonus의 양상은 다음과 같다.</p>
+<figure class="align-default" id="el-conservative">
+<a class="reference internal image-reference" href="../../_images/230425_el_conservative.png"><img alt="../../_images/230425_el_conservative.png" src="../../_images/230425_el_conservative.png" style="width: 500px;" /></a>
+</figure>
+<br>
+<p>Conservative bonus를 포함한 손실 함수 Conservative Encouraging Loss (CEL)를 굳이 굳이 적어보면 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathcal{N}_{\text{CEL}}= 
+\begin{cases}
+-\log p +  \log (1-p) &amp; p \le LE. \\
+-\log p  - \frac{p - LE}{1 - LE} + \log(1 - LE) &amp; p &gt; LE.
+\end{cases}\end{split}\]</div>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id1">
+<h2>4. 실험 결과<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>수행한 실험은 다음과 같다.</p>
+<ul class="simple">
+<li><p><strong>Image Recognition</strong> CIFAR10, CIFAR100, ImageNet을 ResNet50과 EfficientNet-B0으로 훈련</p></li>
+<li><p><strong>Graph Classification</strong> PROTEINS, NCI1을 GCN으로 훈련</p></li>
+<li><p><strong>Machin Translation</strong> De-En, Fr-En을 Transformer로 훈련</p></li>
+</ul>
+<p>다양한 LE 값에 대해서 실험을 진행하였으며, 각 테스크별 가장 좋은 LE 값에 대한 결과는 다음과 같다.
+베이스라인 모델들이 제공하는 하이퍼파라미터와 똑같은 하이퍼파라미터를 사용했는데도, 성능 향상이 꽤 있는 편이다.</p>
+<figure class="align-default" id="el-result1">
+<a class="reference internal image-reference" href="../../_images/230425_el_result1.png"><img alt="../../_images/230425_el_result1.png" src="../../_images/230425_el_result1.png" style="width: 400px;" /></a>
+</figure>
+<br>
+<p>다양한 LE에 대해서 수행한 실험 결과는 다음과 같다.</p>
+<figure class="align-default" id="el-result2">
+<img alt="../../_images/230425_el_result2.png" src="../../_images/230425_el_result2.png" />
+</figure>
+<br>
+<p>CE의 그레디언트에 <span class="math notranslate nohighlight">\((p-1)\)</span>이 포함되어 있기 때문에 학습이 진행될수록 그레디언트의 크기가 작아져서, learning rate가 감소하는 효과가 있다. 하지마 EL는 그레디언트에 <span class="math notranslate nohighlight">\(p\)</span>텀이 제거되어서 CE와 비교했을 때 더 큰 그레디언트 크기를 갖는다. 따라서 베이스라인의 learning rate보다 더 작은 learning rate를 사용하는 것이 좋고, LE가 1이 아니라 0.5와 0.75일 때 더 잘 작동하는 이유라고 한다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h2>5. 참고문헌<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>[1] Zhao, Guangxiang, Wenkai Yang, Xuancheng Ren, Lei Li, Yunfang Wu, and Xu Sun. “Well-Classified Examples Are Underestimated in Classification with Deep Neural Networks.” Proceedings of the AAAI Conference on Artificial Intelligence 36, no. 8 (June 28, 2022): 9180–89. <a class="reference external" href="https://doi.org/10.1609/aaai.v36i8.20904">https://doi.org/10.1609/aaai.v36i8.20904</a>.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/core"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="230420_ulc.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Uncertainty-aware Label Correction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="230523_folklore_constructions.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Elementary Folklore Construction</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
