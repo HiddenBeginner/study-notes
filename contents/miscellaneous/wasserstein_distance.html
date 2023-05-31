@@ -123,22 +123,22 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+  <a class="reference internal" href="../core/beyond_batchnorm.html">
    Beyond BatchNorm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230420_ulc.html">
+  <a class="reference internal" href="../core/230420_ulc.html">
    Uncertainty-aware Label Correction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230425_encouraging_loss.html">
+  <a class="reference internal" href="../core/230425_encouraging_loss.html">
    Encouraging Loss
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230523_folklore_constructions.html">
+  <a class="reference internal" href="../core/230523_folklore_constructions.html">
    Elementary Folklore Construction
   </a>
  </li>
@@ -162,6 +162,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="../rl_papers/DreamerV1.html">
    Dreamer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/230530_CQL.html">
+   Conservative Q-Learning (CQL)
   </a>
  </li>
 </ul>
@@ -522,7 +527,7 @@ W_p(\mu, \nu) =  \left( \inf\limits_{\gamma \in \Gamma (\mu, \nu)} \displaystyle
 <p class="admonition-title"><strong><span class="math notranslate nohighlight">\(p\)</span>-Wasserstein distance</strong></p>
 <p>For any two real-valued random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, with cumulative distribution functions <span class="math notranslate nohighlight">\(F_X\)</span> and <span class="math notranslate nohighlight">\(F_Y\)</span>, the Wasserstein distance between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is given by</p>
 <div class="math notranslate nohighlight" id="equation-analytic-solution">
-<span class="eqno">(1)<a class="headerlink" href="#equation-analytic-solution" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(3)<a class="headerlink" href="#equation-analytic-solution" title="Permalink to this equation">#</a></span>\[
     W_p(X, Y) = \left(\displaystyle\int_0^1 |F_X^{-1}(q) - F_Y^{-1}(q)| \, dq\right)^{1/p},
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(F_X^{-1}\)</span> and <span class="math notranslate nohighlight">\(F_Y^{-1}\)</span> are the quantile functions (inverse CDFs).</p>
@@ -543,8 +548,8 @@ W_p(\mu, \nu) =  \left( \inf\limits_{\gamma \in \Gamma (\mu, \nu)} \displaystyle
 \[F_X^{-1}(p)=\inf \left\{ x \in \mathbb{R}: F_X(x) \ge p \right\}.\]</div>
 <p>쉽게 말하면, CDF 값이 유지되는 구간에서는 가장 맨처음 값을 역함수 값으로 설정하겠다는 것이다.</p>
 </div>
-<p>Wasserstein distance 정의의 analytic solution이 식 <a class="reference internal" href="#equation-analytic-solution">(1)</a>이 되는 것에 대한 증명은 이 글 가장 마지막에 남겨 놓을 예정이다.</p>
-<p>식 <a class="reference internal" href="#equation-analytic-solution">(1)</a> 덕분에 1차원 데이터에 대해서는 CDF를 찾아서 적분만 해주면 되게 된다…! 문제가 훨씬 쉬워졌지만,
+<p>Wasserstein distance 정의의 analytic solution이 식 <a class="reference internal" href="#equation-analytic-solution">(3)</a>이 되는 것에 대한 증명은 이 글 가장 마지막에 남겨 놓을 예정이다.</p>
+<p>식 <a class="reference internal" href="#equation-analytic-solution">(3)</a> 덕분에 1차원 데이터에 대해서는 CDF를 찾아서 적분만 해주면 되게 된다…! 문제가 훨씬 쉬워졌지만,
 여전히 실제 데이터에 대해 Wasserstein distance를 계산하기에는 다음 2가지 문제점이 있다.</p>
 <ul class="simple">
 <li><p>우리가 갖고 있는 것은 확률 분포가 아니라 데이터인데 어떻게 CDF를 찾아야 할까?</p></li>
@@ -822,7 +827,7 @@ CDF는 정의역의 모든 값에 대해 정의가 되는 반면 우리는 각 �
 기회가 된다면 고차원에 대해서도 정리를 해보도록 하겠다.</p>
 </section>
 <section id="id2">
-<h2>식 <a class="reference internal" href="#equation-analytic-solution">(1)</a> 증명<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<h2>식 <a class="reference internal" href="#equation-analytic-solution">(3)</a> 증명<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
 <p>Coming soon!</p>
 <hr class="docutils" />
 <br></section>

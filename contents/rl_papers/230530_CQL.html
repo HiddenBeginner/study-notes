@@ -350,24 +350,46 @@ title="Print to PDF"
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
-   풀고자 하는 문제
+   1. 풀고자 하는 문제
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#offline-rl-distribution-shift">
-     Offline RL과 distribution shift
+     1.1 Offline RL과 distribution shift
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#distribution-shift">
-     Distribution shift의 문제점 알아보기
+     1.2 Distribution shift의 문제점 알아보기
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#conservative-q-learning">
-   Conservative Q-Learning
+   2. Conservative Q-Learning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conservative-off-policy-evaluation">
+     2.1 Conservative Off-Policy Evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conservative-q-learning-for-offline-rl">
+     2.2 Conservative Q-Learning for Offline RL
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experimental-evaluation">
+   Experimental Evaluation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   마무리하며
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -396,24 +418,46 @@ title="Print to PDF"
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#id1">
-   풀고자 하는 문제
+   1. 풀고자 하는 문제
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#offline-rl-distribution-shift">
-     Offline RL과 distribution shift
+     1.1 Offline RL과 distribution shift
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#distribution-shift">
-     Distribution shift의 문제점 알아보기
+     1.2 Distribution shift의 문제점 알아보기
     </a>
    </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#conservative-q-learning">
-   Conservative Q-Learning
+   2. Conservative Q-Learning
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conservative-off-policy-evaluation">
+     2.1 Conservative Off-Policy Evaluation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conservative-q-learning-for-offline-rl">
+     2.2 Conservative Q-Learning for Offline RL
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experimental-evaluation">
+   Experimental Evaluation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   마무리하며
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -443,9 +487,9 @@ title="Print to PDF"
 </ul>
 <hr class="docutils" />
 <section id="id1">
-<h2>풀고자 하는 문제<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<h2>1. 풀고자 하는 문제<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
 <section id="offline-rl-distribution-shift">
-<h3>Offline RL과 distribution shift<a class="headerlink" href="#offline-rl-distribution-shift" title="Permalink to this headline">#</a></h3>
+<h3>1.1 Offline RL과 distribution shift<a class="headerlink" href="#offline-rl-distribution-shift" title="Permalink to this headline">#</a></h3>
 <p>환경과 상호작용하며 에이전트를 학습시키는 기존 강화학습과 다르게, offline RL은 환경과 상호작용할 수 없으며, 미리 수집된 transitions 데이터셋을 사용하여 에이전트를 학습시킨다.
 미리 수집된 데이터셋 <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>는 어떤 행동 정책 <span class="math notranslate nohighlight">\(\pi_\beta\)</span>에 의해 만들어졌다고 가정하며, 최소 그 행동 정책과 비슷한 수준의 정책 또는 더 좋은 정책 <span class="math notranslate nohighlight">\(\pi\)</span>를 찾는 것을 목표로 한다.</p>
 <p>이때,</p>
@@ -457,17 +501,19 @@ title="Print to PDF"
 <br>
 </section>
 <section id="distribution-shift">
-<h3>Distribution shift의 문제점 알아보기<a class="headerlink" href="#distribution-shift" title="Permalink to this headline">#</a></h3>
+<h3>1.2 Distribution shift의 문제점 알아보기<a class="headerlink" href="#distribution-shift" title="Permalink to this headline">#</a></h3>
 <p>Distribution shift가 Q-learning에 미치는 영향을 알아보기 위해 먼저 Bellman operator를 떠올려보자.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{B}Q^{\pi}(\mathbf{s, \mathbf{a}}) = r(\mathbf{s, \mathbf{a}}) + \gamma \mathbb{E}_{s' \sim p(\cdot|\mathbf{s}, \mathbf{a}), a' \in \pi(\cdot|\mathbf{s'})}\left[ Q^\pi(\mathbf{s'}, \mathbf{a'})\right].
+\begin{equation}
+\mathcal{B}^\pi Q^{\pi}(\mathbf{s, \mathbf{a}}) = r(\mathbf{s, \mathbf{a}}) + \gamma \mathbb{E}_{s' \sim p(\cdot|\mathbf{s}, \mathbf{a}), a' \in \pi(\cdot|\mathbf{s'})}\left[ Q^\pi(\mathbf{s'}, \mathbf{a'})\right].
+\end{equation}
 \]</div>
 <br>
 <p>일반적으로 reward function <span class="math notranslate nohighlight">\(r\)</span>과 transition probability distribution <span class="math notranslate nohighlight">\(p\)</span>를 알 수 없기 때문에, buffer <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>에 있는 transition <span class="math notranslate nohighlight">\((\mathbf{s}, \mathbf{a}, r, \mathbf{s}')\)</span>을 사용하여 행동가치함수를 학습한다. Empirical Bellman operator <span class="math notranslate nohighlight">\(\hat{\mathcal{B}}\)</span>는 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{\mathcal{B}}Q^{\pi}(\mathbf{s, \mathbf{a}}) = r + \gamma \mathbb{E}_{\mathbf{a}' \sim \hat{\pi}(\cdot | \mathbf{s}')}\left[ Q(\mathbf{s}', \mathbf{a}')\right] \; \text{ for } (\mathbf{s}, \mathbf{a}, r, \mathbf{s}') \in \mathcal{D}.
+\hat{\mathcal{B}}^\pi Q^{\pi}(\mathbf{s, \mathbf{a}}) = r + \gamma \mathbb{E}_{\mathbf{a}' \sim \hat{\pi}(\cdot | \mathbf{s}')}\left[ Q(\mathbf{s}', \mathbf{a}')\right] \; \text{ for } (\mathbf{s}, \mathbf{a}, r, \mathbf{s}') \in \mathcal{D}.
 \]</div>
 <br>
 <p>보상 <span class="math notranslate nohighlight">\(r\)</span>과 다음 상태 <span class="math notranslate nohighlight">\(\mathbf{s}'\)</span>이 환경 모델로부터 샘플링되는 것이 아니라 그냥 데이터를 대입하는 것이다. Empirical Bellman operator를 바탕으로 TD 에러를 최소화하여 policy evaluation을 하는 것을 식으로 적어보면 다음과 같다.</p>
@@ -489,13 +535,79 @@ title="Print to PDF"
 </section>
 <hr class="docutils" />
 <section id="conservative-q-learning">
-<h2>Conservative Q-Learning<a class="headerlink" href="#conservative-q-learning" title="Permalink to this headline">#</a></h2>
-<p>Coming soon!</p>
+<h2>2. Conservative Q-Learning<a class="headerlink" href="#conservative-q-learning" title="Permalink to this headline">#</a></h2>
+<section id="conservative-off-policy-evaluation">
+<span id="sec-policy-evaluation"></span><h3>2.1 Conservative Off-Policy Evaluation<a class="headerlink" href="#conservative-off-policy-evaluation" title="Permalink to this headline">#</a></h3>
+<p>Function approximation을 사용하여 행동가치함수를 학습 중일 때, 그냥 단순하게 <span class="math notranslate nohighlight">\(Q(\mathbf{s}, \mathbf{a})\)</span> 값이 낮아지는 방향으로 업데이트를 하면 overestimation이 완화될 것이다. 따라서 다음과 같이 Q-network 업데이트 식에 <span class="math notranslate nohighlight">\(Q(\mathbf{s}, \mathbf{a})\)</span> 최소화하는 텀을 추가할 수 있을 것이다.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{Q}^{k+1} \leftarrow \operatorname*{argmin}_{Q} \left(\textcolor{blue}{ \alpha \mathbb{E}_{\mathbf{s}\sim\mathcal{D}, \mathbf{a}\sim\mu(\cdot|\mathbf{s})}\left[ Q(\mathbf{s}, \mathbf{a}) \right]} + \frac{1}{2} \mathbb{E}_{\mathbf{s}, \mathbf{a} \sim \mathcal{D}} \left[ \left( Q(\mathbf{s}, \mathbf{a}) - \hat{\mathcal{B}}^{\pi}\hat{Q}^k(\mathbf{s}, \mathbf{a}) \right)^2\right] \right).
+\]</div>
+<br>
+<p>기존의 TD 에러텀에 파란색으로 표시된 부분이 추가된 것 뿐이다. 여기서 <span class="math notranslate nohighlight">\(\mu(\cdot | \mathbf{s})\)</span>는 어떤 특정 분포이다. 만약 OOD 행동에 대해서만 Q값을 최소화하고 싶다면, 상태 <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>에서 ood 행동에만 확률을 부여하는 확률분포 <span class="math notranslate nohighlight">\(\mu(\cdot | \mathbf{s})\)</span>를 구해서 사용하면 된다. 물론 그런 확률분포는 알기 어려울 것이다. 이후에 또 말하겠지만, <span class="math notranslate nohighlight">\(\mu(\mathbf{a}|\mathbf{s}) \propto \exp(Q(\mathbf{s}, \mathbf{a}))\)</span>되 게 설정하게 된다.</p>
+<p>위 업데이트식으로 찾은 행동가치함수는 모든 <span class="math notranslate nohighlight">\((\mathbf{s}, \mathbf{a})\)</span>에 대해서 실제 행동가치함수의 lower bound가 된다는 것이 논문에 증명되어 있다 (Theorem 3.1).</p>
+<br>
+<p>그런데 위 업데이트식은 조금 억울하다. 그냥 <span class="math notranslate nohighlight">\(Q(\mathbf{s}, \mathbf{a})\)</span>의 크기를 막 줄여 버리는 느낌이다. Offline RL에서 더욱 문제가 되는 overestimation은 데이터셋에 없는 상태-행동 순서쌍에 대한 overestimation이다. 따라서, 데이터셋에 있는 상태-행동 순서쌍에 대한 행동가치함수는 다시 높여주는 텀을 추가해준다.</p>
+<div class="math notranslate nohighlight" id="equation-policy-evaluation">
+<span class="eqno">(1)<a class="headerlink" href="#equation-policy-evaluation" title="Permalink to this equation">#</a></span>\[\begin{split}
+\hat{Q}^{k+1} \leftarrow \operatorname*{argmin}_{Q}  \alpha \left(\mathbb{E}_{\mathbf{s}\sim\mathcal{D}, \mathbf{a}\sim\mu(\cdot|\mathbf{s})}\left[ Q(\mathbf{s}, \mathbf{a}) \right]  \textcolor{blue}{- \mathbb{E}_{\mathbf{s}\sim\mathcal{D}, \mathbf{a}\sim \hat{\pi}_\beta(\cdot|\mathbf{s})} \left[  Q(\mathbf{s}, \mathbf{a})\right]} \right) \\ + \frac{1}{2} \mathbb{E}_{\mathbf{s}, \mathbf{a} \sim \mathcal{D}} \left[ \left( Q(\mathbf{s}, \mathbf{a}) - \hat{\mathcal{B}}^{\pi}\hat{Q}^k(\mathbf{s}, \mathbf{a}) \right)^2\right],
+\end{split}\]</div>
+<br>
+<p>여기서 <span class="math notranslate nohighlight">\(\hat{\pi}_\beta(\mathbf{a}|\mathbf{s})\)</span>는 데이터셋에서 빈도를 세서 만든 empirical 정책이다. 데이터셋 <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>에서 <span class="math notranslate nohighlight">\((\mathbf{s}, \mathbf{a})\)</span>가 등장한 횟수를 상태 <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>가 등장한 횟수로 나눠서 확률을 부여하는 확률분포이다. <span class="math notranslate nohighlight">\(\mu(\mathbf{a}|\mathbf{s})\)</span>를 따라서 행동가치함수 값을 낮춰주되 <span class="math notranslate nohighlight">\(\hat{\pi}_\beta(\mathbf{a}|\mathbf{s})\)</span>을 따라서 행동가치함수를 올려주는 방식으로 행동가치함수를 찾게 된다.</p>
+<p>위 업데이트식을 사용하여 찾은 행동가치함수을 경우, 행동가치함수의 기댓값인 상태가치함수가 실제 상태가치함수의 lower bound가 되게 된다. 그리고 실제 상태가치함수와 더 가까운 tighter한 lower bound가 된다 (Theorem 3.2).</p>
+<br>
+</section>
+<section id="conservative-q-learning-for-offline-rl">
+<h3>2.2 Conservative Q-Learning for Offline RL<a class="headerlink" href="#conservative-q-learning-for-offline-rl" title="Permalink to this headline">#</a></h3>
+<p>사실 <a class="reference internal" href="#sec-policy-evaluation"><span class="std std-ref">2.1 Conservative Off-Policy Evaluation</span></a>의 내용들은 행동 정책이 만든 데이터셋으로부터 어떤 타겟 정책의 행동가치함수를 추정하는 off-policy evaluation 방법이기 때문에 굳이 offline RL에 국한된 이야기는 아니다. 저자는 위 policy evaluation 방법을 off-policy learning에 사용해도 된다고 말한다.</p>
+<p>그러면 어떻게 위의 policy evaluation을 policy optimization에 이용할 수 있을까? 일반적인 policy iteration은 다음 두 과정을 반복한다.</p>
+<ul class="simple">
+<li><p>Policy evaluation: 현재 정책 <span class="math notranslate nohighlight">\(\pi_k\)</span>의 행동가치함수 <span class="math notranslate nohighlight">\(Q^{\pi_k}\)</span>를 추정</p></li>
+<li><p>Policy improvement: 현재 행동가치함수 <span class="math notranslate nohighlight">\(Q^{\pi_k}\)</span>를 증가시키는 방향으로 정책 업데이트</p></li>
+</ul>
+<p>식 <a class="reference internal" href="#equation-policy-evaluation">(1)</a>의 최적화 문제를 풀어서 행동가치함수를 구하고, 또 다시 이를 최대화하는 정책을 찾는 방식으로 정책을 업데이트하면 시간이 많이 걸릴 것이다.  한편, Actor-critic 알고리즘에서는 Q-network를 최대화하는 방향으로 정책이 업데이트된다. 이와 유사하게 현재 행동가치함수를 최대화하는 <span class="math notranslate nohighlight">\(\mu(\mathbf{a}|\mathbf{s})\)</span>를 찾아주는 텀을 추가하여 정책과 행동가치함수를 동시에 최적화하는 문제를 생각해볼 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\min_{Q} \textcolor{blue}{\max_{\mu}} \alpha \left(\mathbb{E}_{\mathbf{s}\sim\mathcal{D}, \textcolor{blue}{\mathbf{a}\sim\mu(\cdot|\mathbf{s})}}\left[ Q(\mathbf{s}, \mathbf{a}) \right]  - \mathbb{E}_{\mathbf{s}\sim\mathcal{D}, \mathbf{a}\sim \hat{\pi}_\beta(\cdot|\mathbf{s})} \left[  Q(\mathbf{s}, \mathbf{a})\right] \right) \\ + \frac{1}{2} \mathbb{E}_{\mathbf{s}, \mathbf{a} \sim \mathcal{D}} \left[ \left( Q(\mathbf{s}, \mathbf{a}) - \hat{\mathcal{B}}^{\pi}\hat{Q}^k(\mathbf{s}, \mathbf{a}) \right)^2\right] + \textcolor{blue}{\mathcal{R}(\mu)},
+\end{split}\]</div>
+<br>
+<p>여기서, <span class="math notranslate nohighlight">\(\mathcal{R}(\mu)\)</span>는 정책에 대한 regularizer이다. 어떤 regularizer를 사용하느냐에 따라 최적화 문제가 달라지기 때문에 위의 최적화 식을 <span class="math notranslate nohighlight">\(\text{CQL}(\mathcal{R})\)</span>이라고 명명하였다. 보통 강화학습에서는 정책 <span class="math notranslate nohighlight">\(\mu\)</span>이 너무 확확 업데이트되는 것을 싫어한다. 그래서 주로 특정 분포 <span class="math notranslate nohighlight">\(\rho\)</span>와 너무 멀어지지 않도록 제약을 주고 정책을 업데이트한다. 제약은 주로 KL divergence로 주기 때문에 <span class="math notranslate nohighlight">\(\mathcal{R}(\mu) = -D_{\text{KL}}(\mu || \rho)\)</span>로 준다. 위의 제약을 사용하면 <span class="math notranslate nohighlight">\(\mu(\mathbf{a}|\mathbf{s}) \propto \rho(\mathbf{a}|\mathbf{s}) \cdot \exp(Q(\mathbf{s}, \mathbf{a}))\)</span> 꼴이어야만 한다.</p>
+<br>
+<p>많은 알고리즘에서 <span class="math notranslate nohighlight">\(\rho\)</span>를 이전 정책 <span class="math notranslate nohighlight">\(\hat{\pi}^k\)</span>로 준다. 이 논문에서는 <span class="math notranslate nohighlight">\(\rho\)</span>로 uniform 분포를 주는 경우를 <span class="math notranslate nohighlight">\(\text{CQL}(\mathcal{\mathcal{H}})\)</span>으로 부른다. 어떤 분포와 균등 분포 사이의 KL divergence를 계산하는 것이 해당 분포의 엔트로피를 계산하는 것과 상수배 차이이기 때문이다.</p>
+<div class="math notranslate nohighlight" id="equation-cqlh">
+<span class="eqno">(2)<a class="headerlink" href="#equation-cqlh" title="Permalink to this equation">#</a></span>\[\begin{split}
+\min_{Q} \alpha \mathbb{E}_{\mathbf{s} \in \mathcal{D}} \left[ \log \sum_{\mathbf{a}} \exp(Q(\mathbf{s}, \mathbf{a})) - \mathbb{E}_{\mathbf{a} \sim \hat{\pi}_{\beta}(\cdot|\mathbf{s})}\left[ Q(\mathbf{s}, \mathbf{a}) \right] \right] \\ + \frac{1}{2} \mathbb{E}_{\mathbf{s}, \mathbf{a}, \mathbf{s}' \sim \mathcal{D}} \left[ \left( Q(\mathbf{s}, \mathbf{a}) - \hat{\mathcal{B}}^{\pi_k}\hat{Q}^k(\mathbf{s}, \mathbf{a}) \right)^2 \right].
+\end{split}\]</div>
+<br>
+<p>위 식이 CQL에서 사용하는 Q-network의 업데이트식이다. 정책 <span class="math notranslate nohighlight">\(\mu\)</span> 최대화 텀이 어디 갔는지 궁금할 수도 있다. 사실, <span class="math notranslate nohighlight">\(\max\limits_\mu \left( \mathbb{E}[Q(\mathbf{s}, \mathbf{a})] -D_{\text{KL}}(\mu || \rho) \right)\)</span>을 직접 해석적으로 풀어보면 <span class="math notranslate nohighlight">\(\log \sum_{\mathbf{a}} \exp(Q(\mathbf{s}, \mathbf{a}))\)</span>이 된다. 정책 업데이트 이야기는 식을 유도하기 위함이었고, 사실 여기에는 정책 네트워크가 낄 자리는 없다. 그래서 Q-network를 업데이트하기 위해서만 사용된다.</p>
+<br>
+<p>최종적으로 <span class="math notranslate nohighlight">\(\text{CQL}(\mathcal{\mathcal{H}})\)</span>의 수도 코드를 보면 다음과 같다. 수도코드에 있는 Equation 4가 본 글에서의 식 <a class="reference internal" href="#equation-cqlh">(2)</a>이다.</p>
+<figure class="align-default" id="cql-algorithm">
+<a class="reference internal image-reference" href="../../_images/230530_cql_algorithm.png"><img alt="../../_images/230530_cql_algorithm.png" src="../../_images/230530_cql_algorithm.png" style="width: 500px;" /></a>
+</figure>
+<br>
+</section>
+</section>
+<hr class="docutils" />
+<section id="experimental-evaluation">
+<h2>Experimental Evaluation<a class="headerlink" href="#experimental-evaluation" title="Permalink to this headline">#</a></h2>
+<p>D4RL의 mujoco 도메인에 대한 결과는 아래 표와 같다.</p>
+<figure class="align-default" id="cql-result-mujoco">
+<img alt="../../_images/230530_cql_result_mujoco.png" src="../../_images/230530_cql_result_mujoco.png" />
+</figure>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h2>마무리하며<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>Offline RL 쪽을 연구하고 싶어서 가장 유명한 논문부터 읽어보았다. 수식이 너무 많아서 처음에는 하나도 이해가 안 되었는데, 반복해서 읽다보니 흐름은 잘 이해가 되었다. 본 논문의 꽃은 사실 이론들인데, 아직 이론까지는 정독하지 못해서 본 글에서는 다루지 않았다. 이론 쪽도 읽어 볼 예정이기 때문에 기회가 된다면 이론과 증명을 추가하도록 할 것이다. 빠른 시일 내로 offline RL 실험 환경 구축에 관한 글을 작성할 예정이다.</p>
+<br>
 </section>
 <hr class="docutils" />
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
 <p>[1] Kumar, Aviral, Aurick Zhou, George Tucker, and Sergey Levine. “Conservative Q-Learning for Offline Reinforcement Learning.” In Advances in Neural Information Processing Systems, 33:1179–91. Curran Associates, Inc., 2020. <a class="reference external" href="https://proceedings.neurips.cc/paper/2020/hash/0d2b2061826a5df3221116a5085a6052-Abstract.html">https://proceedings.neurips.cc/paper/2020/hash/0d2b2061826a5df3221116a5085a6052-Abstract.html</a>.</p>
+<br>
 </section>
 </section>
 
