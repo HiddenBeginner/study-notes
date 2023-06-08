@@ -123,22 +123,22 @@ const thebe_selector_output = ".output, .cell_output"
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+  <a class="reference internal" href="../core/beyond_batchnorm.html">
    Beyond BatchNorm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230420_ulc.html">
+  <a class="reference internal" href="../core/230420_ulc.html">
    Uncertainty-aware Label Correction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230425_encouraging_loss.html">
+  <a class="reference internal" href="../core/230425_encouraging_loss.html">
    Encouraging Loss
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230523_folklore_constructions.html">
+  <a class="reference internal" href="../core/230523_folklore_constructions.html">
    Elementary Folklore Construction
   </a>
  </li>
@@ -162,6 +162,11 @@ const thebe_selector_output = ".output, .cell_output"
  <li class="toctree-l1">
   <a class="reference internal" href="DreamerV1.html">
    Dreamer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230530_CQL.html">
+   Conservative Q-Learning (CQL)
   </a>
  </li>
 </ul>
@@ -470,13 +475,13 @@ title="Print to PDF"
 <p>일반적인 SAC는 다음 Bellman error를 최소화시키는 방법으로 Q-네트워크를 학습시킨다.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}_Q(\tau_t, \theta) = \left( Q_{\theta} (s_t, a_t) - r_t + \gamma \bar{V}(s_{t+1})\right)^2,
+\mathcal{L}_Q(\tau_t, \theta) = \left( Q_{\theta} (s_t, a_t) - r_t - \gamma \bar{V}(s_{t+1})\right)^2,
 \]</div>
 <p>이때, <span class="math notranslate nohighlight">\(\tau_t=(s_t, a_t, r_t, s_{t+1})\)</span>는 하나의 transition이고, <span class="math notranslate nohighlight">\(\bar{V}(s_t) = \mathbb{E}_{a_t \sim \pi_{\phi}}\left[ Q_{\bar{\theta}}(s_t, a_t) - \alpha \log \pi_{\phi}(a_t | s_t)\right]\)</span>, <span class="math notranslate nohighlight">\(\alpha\)</span>는 temperature 하이퍼파라미터이다.</p>
 <p>SUNRISE에서는 <span class="math notranslate nohighlight">\(i\)</span>번째 Q-네트워크를 학습시키기 위해 다음과 같은 weighted Bellman backup을 사용한다.</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{L}_{WQ}(\tau_t, \theta_i) = w(s_{t+1}, a_{t+1})\left( Q_{\theta} (s_t, a_t) - r_t + \gamma \bar{V}(s_{t+1})\right)^2,
+\mathcal{L}_{WQ}(\tau_t, \theta_i) = w(s_{t+1}, a_{t+1})\left( Q_{\theta} (s_t, a_t) - r_t - \gamma \bar{V}(s_{t+1})\right)^2,
 \]</div>
 <p>이때, 가중치 함수 <span class="math notranslate nohighlight">\(w(s, a)\)</span>는 다음과 같이 정의된다.</p>
 <div class="math notranslate nohighlight">

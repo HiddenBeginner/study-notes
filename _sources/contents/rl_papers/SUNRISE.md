@@ -30,7 +30,7 @@ SUNRISE에는 $N$개의 Soft Actor-critic (SAC) 에이전트가 있다 (SAC는 �
 일반적인 SAC는 다음 Bellman error를 최소화시키는 방법으로 Q-네트워크를 학습시킨다.
 
 $$
-\mathcal{L}_Q(\tau_t, \theta) = \left( Q_{\theta} (s_t, a_t) - r_t + \gamma \bar{V}(s_{t+1})\right)^2,
+\mathcal{L}_Q(\tau_t, \theta) = \left( Q_{\theta} (s_t, a_t) - r_t - \gamma \bar{V}(s_{t+1})\right)^2,
 $$
 
 이때, $\tau_t=(s_t, a_t, r_t, s_{t+1})$는 하나의 transition이고, $\bar{V}(s_t) = \mathbb{E}_{a_t \sim \pi_{\phi}}\left[ Q_{\bar{\theta}}(s_t, a_t) - \alpha \log \pi_{\phi}(a_t | s_t)\right]$, $\alpha$는 temperature 하이퍼파라미터이다.
@@ -38,7 +38,7 @@ $$
 SUNRISE에서는 $i$번째 Q-네트워크를 학습시키기 위해 다음과 같은 weighted Bellman backup을 사용한다.
 
 $$
-\mathcal{L}_{WQ}(\tau_t, \theta_i) = w(s_{t+1}, a_{t+1})\left( Q_{\theta} (s_t, a_t) - r_t + \gamma \bar{V}(s_{t+1})\right)^2,
+\mathcal{L}_{WQ}(\tau_t, \theta_i) = w(s_{t+1}, a_{t+1})\left( Q_{\theta} (s_t, a_t) - r_t - \gamma \bar{V}(s_{t+1})\right)^2,
 $$
 
 이때, 가중치 함수 $w(s, a)$는 다음과 같이 정의된다.
