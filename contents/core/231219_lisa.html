@@ -1,0 +1,557 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Learning Invariant predictor with Selective Augmentation (LISA) &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AlphaGo Zero" href="../rl_papers/AlphaGoZero.html" />
+    <link rel="prev" title="Elementary Folklore Construction" href="230523_folklore_constructions.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Learning Invariant predictor with Selective Augmentation (LISA)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/230530_CQL.html">
+   Conservative Q-Learning (CQL)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231021_reward_is_enough.html">
+   Reward Is Enough
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/core/231219_lisa.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/core/231219_lisa.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methodology">
+   Methodology
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Learning Invariant predictor with Selective Augmentation (LISA)</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#methodology">
+   Methodology
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#results">
+   Results
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="learning-invariant-predictor-with-selective-augmentation-lisa">
+<h1>Learning Invariant predictor with Selective Augmentation (LISA)<a class="headerlink" href="#learning-invariant-predictor-with-selective-augmentation-lisa" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>제목: Improving Out-of-Distribution Robustness via Selective Augmentation</p></li>
+<li><p>저자: Cabrera-Vives, Guillermo, César Bolivar, Francisco Förster, Alejandra M. Muñoz Arancibia, Manuel Pérez-Carrasco, and Esteban Reyes</p></li>
+<li><p>연도: 2023년</p></li>
+<li><p>학술대회: ICML</p></li>
+<li><p>링크: <a class="reference external" href="https://proceedings.mlr.press/v162/yao22b.html">https://proceedings.mlr.press/v162/yao22b.html</a></p></li>
+<li><p>키워드: Invariant to domain shift</p></li>
+</ul>
+<br>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<p>공개된 데이터셋으로 학습한 모델을 내가 갖고 있는 데이터에 대해 예측을 해보면 잘 안 될 때가 많다.
+예를 들어, A병원, B병원, C병원에서 공개한 많은 양의 데이터로 모델을 학습시키고 이를 D병원 데이터에 예측을 해보면 성능이 좋지 않을 것이다.
+A~C병원이 갖는 데이터의 분포와 D병원 데이터의 분포가 서로 다르기 때문일 것이다.
+이 논문은 훈련 데이터의 분포와 테스트 데이터의 분포가 서로 달라도, 즉 domain shift가 있어도 잘 작동하는 모델을 학습시키는 방법에 관한 것이다.
+특히, data augmentation 기법을 적용하여 domain shift에 robust한 모델을 학습시킨다. 이 논문의 요약은 다음 2줄로 충분하다.</p>
+<ul class="simple">
+<li><p>Inter label LISA: 레이블은 같지만 도메인이 서로 다른 두 데이터를 interpolation.</p></li>
+<li><p>Inter domain LISA: 도메인은 같지만 레이블이 서로 다른 두 데이터를 interpolation. 이때 레이블도 같은 비율로 interpolation</p></li>
+</ul>
+<br>
+</section>
+<hr class="docutils" />
+<section id="methodology">
+<h2>Methodology<a class="headerlink" href="#methodology" title="Permalink to this headline">#</a></h2>
+<p>훈련 데이터의 <span class="math notranslate nohighlight">\(i\)</span> 번째 데이터를 <span class="math notranslate nohighlight">\((x_i, y_i, d_i)\)</span>라고 하자. <span class="math notranslate nohighlight">\(x_i\)</span>는 입력 데이터이며 컴퓨터 비전의 경우 이미지이고, 텍스트 데이터의 경우 pretrained LLM이 출력한 임베딩 벡터가 된다.
+<span class="math notranslate nohighlight">\(y_i\)</span>는 레이블이며 이 논문의 경우 classification을 다루기 때문에 <span class="math notranslate nohighlight">\(y_i\)</span>는 원핫인코딩 벡터가 된다.
+<span class="math notranslate nohighlight">\(d_i\)</span>는 <span class="math notranslate nohighlight">\(i\)</span>번째 데이터가 속한 도메인이다.
+이 논문에서는 각 데이터가 속한 도메인을 알고 있다고 가정한다. 각 데이터가 속한 도메인을 모르는 경우는 훨씬 더 어렵지만 흥미로운 연구 주제가 될 것이다.</p>
+<br>
+<p>각 훈련 데이터 <span class="math notranslate nohighlight">\((x_i, y_i, d_i)\)</span>마다 가장 먼저 <span class="math notranslate nohighlight">\(\text{Beta}(2, 2)\)</span>에서 interpolation ratio <span class="math notranslate nohighlight">\(\lambda\)</span>를 샘플링한다.
+다음으로 <span class="math notranslate nohighlight">\(p_{\text{sel}}\)</span>의 확률로 inter-label LISA를 적용할지, inter-domain LISA를 적용할지 결정한다.
+<span class="math notranslate nohighlight">\(p_{\text{sel}} \in [0,1]\)</span>은 하이퍼파라미터이며, inter label LISA를 적용할 확률이다.
+논문에서는 cross-validation을 통해 좋은 <span class="math notranslate nohighlight">\(p_{\text{sel}}\)</span>을 찾았으며, <span class="math notranslate nohighlight">\(p_{\text{sel}}=0.5\)</span> 혹은 <span class="math notranslate nohighlight">\(p_{\text{sel}}=1\)</span>이 잘 작동한다고 한다.</p>
+<ul class="simple">
+<li><p>만약 inter-label LISA가 선택되었다면, 훈련 데이터에서 레이블은 <span class="math notranslate nohighlight">\(y_i\)</span>와 같으며 도메인은 <span class="math notranslate nohighlight">\(d_i\)</span>와 다른 데이터 <span class="math notranslate nohighlight">\((x_j, y_j, d_j)\)</span>를 랜덤 샘플링한다.</p></li>
+<li><p>만약 inter-label LISA가 선택되었다면, 훈련 데이터에서 레이블은 <span class="math notranslate nohighlight">\(y_i\)</span>와 다르며 도메인은 <span class="math notranslate nohighlight">\(d_i\)</span>와 같은 데이터 <span class="math notranslate nohighlight">\((x_j, y_j, d_j)\)</span>를 랜덤 샘플링한다.</p></li>
+</ul>
+<br>
+<p>그리고 다음과 같이 interpolation한 <span class="math notranslate nohighlight">\(x_{\text{mix}}\)</span>와 <span class="math notranslate nohighlight">\(y_{\text{mix}}\)</span>를 계산한다.</p>
+<div class="math notranslate nohighlight">
+\[x_{\text{mix}} = \lambda x_i + (1-\lambda) x_j, \quad y_{\text{mix}} = \lambda y_i + (1-\lambda) y_j.\]</div>
+<p>여기서 inter-label LISA의 경우 <span class="math notranslate nohighlight">\(y_{\text{mix}}\)</span>는 <span class="math notranslate nohighlight">\(y_i\)</span>랑 같다. inter-domain LISA의 레이블 <span class="math notranslate nohighlight">\(y_{\text{mix}}\)</span> 경우, 예를 들어, <span class="math notranslate nohighlight">\(y_i=[1, 0]\)</span>, <span class="math notranslate nohighlight">\(y_j=[0, 1]\)</span>이고 <span class="math notranslate nohighlight">\(\lambda=0.3\)</span>이라고 했을 때, <span class="math notranslate nohighlight">\(y_{\text{mix}}= [0.3, 0.7]\)</span>이 된다. 이렇게 만든 <span class="math notranslate nohighlight">\(x_{\text{mix}}\)</span>와 <span class="math notranslate nohighlight">\(y_{\text{mix}}\)</span>로 모델을 학습시키는 것이다. 논문에서 사용된 LISA 설명 그림은 다음과 같다.</p>
+<figure class="align-default" id="lisa-cmnist">
+<img alt="../../_images/231219_lisa_cmnist.png" src="../../_images/231219_lisa_cmnist.png" />
+</figure>
+<p>예시에 샤용된 데이터셋은 CMNIST이며 0~4의 숫자는 0으로, 5~9의 숫자는 1로 레이블링되어 있다. 데이터의 도메인은 초록색 글자와 빨간색 글자로 2가지가 있다. 이 데이터셋의 경우 초록색 글자 데이터의 80%가 레이블 0에 속하며 20%는 레이블 1에 속한다. 반대로 빨간색 글자의 80%는 레이블 1에 속하며 20%는 레이블 0에 속한다. 즉, 숫자의 모양에 상관 없이 글자가 초록색이면 0이라고 예측하고 빨간색이면 1이라고 예측하면 높은 성능이 보장된다. 이런 잘못된 상관 관계를 논문에서는 <strong>spurious correlation</strong> (허위 상관)이라고 부르고 있다. 테스트 데이터도 초록색 글자와 빨간색 글자가 있으며, 다만 색상별 레이블의 비율은 8:2가 아니라 9:1이다. 이렇게 테스트 데이터의 도메인이 훈련 데이터의 도메인과 일치하지만 그 분포가 다른 문제를 subpopulation</p>
+<br>
+<p>그림의 첫 번째 행이 inter-label LISA 기법이다. 레이블은 <span class="math notranslate nohighlight">\(y_2\)</span>로 같으며 도메인이 다른 빨간색 글자 이미지와 interpolation되어 초록색과 빨간색 모두를 포함하는 글자의 이미지가 되었다. 두 번째 행은 inter-domain LISA 기법으로, 도메인은 빨간색 글자로 같으며 레이블이 서로 다른 두 글자를 합치고 레이블도 대응하게 interpolation하였다. 사실 이런 데이터 기법을 mixup이라고 부른다. 다만 mixup은 전체 데이터에서 임의로 두 샘플을 뽑아 interpolation하는 방법이다. 하지만 mixup만으로는 domain shift에 robust한 모델을 만들기 부족하여 선택적으로 샘플을 선택하는 selective augmentation 적용한 것이 LISA이다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">#</a></h2>
+<p>아래는 subpolulation shift를 갖고 있는 데이터셋에 대한 성능표이다. 논문의 본문이 아닌 부록에 있는 표이다. CelebA는 이미지 데이터셋이며 CivilComments는 텍스트 데이터셋이다. Avg가 도메인 상관 없이 측정 없이 정확도를 측정한 지표이고, worst가 도메인별로 나눠서 정확도를 측정했을 때, 가장 성능이 낮은 도메인에 대한 정확도이다. 그리고 ERM이 우리가 아는 평범한 손실 함수를 사용한 모델이다. ERM의 결과를 해석해보자면, 우리가 검증 데이터로 90%대의 정확도를 얻었는데, 실제로 테스트 해보니 어떤 도메인에서는 성능이 50%까지 떨어진다는 것을 의미한다. LISA는 가장 안 좋은 도메인에 대한 성능을 거의 90%까지 끌어올렸다.</p>
+<figure class="align-default" id="lisa-subpopulation-result1">
+<a class="reference internal image-reference" href="../../_images/231219_lisa_subpopulation_result1.png"><img alt="../../_images/231219_lisa_subpopulation_result1.png" src="../../_images/231219_lisa_subpopulation_result1.png" style="width: 500px;" /></a>
+</figure>
+<br>
+<p>아래는 위 데이터셋에 대한 ablation study 결과이다. 마찬가지로 부록에 있는 표를 갖고 왔다. Vanilla mixup은 selective augmentation 없이 mixup을 진행한 것이고, Within group 같은 그룹 다른 레이블에 대한 데이터만 interpolation을 한 결과이다. UW는 upweighting을 의미하며 논문에 설명은 없지만 minor class에 대한 oversampling을 의미하는 것 같다. 먼저, 논문에서 주장한 것처럼 mixup만으로는 subpopulation shift 문제가 해결되지 않는다. 그래서 LISA의 성능 향상이 단순히 data augmentation에 기인하는 것이 아닌 것을 알 수 있다.</p>
+<figure class="align-default" id="lisa-subpopulation-result2">
+<a class="reference internal image-reference" href="../../_images/231219_lisa_subpopulation_result2.png"><img alt="../../_images/231219_lisa_subpopulation_result2.png" src="../../_images/231219_lisa_subpopulation_result2.png" style="width: 500px;" /></a>
+</figure>
+<br>
+<p>위 결과말고도 논문에 domain shift에 대한 결과도 많이 있으니 필요하신 분들께서는 추가적으로 논문을 살펴보면 좋을 것 같다.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/core"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="230523_folklore_constructions.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Elementary Folklore Construction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../rl_papers/AlphaGoZero.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">AlphaGo Zero</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
