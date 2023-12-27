@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>PLASTIC &#8212; 공부 기록</title>
+    <title>Primacy bias and Reset &#8212; 공부 기록</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -51,10 +51,12 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Primacy bias and Reset" href="231227_Reset.html" />
-    <link rel="prev" title="Reward Is Enough" href="231021_reward_is_enough.html" />
+    <link rel="next" title="Define-and-run vs Define-by-run" href="../miscellaneous/define_and_by_run.html" />
+    <link rel="prev" title="PLASTIC" href="231226_PLASTIC.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -177,13 +179,13 @@ const thebe_selector_output = ".output, .cell_output"
    Reward Is Enough
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="231226_PLASTIC.html">
    PLASTIC
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="231227_Reset.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Primacy bias and Reset
   </a>
  </li>
@@ -285,7 +287,7 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/231226_PLASTIC.html&body=Your%20issue%20content%20here."
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/231227_Reset.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="bottom"
@@ -307,7 +309,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/contents/rl_papers/231226_PLASTIC.md"
+        <a href="../../_sources/contents/rl_papers/231227_Reset.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -377,6 +379,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reset">
+   Reset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#experiment">
    Experiment
   </a>
@@ -390,7 +397,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>PLASTIC</h1>
+                <h1>Primacy bias and Reset</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -411,6 +418,11 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reset">
+   Reset
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#experiment">
    Experiment
   </a>
@@ -425,90 +437,109 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="plastic">
-<h1>PLASTIC<a class="headerlink" href="#plastic" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="primacy-bias-and-reset">
+<h1>Primacy bias and Reset<a class="headerlink" href="#primacy-bias-and-reset" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>제목: PLASTIC: Improving Input and Label Plasticity for Sample Efficient Reinforcement Learning</p></li>
-<li><p>저자: Lee, Hojoon, Hanseul Cho, Hyunseung Kim, Daehoon Gwak, Joonkee Kim, Jaegul Choo, Se-Young Yun, and Chulhee Yun, <em>KAIST</em></p></li>
-<li><p>연도: 2023년</p></li>
-<li><p>학술대회: NeurIPS</p></li>
-<li><p>링크: <a class="reference external" href="http://arxiv.org/abs/2306.10711">http://arxiv.org/abs/2306.10711</a></p></li>
+<li><p>제목: The Primacy Bias in Deep Reinforcement Learning</p></li>
+<li><p>저자: Nikishin, Evgenii, Max Schwarzer, Pierluca D’Oro, Pierre-Luc Bacon, and Aaron Courville, <em>Mila</em></p></li>
+<li><p>연도: 2022년</p></li>
+<li><p>학술대회: ICML</p></li>
+<li><p>링크: <a class="reference external" href="https://proceedings.mlr.press/v162/nikishin22a.html">https://proceedings.mlr.press/v162/nikishin22a.html</a></p></li>
 <li><p>키워드: Off-policy, overfitting, plasticity</p></li>
 </ul>
 <br>
-<p>NeurIPS 2023에 accept된 논문들 중 읽을 만한 논문들 찾다가 발견한 한국인 저자의 논문.
-주제도 off-policy RL 알고리즘들의 overfitting에 관한 것이고, 이론보다는 empirical한 실험 위주의 논문이라서 흥미롭게 읽었다.
-논문의 내용과 관련 없지만, 특히 인상 깊었던 것은 저자분께서 최신 논문을 엄청나게 많이 읽으신다는 것이었다.
-예를 들어, 2023년 2~3월쯤 arXiv에 올라온 (추후 ICML에 승인된) 논문들을 읽으시고 5월 중순 마감인 Neurips 2023에 제출할 때 해당 논문들을 참고문헌으로 넣으셨다.
-최신 동향을 파악하고 실험까지 빠르게 진행하여 논문을 쓴다는 점을 본받아야 할 것 같다.</p>
+<p>바로 직전에 읽은 PLASTIC 논문에서는 off-policy 알고리즘이 early experiences에 과적합되는 문제를 해결했었다.
+하지만 아쉽게도 off-policy 알고리즘이 진짜 과적합 문제를 겪고 있는지에 대한 empirical evidence가 논문에 따로 없었고,
+대신 지금 리뷰하고 있는 이 논문을 참고문헌으로 인용하고 있었다.
+이 논문은 PLASTIC 알고리즘의 한 구성 요소인 reset 알고리즘을 제안한 논문이며,
+off-policy 알고리즘이 early experiences에 과적합되면 추후 좋은 데이터가 버퍼에 들어와도 성능 향상이 이뤄지지 않는다는 것을 실험을 통해 보였다.</p>
 <br>
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
-<p>심층강화학습에서 off-policy 알고리즘들은 replay buffer를 사용한다. Replay buffer를 사용함으로써 off-policy RL은 다음 세 가지 특징을 갖게 된다.</p>
+<p>Off-policy 알고리즘이 학습 초기 데이터에 과적합되는 현상을 이 논문에서는 <em>primacy bias</em> 라고 부른다.
+학습 초기에 발생한 primacy bias가 학습 과정 전체에 악영향을 끼칠 수 있다고 한다. 논문에서는 크게 다음 두 가지를 주장하고 있다.</p>
 <ul class="simple">
-<li><p>학습이 진행될 수록 buffer 안의 데이터가 많아진다.</p></li>
-<li><p>학습이 진행될 수록 buffer 안의 데이터의 분포가 바뀐다.</p></li>
-<li><p>매 environment step마다 여러번 네트워크를 훈련시킬 수 있다.</p></li>
+<li><p>Off-policy 알고리즘 내 네트워크들이 초기 데이터에 과적합되면 이후의 학습 과정 전체에 악영향을 끼칠 수 있다.</p></li>
+<li><p>이후 학습 과정에 악영향을 끼치는 이유는 replay buffer 안에 나쁜 데이터가 있기 때문이 아니라, 네트워크들이 과적합됐기 때문이다.</p></li>
 </ul>
 <br>
-<p>1, 2번을 반대로 생각하면 학습 초기 replay buffer 안에 안 그래도 적은 데이터가 있는데 걔네들의 품질까지 안 좋다는 것을 의미한다.
-이런 안 좋은 replay buffer에서 데이터를 랜덤 샘플링하여 학습을 하기 때문에 네트워크들이 학습 초기의 early transitions에 과적합이 될 수 있고, 한 번 과적합에 빠지면 알고리즘의 성능이 향상되지 않고 정착되는 현상이 발생할 수 있다.
-논문에서는 이런 현상을 <em>loss of plasticity</em> 이라고 부른다.
-<strong>Plasticity</strong>는 가소성이란 뜻을 갖고 있고, 최근 continual learning에서 많이 등장하는 단어이다.
-네트워크가 이전에 학습한 데이터들을 적당히 잊고 새롭게 들어오는 데이터를 학습할 수 있어야 하는데,
-이전 데이터를 잊지 못하고 과적합되었으니 알고리즘이 plasticity가 부족한 문제, 즉 loss of plasticity 문제를 겪고 있는 것이다.
-논문에서는 plasticity를 크게 두 가지로 분류한다.</p>
-<ul class="simple">
-<li><p>데이터 분포의 변화에 적응할 수 있는 능력을 input plasticity라고 부르고,</p></li>
-<li><p>입력 데이터와 레이블 (return 또는 Q값) 사이의 관계 변화에 적응할 수 있는 능력을 label plasticity라고 부른다.</p></li>
-</ul>
-<br>
-<p>논문에서는 다음 네 가지 최신 기법을 사용하여 off-policy 알고리즘의 loss of plasticity를 완화시켰다.</p>
-<ul class="simple">
-<li><p>Layer normalization (LN)</p></li>
-<li><p>SAM (sharpness-aware minimiazation) optimizer</p></li>
-<li><p>Concanated ReLU (CReLU)</p></li>
-<li><p>Reset</p></li>
-</ul>
-<br>
-<p>LN은 loss landscape를 보다 더 smooth하게 만드는 효과가 있고, SAM은 네트워크 파라미터를 loss landscape에서 smooth한 영역으로 업데이트하는 효과가 있어서 네트워크의 일반화 성능 향상에 기여한다. 따라서 LN과 SAM은 일반화 성능을 향상시켜 데이터 분포 변화에도 대응할 수 있는 input plasticity를 향상시킨다.
-한편, 딥러닝 네트워크들은 학습이 진행될 수록 active units (activation값이 0이 아닌)의 개수가 줄어들어 사실상 업데이트가 이뤄지는 파라미터가 줄어드는 문제를 갖고 있다.
-이 현상을 ReLU와 -ReLU를 concanate하여 0이 아닌 activte units을 늘리는 CReLU와 네트워크 파라미터의 일부를 주기적으로 초기화시키는 reset을 사용하여 완화시켰다. 파라미터 업데이트가 지속적으로 잘 일어나니 입력과 레이블 사이의 관계가 변화해도 거기에 맞게 업데이트가 잘 일어날 것이다. 따라서 CReLU와 reset은 label plasticity를 향상시키는 효과가 있다.</p>
+<p>직관적으로는 replay buffer 안에 나쁜 데이터들이 있기 때문에 알고리즘의 성능이 저하되거나 정체될 것으로 생각된다.
+하지만 이 논문에서는 replay buffer 안에 나쁜 데이터들이 있어도 네트워크들은 이 안에서 좋은 정보를 학습해낼 수 있다는 것을 실험으로 보였다.
+이 두 가지 주장을 바탕으로 replay buffer를 초기화하는 과정 없이 학습 과정 중 주기적으로 네트워크의 일부 파라미터들을 랜덤 초기화하는 reset 알고리즘을 제안한다.</p>
 <br>
 </section>
 <hr class="docutils" />
 <section id="empirical-evidence">
 <h2>Empirical evidence<a class="headerlink" href="#empirical-evidence" title="Permalink to this headline">#</a></h2>
-<p>위에서 언급한 네 가지 기법이 input 및 label plasticity에 효과가 있다는 것을 보이기 위해
-저자는 CIFAR10 데이터셋을 사용하여 강화학습과 비슷한 학습 상황에서 분류 네트워크를 학습시키고 성능을 확인했다.
-Input plasticity에 대한 실험으로 학습이 진행될 수록 점점 더 데이터가 추가되는 실험을 설계하였고,
-Label plasticity에 대한 실험으로 주기적으로 할당된 레이블을 바꾸는 실험을 진행하였다.
-베이스라인 모델은 DQN에서 많이 사용되는 구조이며 3개의 convolutional layers와 3개의 fully-connected layer를 갖는다.
-자세한 실험 환경은 논문을 참고하면 좋을 것이다.</p>
-<br>
-<p>아래 그림의 왼쪽 패널에서 LN과 SAM이 input plasticity 실험에서 base 모델보다 성능을 향상시켰다.
-한편, CReLU와 reset은 label plasticity 실험에서 base 모델보다 높은 성능을 보였다.</p>
-<figure class="align-default" id="plastic-result1-png">
-<img alt="../../_images/231226_plastic_result1.png" src="../../_images/231226_plastic_result1.png" />
+<p>학습 초기 데이터에 네트워크들이 과적합될 경우 이후에 있는 모든 학습 과정 동안 알고리즘의 성능이 정체될 수 있다는 것을 실험적으로 보였다.
+Deepmind Control suite (DMC)의 <code class="docutils literal notranslate"><span class="pre">quadruped-run</span></code> 환경에 Soft Actor-Critic (SAC) 알고리즘을 학습시킬 때,
+처음 수집한 100개의 데이터를 사용하여 100,000번 네트워크를 학습시켜서 primacy bias를 발생시킨다 (좀 과하게 많이 학습시키는 것 같다).
+이후 일반적인 SAC 알고리즘 학습 과정을 진행한다.
+아래 그림 중 왼쪽에 있는 Figure 1이 실험에 대한 결과이다.
+주황색 선은 그냥 일반적으로 SAC를 학습시킨 결과이고, 파란색 선은 primacy bias가 발생한 SAC이다.
+첫 100개의 데이터에 과적합된 알고리즘은 이후 1백만번 환경과 상호작용하며 학습하는 동안 성능이 향상되지 않고 정체되어 버렸다.</p>
+<figure class="align-default" id="reset-figure12-png">
+<img alt="../../_images/231227_reset_figure12.png" src="../../_images/231227_reset_figure12.png" />
 </figure>
+<br>
+<p>그럼 replay buffer 안에 나쁜 데이터가 그득하여 과적합된 이후에도 학습이 되지 않은 것일까?
+논문의 주장은 데이터의 품질 때문에 학습이 정체된 것이 아니라 과적합된 네트워크 때문에 학습이 정체되었다는 것이다.
+이를 보이기 위하여 논문에서는 먼저 한 번의 environment step마다 9번의 파라미터 업데이트를 진행하여 (replay ratio=9) primacy bias가 발생한 SAC 알고리즘을 얻었다.
+이 primacy bias가 있는 SAC로 데이터를 수집하여 replay buffer를 구성하고,
+이 replay buffer를 initial replay buffer로 사용하여 아예 새로운 SAC 알고리즘을 학습시켜보았다.
+그 결과가 위 그림의 오른쪽에 있는 Figure 2이다.
+파란색 선은 replay ratio=9로 설정하여 primacy bias가 발생한 SAC의 학습 곡선이고,
+주황색 선은 primacy bias가 발생한 SAC가 수집한 replay buffer로 학습시킨 SAC의 학습 곡선이다.
+이 결과를 통해 replay buffer 안에 나쁜 데이터들이 있는 것이 학습 정체의 주된 원인이 아니라,
+과적합된 네트워크가 학습 정체의 주된 원인이라는 것을 알 수 있다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="reset">
+<h2>Reset<a class="headerlink" href="#reset" title="Permalink to this headline">#</a></h2>
+<p>이 논문에서 재밌었던 점은 논문의 method에 해당하는 섹션이 달랑 12줄이라는 것이었다. 수식 하나 없이 말로만 메서드를 소개하는데도 잘 이해가 되었다.
+Reset 알고리즘은 그냥 학습 동안 네트워크의 일부 레이어 (또는 전체 레이어)의 파라미터를 주기적으로 초기화시키는 것이다.</p>
 <br>
 </section>
 <hr class="docutils" />
 <section id="experiment">
 <h2>Experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h2>
-<p>이 논문에서는 Rainbow + DrQ와 SAC + DrQ를 베이스라인 모델로 설정하고, 여기에 위에서 설명한 네 가지 기법들을 적용하여 Atari와 DMC-medium 벤치마킹 환경에서의 성능을 비교하였다. 성능이 엄청나게 향상되는 것을 확인할 수 있다. 논문에 아래 실험 외에도 다양한 실험들이 있으니 참고하면 좋을 것이다.</p>
-<figure class="align-default" id="plastic-result2-png">
-<img alt="../../_images/231226_plastic_result2.png" src="../../_images/231226_plastic_result2.png" />
+<p>논문에서는 Atari-100K와 DMC를 벤치마킹 환경으로 사용했다.
+Atari-100k 실험에서는 SPR이라는 알고리즘에 reset 알고리즘을 적용하였으며 매 20,000번마다 Q네트워크의 가장 마지막 레이어의 파라미터만 초기화시켰다.
+DMC에서는 벡터 상태 공간일 경우 SAC 알고리즘을 사용하였으며, 매 200,000번마다 알고리즘 내 모든 네트워크들의 모든 레이어를 초기화시켰다.
+벡터 상태 공간을 가질 경우 네트워크들이 3층짜리 MLP라서 그냥 다 초기화시켰다고 한다.
+이미지 상태 공간일 경우 DrQ를 사용했으며 훈련 과정 동안 총 10번 네트워크의 가장 마지막 세 레이어를 초기화시켰다.
+Optimizer의 momentum statistics도 초기화해줬다고 하는데, 이후 실험에서 optimizer의 momentum statistics 초기화 여부는 성능에 큰 영향을 미치지 않는다고 한다.</p>
+<br>
+<p>아래는 Atari-100k에 대한 실험 결과이다. 왼쪽 그림에서 <span class="math notranslate nohighlight">\(x\)</span> 축이 성능인 IQM (interquantile mean) 값이다.
+SPR과 SPR + resets을 비교해보면 큰 성능 향상이 있는 것을 알 수 있다.</p>
+<figure class="align-default" id="reset-figure3-png">
+<a class="reference internal image-reference" href="../../_images/231227_reset_figure3.png"><img alt="../../_images/231227_reset_figure3.png" src="../../_images/231227_reset_figure3.png" style="width: 500px;" /></a>
 </figure>
 <br>
-<p>실제로 LN과 SAM을 통해 네트워크 파라미터가 더 smooth한 loss landscape으로 수렴한 것을 보이기 위하여 파라미터에 대한 손실함수의 Hessian matrix의 maximum eigenvalue를 측정하였다. 작을 수록 더 smooth한 영역임을 의미한다.
-그리고 fully-connected layers의 active units의 비율도 측정하여 CReLU와 Reset의 효능도 검증하였다.</p>
-<figure class="align-default" id="plastic-result3-png">
-<img alt="../../_images/231226_plastic_result3.png" src="../../_images/231226_plastic_result3.png" />
+<p>DMC에 대한 결과표이다.
+참고로 Table 1과 2에서 베이스라인 알고리즘을 포함한 모든 결과는
+여러 replay ratio와 <span class="math notranslate nohighlight">\(n\)</span>-step td target의 <span class="math notranslate nohighlight">\(n\)</span>값을 실험해보며 제일 좋은 결과를 선택한 것이다.</p>
+<figure class="align-default" id="reset-table2-png">
+<a class="reference internal image-reference" href="../../_images/231227_reset_table2.png"><img alt="../../_images/231227_reset_table2.png" src="../../_images/231227_reset_table2.png" style="width: 500px;" /></a>
 </figure>
 <br>
-<p>논문에는 위 실험 외에도 다양한 ablation study가 있으니 궁금하신 분들께서는 논문을 참고하시면 좋을 것 같다.</p>
+<p>베이스라인 알고리즘들의 경우 replay ratio를 늘려도 성능이 막 올라가진 않는다.
+학습 과정에서 sample efficiency로 얻는 이득보다 primacy bias로 잃는 손해가 더 많기 때문일 것이다.
+하지만 reset을 적용할 경우 replay ratio를 늘리면 성능 향상을 기대할 수 있다.
+이에 대한 실험 결과는 아래와 같다.
+나는 아직 초짜라서 replay ratio=1인 알고리즘들만 사용하는데, 이때는 오히려 reset을 적용할 경우 성능이 떨어진다는 점이 아쉽다.</p>
+<figure class="align-default" id="reset-figure5-png">
+<img alt="../../_images/231227_reset_figure5.png" src="../../_images/231227_reset_figure5.png" />
+</figure>
+<br>
+<p>Reset 알고리즘을 적용하여 학습을 하면 다음과 같은 학습 곡선이 나온다.
+뭔가 optimization 기법 중 cosine annealing을 적용했을 때와 비슷한 양상을 보인다.</p>
+<figure class="align-default" id="reset-figure4-png">
+<a class="reference internal image-reference" href="../../_images/231227_reset_figure4.png"><img alt="../../_images/231227_reset_figure4.png" src="../../_images/231227_reset_figure4.png" style="width: 500px;" /></a>
+</figure>
+<br>
 </section>
 </section>
 
@@ -539,17 +570,17 @@ Label plasticity에 대한 실험으로 주기적으로 할당된 레이블을 �
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="231021_reward_is_enough.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="231226_PLASTIC.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Reward Is Enough</p>
+            <p class="prev-next-title">PLASTIC</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="231227_Reset.html" title="next page">
+    <a class='right-next' id="next-link" href="../miscellaneous/define_and_by_run.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Primacy bias and Reset</p>
+        <p class="prev-next-title">Define-and-run vs Define-by-run</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
