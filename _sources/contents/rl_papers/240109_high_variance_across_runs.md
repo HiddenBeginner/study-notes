@@ -152,17 +152,20 @@ name: 240109_figure3
 하지만 penultimate는 '끝에서 두 번째의'라는 뜻이다. 
 *penultimate normalization*는 $\mathbf{a}^{\text{pre}}_\theta$ 직전의 activation을 $\Lambda_\theta(\mathbf{s})$라고 할 때, 
 먼저 $\Lambda_\theta(\mathbf{s})$를 normalization해줘 유닛 벡터를 계산한다.
+
 $$\Lambda_\theta^{\text{n}}(\mathbf{s}):=\Lambda_\theta(\mathbf{s}) / \lVert \Lambda_\theta(\mathbf{s}) \rVert.$$
 
 <br>
 
 위 식이 penultimate normalization, 줄여서 pnorm이다. 여기서
 actor network의 경우 $\Lambda_\theta^{\text{n}}(\mathbf{s})$의 차원을 행동공간의 차원으로 바꿔주기 위하여 행렬 $L$을 곱해준 것을 $\mathbf{a}_\theta^{\text{pre}}$로 사용한다.
+
 $$\mathbf{a}_\theta^{\text{pre}}:=L\Lambda_\theta^{\text{n}}(\mathbf{s}).$$
 
 <br>
 
-이 pnorm을 actor와 critic 네트워크 둘 다에 적용하고, ssl을 학습 과정 전체 동안 진행하며, 손실 함수에 $\mathbf{a}^{\text{pre}}_\theta$의 크기에 패널티를 준 알고리즘 (combined)을 사용하여 베이스라인인 DrQ-v2와 비교한 그림은 다음과 같다. 위 그림은 환경별 10개 runs에 대한 평균 누적 보상이고, 아래 그림은 표준편차이다.
+이 pnorm을 actor와 critic 네트워크 둘 다에 적용하고, ssl을 학습 과정 전체 동안 진행하며, 손실 함수에 $\mathbf{a}^{\text{pre}}_\theta$의 크기에 패널티를 준 알고리즘 (combined)을 사용하여 베이스라인인 DrQ-v2와 비교한 그림은 다음과 같다. 위 그림은 환경별 10개 runs에 대한 평균 누적 보상이고, 아래 그림은 표준편차이다. 
+combined++은 combined에 sparse reward 환경을 위해 2가지 구현 디테일을 추가해준 것이다.
 
 ```{figure} ../img/240109_figure5.png
 ---
@@ -178,7 +181,7 @@ name: 240109_figure5
 
 우리가 흔히 경험하는 학습에 실패하는 현상의 원인을 파악하고 해결했다는 점에서 굉장히 좋은 논문인 것 같다.
 나는 학습에 실패하면 자연스러운 현상으로 간주하고 내 코드를 의심하거나 랜덤 시드와 하이퍼파라미터 등만 바꿔가며 다시 돌렸을텐데, 
-(실험적으로나마) 저자는 원인을 어떻게든 파악하려고 했다는 점을 본받고 싶다. 문제의 원인을 파악하면 해결책도 따라오는 것 같다. 
+저자는 원인을 어떻게든 파악하려고 했다는 점을 본받고 싶다. 문제의 원인을 파악하면 해결책도 따라오는 것 같다. 
 그렇게 하나의 논문이 탄생하는 것 같다.
 
 생각해볼 점은 내 짧은 경험으로는 on-policy 알고리즘들이 runs 사이의 분산이 더 큰 것으로 알고 있다. 
