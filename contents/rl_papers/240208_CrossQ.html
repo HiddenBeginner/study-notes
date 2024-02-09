@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>CrossQ &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Learning Invariant predictor with Selective Augmentation (LISA)" href="../domain_generalization/231219_lisa.html" />
+    <link rel="prev" title="High variance across runs / failed runs" href="240109_high_variance_across_runs.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-75JTHKY1C6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-75JTHKY1C6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230530_CQL.html">
+   Conservative Q-Learning (CQL)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="231021_reward_is_enough.html">
+   Reward Is Enough
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="231226_PLASTIC.html">
+   PLASTIC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="231227_Reset.html">
+   Primacy bias and Reset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="240109_high_variance_across_runs.html">
+   High variance across runs / failed runs
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   CrossQ
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Domain/OOD generalization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../domain_generalization/231219_lisa.html">
+   Learning Invariant predictor with Selective Augmentation (LISA)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/240208_CrossQ.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/rl_papers/240208_CrossQ.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiment">
+   Experiment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   마치며
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>CrossQ</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#experiment">
+   Experiment
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   마치며
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="crossq">
+<h1>CrossQ<a class="headerlink" href="#crossq" title="Permalink to this headline">#</a></h1>
+<ul class="simple">
+<li><p>제목: Cross<span class="math notranslate nohighlight">\(Q\)</span>: Batch Normalization in Deep Reinforcement Learning for Greater Sample Efficiency and Simplicity</p></li>
+<li><p>저자: Bhatt, Aditya, Daniel Palenicek, Boris Belousov, and Max Argus, <em>Cornell University</em></p></li>
+<li><p>연도: 2024년</p></li>
+<li><p>학술대회: ICLR</p></li>
+<li><p>링크: <a class="reference external" href="https://arxiv.org/abs/1902.05605">https://arxiv.org/abs/1902.05605</a></p></li>
+<li><p>키워드: Off-policy, Sample efficiency</p></li>
+</ul>
+<br>
+<p>오늘은 얼마 전에 accpetance decision이 나온 2024 ICLR 논문 중 spotlight로 지정된 CrossQ 알고리즘에 대해 리뷰해볼 것이다.
+아니 2024년 ICLR 논문이라면서 왜 arXiv identifier는 19년도야? 그렇다. 이 논문의 아주 초기 아이디어는 2019년에 나온 것이 맞다.
+초기 아이디어를 다듬고 또 다듬고 또 다듬어서 결국 이번에 2024 ICLR에 승인된 것이다.
+아이디어를 구현해서 빠르게 결과가 나지 않으면 안 된다고 단정 짓고 다른 아이디어로 넘어가는 나 자신을 반성한다.
+결과가 안 좋으면 시간을 들여서 좋게 만들면 되는 것인데 말이다.</p>
+<br>
+<p>아무튼 이 논문은 다소 충격적이다.
+DQN 등장 이후로 많은 off-policy value-based 방법론들은 target critic network을 필수적으로 사용했다.
+실제로 SAC에서 target network를 삭제하면 학습 아예 안 되거나 발산한다고 한다.
+하지만, 이 논문에서는 target network를 삭제한다. 그 대신 학습 안정성을 확보하게 위하여 critic network에 batch normalization을 추가한다.</p>
+<br>
+<p>아니 굳이 target network 지우지 않고 batch normalization만 추가해도 성능 오르는거 아니야?라고 생각할 수 있다.
+학습 안정성에 도움을 준다는 batch normalization은 유독 강화학습 분야에서는 적용 사례가 별로 없다.
+그 이유는 강화학습 특성상 입력 데이터인 state-action pair <span class="math notranslate nohighlight">\((s, a)\)</span>의 분포가 계속 달라지기도 하고,
+학습은 state-action pair <span class="math notranslate nohighlight">\((s, a)\)</span>에 대해 진행되는데, next value를 계산할 때는 다음 state-action pair인 <span class="math notranslate nohighlight">\((s', a'_{\pi})\)</span>이 입력되기 때문이다.
+즉, <span class="math notranslate nohighlight">\((s, a)\)</span>에 대해 계산된 statistics을 <span class="math notranslate nohighlight">\((s', a'_{\pi})\)</span>에 적용하니 오히려 악영향을 끼치는 것이다.</p>
+<br>
+<p>아무튼 CrossQ의 요약은 다음 세 줄이다.</p>
+<ul class="simple">
+<li><p>SAC에서 target network 삭제하기</p></li>
+<li><p>그 대신 critic network에 batch normalization 추가하기</p></li>
+<li><p>위 2가지로 충분하지만, 성능을 조금 더 끌어올리기 위하여 wider한 네트워크 사용하기</p></li>
+</ul>
+<br>
+<p>첫 번째와 두 번째 항목이 이 논문의 main contribution이고, 세 번째는 이 논문의 contribution은 아니다.
+위 세 가지 수정 사항만으로 SAC과 비교하여 성능이 압도적으로 개선되었다.
+얼마나 성능이 향상되었냐면, CrossQ의 성능은 SAC 계열 SOTA 알고리즘인 REDQ와 DroQ과 동등하거나 그 이상이다.</p>
+<br>
+<p>참고로 REDQ는 10개의 critic network를 앙상블하는 알고리즘이고, DroQ는 critic network을 개수를 늘리는 대신 dropout을 통해 앙상블을 하는 알고리즘이다.
+그리고 두 알고리즘 모두 update-to-data (UTD) ratio를 20까지 올린 알고리즘이다. 즉, sample efficiency를 위하여 1 environment step마다 네트워크를 20번 학습시킨다는 뜻이다. 즉, REDQ와 DroQ는 critic 앙상블을 통하여 1보다 큰 UTD ratio 사용을 가능하게 만들었고, sample efficiency를 확보하여 SAC보다 더 빠르게 더 높은 성능을 도달한 알고리즘들이다. 하지만 CrossQ는 UTD=1로 설정했는데, REDQ와 DroQ만큼 빠르게 동등하거나 높은 성능을 기록하였다.</p>
+<br>
+<hr class="docutils" />
+<section id="experiment">
+<h2>Experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h2>
+<p>Gym의 MuJoCo benchmark를 사용했다. image observation은 아니고, true vector state를 사용한다.
+Image observation에 대한 이야기가 없어서 아쉬웠다.
+아래는 학습 곡선이다. 보통 Gym의 MuJoCo 벤치마킹 1백만번 정도 학습시켰는데, <span class="math notranslate nohighlight">\(x\)</span>축을 보면 알겠지만 30만 번에 대한 학습 곡선이다.
+REDQ, DroQ, CrossQ 모두 환경과의 적은 상호작용 횟수만으로도 높은 성능을 기록한다.</p>
+<figure class="align-default" id="crossq-figure1">
+<img alt="../../_images/240208_crossq_figure1.png" src="../../_images/240208_crossq_figure1.png" />
+</figure>
+<br>
+<p>아래는 학습 경과 시간에 따른 성능 그래프이다.
+REDQ, DroQ는 사실 환경과의 상호작용 횟수만 적을 뿐 앙상블 및 UTD=20을 사용하기 때문에 학습에 소요되는 시간은 훨씬 더 길다.
+하지만, CrossQ는 SAC와 비슷한 학습 시간만으로도 높은 성능을 기록할 수 있다.</p>
+<figure class="align-default" id="crossq-figure2">
+<img alt="../../_images/240208_crossq_figure2.png" src="../../_images/240208_crossq_figure2.png" />
+</figure>
+<br>
+<p>아래는 ablation study이다. SAC에서 target network를 삭제하면 아예 학습이 안 되게 된다.
+그러면 ablation study을 하기 어려울 것이다.
+따라서 이 실험에서는 critic의 activation 함수를 ReLU 대신 bounded activation 함수인 tanh를 사용하였다.
+Bounded activation 함수를 사용하게 되면 target network를 삭제해도 네트워크가 발산하는 현상이 줄어든다고 한다.
+<span class="math notranslate nohighlight">\(-TN\)</span>이 target network를 삭제한 것. <span class="math notranslate nohighlight">\(BN\)</span>이 critic network에 batch normalization을 추가한 것이다.
+Target network를 삭제해주고 batch normalization을 해줘야만 성능이 대폭 향상하게 된다 (HalfCheetah는 함정..).</p>
+<figure class="align-default" id="crossq-figure3">
+<img alt="../../_images/240208_crossq_figure3.png" src="../../_images/240208_crossq_figure3.png" />
+</figure>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id1">
+<h2>마치며<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>다음 생각이 든다.</p>
+<ul class="simple">
+<li><p>Image observation에서도 잘 작동할까?</p></li>
+<li><p>DQN 계열에서도 마찬가지 결과를 얻을 수 있을까?</p></li>
+<li><p>코드가 빨리 공개되었으면 좋겠다.</p></li>
+</ul>
+<p>이상 글을 마치도록 하겠다.</p>
+<br>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/rl_papers"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="240109_high_variance_across_runs.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">High variance across runs / failed runs</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../domain_generalization/231219_lisa.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Learning Invariant predictor with Selective Augmentation (LISA)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
