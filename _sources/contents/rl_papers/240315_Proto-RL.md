@@ -109,6 +109,100 @@ $$\mathcal{L}(\mathbf{p}_t, \mathbf{q}_{t+1})=-\mathbf{q}_{t+1}^{\top} \log \mat
 
 ## Maximum entropy exploration
 
-To be updated!
+지금까지 데이터가 수집되었다는 가정 하에 CL을 어떻게 할지에 대해 알아보았다. 
+다음으로 탐험을 통해 다양한 데이터를 수집하도록 에이전트를 훈련시키는 방법에 대해 알아보자.
+Task reward를 사용하지 않는 unsupervised RL 특성상 새롭게 보상 함수를 정의해야 한다.
+환경에서 정의된 reward가 아닌 강화학습 알고리즘이 고유하게 정의하는 보상 함수이기 때문에 intrinsic reward라고 부른다.
+이후에는 정의한 intrinsic reward에 SAC 등 일반적인 강화학습 알고리즘을 적용하여 정책을 훈련시키며 데이터를 수집하면 된다.
 
 <br>
+
+에이전트가 최대한 많은 상태를 탐험하는 것을 목표로 하기 때문에 정책을 따랐을 때 가능한 많은 상태들을 골고루 방문하면 좋을 것이다.
+따라서 정책을 따랐을 때 상태들에 방문할 확률분포 $d^{\pi}(\cdot)$의 엔트로피를 intrinsic reward를 사용한다. 
+먼저 주어진 정책 $\pi$의 discounted state visitation distribution $d^{\pi}(\mathbf{x})$는 다음과 같이 정의된다.
+
+$$
+d^{\pi}(\mathbf{x}) = (1 - \gamma) \sum_{t=0}^{\infty} \gamma^{t} d^{\pi}_t(\mathbf{x}),
+$$
+
+<br>
+
+이때, $d^{\pi}_t(x)$는 초기 상태에서 시작해서 정책 $\pi$를 따랐을 때 $t$시점에 상태 $\mathbf{x}$에 도달할 확률이다. 즉,
+
+$$
+d^{\pi}_t(\mathbf{x}) = \text{Pr}\left[ \mathbf{x}_t=\mathbf{x} \mid \mathbf{x}_0 \sim d_0, \forall k< t,  \mathbf{a}_k \sim \pi(\cdot\mid \mathbf{x}_k), \mathbf{x}_{k+1} \sim p(\cdot\mid \mathbf{x}_k, \mathbf{a}_k)\right],
+$$
+
+<br>
+
+이때, $d_0$는 환경 초기 상태의 확률분포이다. Proto-RL에서는 $d^{\pi}(\cdot)$의 엔트로피에 비례하여 intrinsic reward를 정의할 것이다. 확률변수 $X$에 대한 엔트로피는 다음과 같이 정의된다.
+
+$$
+\mathbb{H}_X = \mathbb{E}_X[-\log p(X)],
+$$
+
+<br>
+
+기댓값으로 표현되는 실제 엔트로피 값을 정확하게 계산하는 것은 어렵기 때문에 보통 데이터를 사용하여 엔트로피를 추정하게 된다. 가장 단순한 추정 방법은 $p(X)$에서 데이터 $N$개를 샘플링하여 기댓값을 추정하는 것이다. $N$개의 데이터를 모아놓은 집합 $\mathbf{X} = \left\{ \mathbf{x}_i \right\}_{i=1}^{N}$을 하자.
+$\mathbf{X}$로 추정한 엔트로피는 다음과 같다.
+
+$$
+\hat{\mathbb{H}}_\mathbf{X} = -\frac{1}{N} \sum_{i}^{N}\log p(\mathbf{x}_i),
+$$
+
+<br>
+
+하지만 우리의 경우 환경과 상호작용하여 샘플은 얻을 수 있을 언정 밀도함수 $d^{\pi}(\mathbf{x})$ 값을 계산하는 것이 불가능하다. 
+따라서, 다른 엔트로피 추정 방식인 non-parametric Nearest Neighbor 기반 엔트로피 추정 방식을 택한다:
+
+$$
+\hat{\mathbb{H}}_{k, \mathbf{X}} = -\frac{1}{N} \sum_{i}^{N}\ln \frac{k \Gamma(q/2 + 1)}{N \pi^{q/2}R^{q}_{i, k, \mathbf{X}}} + C_k,
+$$
+
+<br>
+
+이때, $k$는 사용자가 설정할 하이퍼파라미터이고 $q$는 상태 공간의 차원이다 ($ \mathbf{x} \in \mathbb{R}^q$). 그리고 $\Gamma$는 gamma 함수고 $C_k=\ln k - \frac{\Gamma'(k)}{\Gamma(k)}$는 bias correction을 위한 항이며 관심 없는 대상이다. 우리가 관심 있는 것은 $R_{i, k, \mathbf{X}} = \lVert \mathbf{x}_i - \text{NN}_{k, \mathbf{X}} (x_i)\rVert$인데, 여기서 $\text{NN}_{k , \mathbf{X}} (x_i)$는 데이터셋 $\mathbf{X}$에서 $\mathbf{x}_i$의 $k$번째 최근접 이웃이다. 직관적인 해석은 다음과 같다.
+- 최근접 이웃과 거리가 짧다 $\rightarrow$ 데이터가 몰려있다 $\rightarrow$ 엔트로피가 작다. 실제로, 분모가 작아지고, $\ln$ 값은 커지며 마이너스가 붙어 엔트로피 추정치는 작아진다.
+- 최근접 이웃과 거리가 멀다 $\rightarrow$ 데이터가 퍼져있다 $\rightarrow$ 엔트로피가 크다. 실제로 분포가 커지고 $\ln$ 값은 작아지며 마이너스가 붙어 엔트로피 추정치는 커진다.
+
+<br>
+
+사실 엔트로피를 정확하게 추정하여 intrinsic reward를 정의할 필요는 없기 때문에 그냥 엔트로피 추정치에 비례하게 보상함수를 정의하게 된다.
+
+$$ \hat{r}_t := \lVert \mathbf{z}_{t+1} - \text{NN}_{k, \mathbf{Q}} (\mathbf{z}_{t+1}) \rVert.$$
+
+<br>
+
+원래 $d^{\pi}(\mathbf{x})$의 엔트로피를 고려하려고 했으나 $\mathbf{x}$가 고차원이기 때문에 latent vector $\mathbf{z}$를 사용한다. 
+그리고 전체 데이터셋 $X$에서 상태 $\mathbf{x}$의 $k$번 째 최근접 이웃을 찾기는 어렵기 때문에 미리 샘플링 해놓은 latent vector들의 집합인 $\mathbf{Q}$에서 $k$번 째 최근접 이웃을 찾게 된다.
+
+$\mathbf{Q}$는 replay buffer처럼 사이즈가 고정된 큐 자료구조이며, 학습 동안 계속 데이터가 나갔다 들어온다.
+미니 배치 $\left\{ \mathbf{x}_i \right\}_{i=1}^{B}$가 들어오면 latent vector $\left\{ \mathbf{z}_i \right\}_{i=1}^{B}$들이 prototype $\left\{ \mathbf{c}_j \right\}_{j=1}^{M}$에 속할 확률을 담은 행렬 $\mathbf{W}$을 계산한다.
+
+$$
+w^{i}_j = \frac{\hat{z}_i^\top\mathbf{c}_j}{\sum_{k=1}^{B} \hat{z}_k^\top\mathbf{c}_j}.
+$$
+
+<br>
+
+그럼 각 prototypes $\mathbf{c}_j$마다 가중치 $\left\{ w^{i}_j \mid i=1,\ldots B \right\}$를 사용하여 latent vector 1개씩 뽑아 총 $M$개의 latent vectors를 $\mathbf{Q}$에 집어 넣는다. 이 과정 통해 $\mathbf{Q}$에는 가장 최근 $T=4$개 미니 배치에 대해 각 $M$개의 latent vectors가 저장되어 총 $MT=512 \times 4 = 2048$개의 latent vectors가 저장되게 된다. 
+
+
+<br>
+
+
+```{figure} ../img/240315_proto_figure3.png
+---
+name: 240315_proto_figure3
+width: 500px
+---
+```
+
+<br>
+
+미니 배치 내 각 데이터 $\mathbf{x}_i$마다 $\mathbf{Q}$ 에 저장된 $2048$개의 latent vectors로부터 $k$번 째 최근접 이웃을 계산하고,
+intrinsic reward $\hat{r}_i$를 계산한다. 이 intrinsic reward를 사용하여 SAC 알고리즘을 적용하면 끝이다. 
+참고로 Unsupervised RL 단계에서는 intrinsic reward 사용하고, 미세조정 단계에서는 task reward와 intrisic reward를 가중합한 것을 보상으로 정의하여 사용한다 ($r_t + \alpha \hat{r}_{t}$):
+
+<br>
+

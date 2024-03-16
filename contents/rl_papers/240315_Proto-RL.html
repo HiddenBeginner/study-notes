@@ -536,8 +536,76 @@ p_t^{(i)}=\frac{\operatorname{exp}(\hat{\mathbf{u}}_t^\top \mathbf{c}_i /\tau) }
 <hr class="docutils" />
 <section id="maximum-entropy-exploration">
 <h2>Maximum entropy exploration<a class="headerlink" href="#maximum-entropy-exploration" title="Permalink to this headline">#</a></h2>
-<p>To be updated!</p>
-<br></section>
+<p>지금까지 데이터가 수집되었다는 가정 하에 CL을 어떻게 할지에 대해 알아보았다.
+다음으로 탐험을 통해 다양한 데이터를 수집하도록 에이전트를 훈련시키는 방법에 대해 알아보자.
+Task reward를 사용하지 않는 unsupervised RL 특성상 새롭게 보상 함수를 정의해야 한다.
+환경에서 정의된 reward가 아닌 강화학습 알고리즘이 고유하게 정의하는 보상 함수이기 때문에 intrinsic reward라고 부른다.
+이후에는 정의한 intrinsic reward에 SAC 등 일반적인 강화학습 알고리즘을 적용하여 정책을 훈련시키며 데이터를 수집하면 된다.</p>
+<br>
+<p>에이전트가 최대한 많은 상태를 탐험하는 것을 목표로 하기 때문에 정책을 따랐을 때 가능한 많은 상태들을 골고루 방문하면 좋을 것이다.
+따라서 정책을 따랐을 때 상태들에 방문할 확률분포 <span class="math notranslate nohighlight">\(d^{\pi}(\cdot)\)</span>의 엔트로피를 intrinsic reward를 사용한다.
+먼저 주어진 정책 <span class="math notranslate nohighlight">\(\pi\)</span>의 discounted state visitation distribution <span class="math notranslate nohighlight">\(d^{\pi}(\mathbf{x})\)</span>는 다음과 같이 정의된다.</p>
+<div class="math notranslate nohighlight">
+\[
+d^{\pi}(\mathbf{x}) = (1 - \gamma) \sum_{t=0}^{\infty} \gamma^{t} d^{\pi}_t(\mathbf{x}),
+\]</div>
+<br>
+<p>이때, <span class="math notranslate nohighlight">\(d^{\pi}_t(x)\)</span>는 초기 상태에서 시작해서 정책 <span class="math notranslate nohighlight">\(\pi\)</span>를 따랐을 때 <span class="math notranslate nohighlight">\(t\)</span>시점에 상태 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>에 도달할 확률이다. 즉,</p>
+<div class="math notranslate nohighlight">
+\[
+d^{\pi}_t(\mathbf{x}) = \text{Pr}\left[ \mathbf{x}_t=\mathbf{x} \mid \mathbf{x}_0 \sim d_0, \forall k&lt; t,  \mathbf{a}_k \sim \pi(\cdot\mid \mathbf{x}_k), \mathbf{x}_{k+1} \sim p(\cdot\mid \mathbf{x}_k, \mathbf{a}_k)\right],
+\]</div>
+<br>
+<p>이때, <span class="math notranslate nohighlight">\(d_0\)</span>는 환경 초기 상태의 확률분포이다. Proto-RL에서는 <span class="math notranslate nohighlight">\(d^{\pi}(\cdot)\)</span>의 엔트로피에 비례하여 intrinsic reward를 정의할 것이다. 확률변수 <span class="math notranslate nohighlight">\(X\)</span>에 대한 엔트로피는 다음과 같이 정의된다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{H}_X = \mathbb{E}_X[-\log p(X)],
+\]</div>
+<br>
+<p>기댓값으로 표현되는 실제 엔트로피 값을 정확하게 계산하는 것은 어렵기 때문에 보통 데이터를 사용하여 엔트로피를 추정하게 된다. 가장 단순한 추정 방법은 <span class="math notranslate nohighlight">\(p(X)\)</span>에서 데이터 <span class="math notranslate nohighlight">\(N\)</span>개를 샘플링하여 기댓값을 추정하는 것이다. <span class="math notranslate nohighlight">\(N\)</span>개의 데이터를 모아놓은 집합 <span class="math notranslate nohighlight">\(\mathbf{X} = \left\{ \mathbf{x}_i \right\}_{i=1}^{N}\)</span>을 하자.
+<span class="math notranslate nohighlight">\(\mathbf{X}\)</span>로 추정한 엔트로피는 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbb{H}}_\mathbf{X} = -\frac{1}{N} \sum_{i}^{N}\log p(\mathbf{x}_i),
+\]</div>
+<br>
+<p>하지만 우리의 경우 환경과 상호작용하여 샘플은 얻을 수 있을 언정 밀도함수 <span class="math notranslate nohighlight">\(d^{\pi}(\mathbf{x})\)</span> 값을 계산하는 것이 불가능하다.
+따라서, 다른 엔트로피 추정 방식인 non-parametric Nearest Neighbor 기반 엔트로피 추정 방식을 택한다:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbb{H}}_{k, \mathbf{X}} = -\frac{1}{N} \sum_{i}^{N}\ln \frac{k \Gamma(q/2 + 1)}{N \pi^{q/2}R^{q}_{i, k, \mathbf{X}}} + C_k,
+\]</div>
+<br>
+<p>이때, <span class="math notranslate nohighlight">\(k\)</span>는 사용자가 설정할 하이퍼파라미터이고 <span class="math notranslate nohighlight">\(q\)</span>는 상태 공간의 차원이다 (<span class="math notranslate nohighlight">\( \mathbf{x} \in \mathbb{R}^q\)</span>). 그리고 <span class="math notranslate nohighlight">\(\Gamma\)</span>는 gamma 함수고 <span class="math notranslate nohighlight">\(C_k=\ln k - \frac{\Gamma'(k)}{\Gamma(k)}\)</span>는 bias correction을 위한 항이며 관심 없는 대상이다. 우리가 관심 있는 것은 <span class="math notranslate nohighlight">\(R_{i, k, \mathbf{X}} = \lVert \mathbf{x}_i - \text{NN}_{k, \mathbf{X}} (x_i)\rVert\)</span>인데, 여기서 <span class="math notranslate nohighlight">\(\text{NN}_{k , \mathbf{X}} (x_i)\)</span>는 데이터셋 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>에서 <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>의 <span class="math notranslate nohighlight">\(k\)</span>번째 최근접 이웃이다. 직관적인 해석은 다음과 같다.</p>
+<ul class="simple">
+<li><p>최근접 이웃과 거리가 짧다 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 데이터가 몰려있다 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 엔트로피가 작다. 실제로, 분모가 작아지고, <span class="math notranslate nohighlight">\(\ln\)</span> 값은 커지며 마이너스가 붙어 엔트로피 추정치는 작아진다.</p></li>
+<li><p>최근접 이웃과 거리가 멀다 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 데이터가 퍼져있다 <span class="math notranslate nohighlight">\(\rightarrow\)</span> 엔트로피가 크다. 실제로 분포가 커지고 <span class="math notranslate nohighlight">\(\ln\)</span> 값은 작아지며 마이너스가 붙어 엔트로피 추정치는 커진다.</p></li>
+</ul>
+<br>
+<p>사실 엔트로피를 정확하게 추정하여 intrinsic reward를 정의할 필요는 없기 때문에 그냥 엔트로피 추정치에 비례하게 보상함수를 정의하게 된다.</p>
+<div class="math notranslate nohighlight">
+\[ \hat{r}_t := \lVert \mathbf{z}_{t+1} - \text{NN}_{k, \mathbf{Q}} (\mathbf{z}_{t+1}) \rVert.\]</div>
+<br>
+<p>원래 <span class="math notranslate nohighlight">\(d^{\pi}(\mathbf{x})\)</span>의 엔트로피를 고려하려고 했으나 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>가 고차원이기 때문에 latent vector <span class="math notranslate nohighlight">\(\mathbf{z}\)</span>를 사용한다.
+그리고 전체 데이터셋 <span class="math notranslate nohighlight">\(X\)</span>에서 상태 <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>의 <span class="math notranslate nohighlight">\(k\)</span>번 째 최근접 이웃을 찾기는 어렵기 때문에 미리 샘플링 해놓은 latent vector들의 집합인 <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>에서 <span class="math notranslate nohighlight">\(k\)</span>번 째 최근접 이웃을 찾게 된다.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>는 replay buffer처럼 사이즈가 고정된 큐 자료구조이며, 학습 동안 계속 데이터가 나갔다 들어온다.
+미니 배치 <span class="math notranslate nohighlight">\(\left\{ \mathbf{x}_i \right\}_{i=1}^{B}\)</span>가 들어오면 latent vector <span class="math notranslate nohighlight">\(\left\{ \mathbf{z}_i \right\}_{i=1}^{B}\)</span>들이 prototype <span class="math notranslate nohighlight">\(\left\{ \mathbf{c}_j \right\}_{j=1}^{M}\)</span>에 속할 확률을 담은 행렬 <span class="math notranslate nohighlight">\(\mathbf{W}\)</span>을 계산한다.</p>
+<div class="math notranslate nohighlight">
+\[
+w^{i}_j = \frac{\hat{z}_i^\top\mathbf{c}_j}{\sum_{k=1}^{B} \hat{z}_k^\top\mathbf{c}_j}.
+\]</div>
+<br>
+<p>그럼 각 prototypes <span class="math notranslate nohighlight">\(\mathbf{c}_j\)</span>마다 가중치 <span class="math notranslate nohighlight">\(\left\{ w^{i}_j \mid i=1,\ldots B \right\}\)</span>를 사용하여 latent vector 1개씩 뽑아 총 <span class="math notranslate nohighlight">\(M\)</span>개의 latent vectors를 <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>에 집어 넣는다. 이 과정 통해 <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span>에는 가장 최근 <span class="math notranslate nohighlight">\(T=4\)</span>개 미니 배치에 대해 각 <span class="math notranslate nohighlight">\(M\)</span>개의 latent vectors가 저장되어 총 <span class="math notranslate nohighlight">\(MT=512 \times 4 = 2048\)</span>개의 latent vectors가 저장되게 된다.</p>
+<br>
+<figure class="align-default" id="proto-figure3">
+<a class="reference internal image-reference" href="../../_images/240315_proto_figure3.png"><img alt="../../_images/240315_proto_figure3.png" src="../../_images/240315_proto_figure3.png" style="width: 500px;" /></a>
+</figure>
+<br>
+<p>미니 배치 내 각 데이터 <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>마다 <span class="math notranslate nohighlight">\(\mathbf{Q}\)</span> 에 저장된 <span class="math notranslate nohighlight">\(2048\)</span>개의 latent vectors로부터 <span class="math notranslate nohighlight">\(k\)</span>번 째 최근접 이웃을 계산하고,
+intrinsic reward <span class="math notranslate nohighlight">\(\hat{r}_i\)</span>를 계산한다. 이 intrinsic reward를 사용하여 SAC 알고리즘을 적용하면 끝이다.
+참고로 Unsupervised RL 단계에서는 intrinsic reward 사용하고, 미세조정 단계에서는 task reward와 intrisic reward를 가중합한 것을 보상으로 정의하여 사용한다 (<span class="math notranslate nohighlight">\(r_t + \alpha \hat{r}_{t}\)</span>):</p>
+<br>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
