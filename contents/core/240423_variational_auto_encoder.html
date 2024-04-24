@@ -404,13 +404,23 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#latent-variable-model">
-   Latent variable model
+  <a class="reference internal nav-link" href="#id1">
+   문제 정의
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#variation-inference">
-   Variation inference
+  <a class="reference internal nav-link" href="#latent-variable-model">
+   Latent Variable Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-inference">
+   Variational Inference
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-lower-bound">
+   Variational Lower Bound
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -438,13 +448,23 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#latent-variable-model">
-   Latent variable model
+  <a class="reference internal nav-link" href="#id1">
+   문제 정의
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#variation-inference">
-   Variation inference
+  <a class="reference internal nav-link" href="#latent-variable-model">
+   Latent Variable Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-inference">
+   Variational Inference
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-lower-bound">
+   Variational Lower Bound
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -464,19 +484,30 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="variational-autoencoder-vae">
 <h1>Variational Autoencoder (VAE)<a class="headerlink" href="#variational-autoencoder-vae" title="Permalink to this headline">#</a></h1>
-<p>맨날 헷갈리는 VAE 정리 =ㅅ=</p>
-<p><span class="math notranslate nohighlight">\(\mathbf{X}=\left\{ x_i \right\}_{i=1}^{N}\)</span>을 주어진 <span class="math notranslate nohighlight">\(N\)</span>개 데이터의 집합이라고 하자. 그리고 이 <span class="math notranslate nohighlight">\(N\)</span>개의 데이터는 어떤 알 수 없는 확률분포 <span class="math notranslate nohighlight">\(p\)</span>에 대한 i.i.d 샘플이라고 가정하자.
+<p>맨날 헷갈리는 VAE 정리 =ㅅ=. Variational inference에 대한 개념 정리 위주이기 때문에 그림 없음 주의!</p>
+<br>
+<section id="id1">
+<h2>문제 정의<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p><span class="math notranslate nohighlight">\(\mathbf{X}=\left\{ x_i \in \mathbb{R}^{n} \right\}_{i=1}^{N}\)</span>을 <span class="math notranslate nohighlight">\(n\)</span>차원 데이터를 <span class="math notranslate nohighlight">\(N\)</span>개 모아놓은 집합이라고 하자.
+그리고 이 <span class="math notranslate nohighlight">\(N\)</span>개의 데이터는 어떤 알 수 없는 확률분포 <span class="math notranslate nohighlight">\(p\)</span>에서 독립적으로 샘플링되었다고 가정하자.
 우리의 목표는 뉴럴 네트워크를 사용하여 데이터를 생성시킨 확률분포 <span class="math notranslate nohighlight">\(p\)</span>를 근사하는 것이다.
 따라서 뉴럴 네트워크로 근사시킨 확률분포를 <span class="math notranslate nohighlight">\(p_\theta\)</span>로 표기할 것이다.
 우리의 maximum likelihood estimation (MLE) 목적함수는 다음과 같다.</p>
 <div class="math notranslate nohighlight">
 \[\operatorname*{maximize}_\theta \frac{1}{N}\sum_{i=1}^{N} \log p_\theta(x_i).\]</div>
 <br>
+</section>
 <hr class="docutils" />
 <section id="latent-variable-model">
-<h2>Latent variable model<a class="headerlink" href="#latent-variable-model" title="Permalink to this headline">#</a></h2>
-<p>여기서 우리는 latent variable model을 사용할 것이다. 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 생성하는 데</p>
-<p>그럼, 위 목적함수에서 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>를 다시 적어줄 수 있다.</p>
+<h2>Latent Variable Model<a class="headerlink" href="#latent-variable-model" title="Permalink to this headline">#</a></h2>
+<p>여기서 우리는 latent variable model을 사용할 것이다.
+데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 생성하는 데 필요한 실질적인 정보가 어떤 latent variable <span class="math notranslate nohighlight">\(z\)</span>에 담겨져 있다고 가정하는 것이다.
+예컨데, 용의자의 몽타주를 그리기 위하여 용의자의 얼굴을 묘사할 때 “얼굴은 길고, 눈은 작으며 쌍커풀이 없다. 안경을 썼고, 코는 크며, 입은 얍실하게 생겼다.” (필자 얼굴 절대 아님) 등으로 묘사할 것이지 얼굴의 좌표마다 색상값을 알려주진 않을 것이다.
+얼굴의 좌표마다 색상값으로 나타난 것이 원래 이미지 <span class="math notranslate nohighlight">\(x_i\)</span>라고 생각하면 되고, 몽타주 묘사가 latent variable <span class="math notranslate nohighlight">\(z\)</span>라고 생각하면 된다.
+또한 같은 몽타주 묘사에서도 다양한 결과 사진이 생성되는 특징도 있을 것이다.
+실질적인 정보 <span class="math notranslate nohighlight">\(z\)</span>를 바탕으로 <span class="math notranslate nohighlight">\(x_i\)</span>를 생성하는 것이므로 우리가 근사할 확률 분포는 <span class="math notranslate nohighlight">\(p_{\theta}(x_i | z)\)</span>이 된다. 일반적으로 <span class="math notranslate nohighlight">\(z \in \mathbb{R}^m\)</span>를 <span class="math notranslate nohighlight">\(m\)</span>차원 벡터로 사용하며, <span class="math notranslate nohighlight">\(m\)</span>은 <span class="math notranslate nohighlight">\(n\)</span>보다 작게 설정하는 것이 국룰이다 <span class="math notranslate nohighlight">\((m &lt;&lt; n)\)</span>.</p>
+<br>
+<p>Latent variable을 도입하면 좋은 점 중 하나는 <span class="math notranslate nohighlight">\(p_{\theta}(x_i | z)\)</span>를 가우시안 분포 등 비교적 단순한 확률분포로 모델링하여도 최종적인 <span class="math notranslate nohighlight">\(p_{\theta}(x_i)\)</span>는 직접 계산이 불가능할 정도로 복잡한 확률분포가 된다는 것이다. Latent variable <span class="math notranslate nohighlight">\(z\)</span>를 도입하면 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>를 다음과 같이 다시 적어줄 수 있다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{matrix}
@@ -486,7 +517,14 @@ p_\theta(x_i)
 \end{matrix}
 \end{split}\]</div>
 <br>
-<p>첫 번째 등식은 joint distribution <span class="math notranslate nohighlight">\(p(x_i, z)\)</span>를 <span class="math notranslate nohighlight">\(z\)</span>에 대해 marginalization 해준 것이고, 두 번째 등식은 Bayes’s theorem을 사용한 것이다.</p>
+<p>첫 번째 등식은 joint distribution <span class="math notranslate nohighlight">\(p(x_i, z)\)</span>를 <span class="math notranslate nohighlight">\(z\)</span>에 대해 marginalization 해준 것이고, 두 번째 등식은 조건부 확률의 정의를 사용한 것이다. <span class="math notranslate nohighlight">\(p_\theta(x_i | z)\)</span>가 단순한 분포라 하더라고 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>는 적분으로 표현되기 때문에 계산할 수 없는 대상이 된다. VAE에서는 <span class="math notranslate nohighlight">\(p_\theta(x_i | z)\)</span>을 가우시안 분포로 모델링한다.</p>
+<div class="math notranslate nohighlight">
+\[
+p_\theta(x_i | z) = \mathcal{N}\left(\mu_\theta(z), \sigma^2_\theta(z)\right).
+\]</div>
+<br>
+<p><span class="math notranslate nohighlight">\(z\)</span>를 입력 받아서 2개의 벡터 <span class="math notranslate nohighlight">\(\mu_\theta(z) \in \mathbb{R}^n, \sigma_\theta(z)\in \mathbb{R}^n\)</span>를 출력하는 뉴럴 네트워크로 구현한다.
+다시 돌아가서 위의 적분을 조금 더 변형해보자.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{matrix}
@@ -507,7 +545,7 @@ p_\theta(x_i)
 \end{matrix}
 \end{split}\]</div>
 <br>
-<p>두 번째 부등식은 로그 함수가 위로 볼록하다는 성질 때문에 Jensen’s inequality 만족하기 때문이다. 이제 겉보기에는 적분 계산이 사라졌고, <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>가 기댓값으로 표현된다. 기댓값으로 표현되면 좋은 점은 다음과 같이 <span class="math notranslate nohighlight">\(z\)</span>를 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>에서 샘플링하여 표본평균으로 기댓값을 근사할 수 있다는 점이다.</p>
+<p>두 번째 부등식은 로그 함수가 위로 볼록하다는 성질 때문에 Jensen’s inequality 만족하기 때문에 성립한다. 이제 겉보기에는 적분 계산이 사라졌고, <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>가 기댓값으로 표현된다. 기댓값으로 표현되면 좋은 점은 다음과 같이 <span class="math notranslate nohighlight">\(z\)</span>를 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>에서 샘플링하여 표본평균으로 기댓값을 근사할 수 있다는 점이다.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{matrix}
@@ -520,9 +558,9 @@ p_\theta(x_i)
 <br>
 </section>
 <hr class="docutils" />
-<section id="variation-inference">
-<h2>Variation inference<a class="headerlink" href="#variation-inference" title="Permalink to this headline">#</a></h2>
-<p>여기서 문제는 posterior인 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>를 계산하는 것과 샘플링하는 것 모두 불가능하다. 따라서 우리는 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>을 보다 더 쉬운 분포로 근사를 할 것이다. 예를 들어, <span class="math notranslate nohighlight">\(x_i\)</span>에 depend한 가우시안 분포로 근사할 수 있을 것이다. 이는 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 입력 받아 가우시안 분포의 평균과 분산을 출력하는 뉴럴 네트워크로 구현 가능하다.</p>
+<section id="variational-inference">
+<h2>Variational Inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">#</a></h2>
+<p>여기서 문제는 posterior인 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>를 계산하는 것과 샘플링하는 것 모두 불가능하다. 따라서 우리는 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>을 보다 더 쉬운 분포로 근사를 할 것이다. 예를 들어, <span class="math notranslate nohighlight">\(x_i\)</span>에 dependent한 가우시안 분포로 근사할 수 있을 것이다. 이는 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 입력 받아 가우시안 분포의 평균과 분산을 출력하는 뉴럴 네트워크로 구현 가능하다.</p>
 <div class="math notranslate nohighlight">
 \[q_{\phi}(z|x_i)=\mathcal{N}\left(\mu_\phi(x_i), \sigma_\phi^2(x_i) \right).\]</div>
 <br>
@@ -552,6 +590,70 @@ p_\theta(x_i)
 \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] \approx \frac{1}{K} \sum_{k=1}^{K} \log  p_\theta(x_i | z_k),
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(z_k \sim q_\phi(z|x_i)\)</span> for <span class="math notranslate nohighlight">\(k=1, 2, \ldots, K\)</span>.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="variational-lower-bound">
+<h2>Variational Lower Bound<a class="headerlink" href="#variational-lower-bound" title="Permalink to this headline">#</a></h2>
+<p>지금까지 우리는 다음과 같은 부등식을 얻었다. 부등식을 얻어서 어디에 사용할 것인가? 우리의 목표는 주어진 데이터셋 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>에 대해서 좌변 값들의 평균을 최대화하는 <span class="math notranslate nohighlight">\(\theta\)</span>를 찾는 것이다. 문제는 latent variable을 도입하여 <span class="math notranslate nohighlight">\(p_\theta(x_i | z)\)</span>를 간단한 분포로 가져가는 대신 좌변의 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>는 계산하지 못하게 되었다는 것이다.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) \ge \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right].
+\]</div>
+<br>
+<p>따라서 우리의 전략은 좌변을 최대화하는 대신 부등식의 우변인 lower bound를 최대화하는 것이다. Variational inference에서 이 lower bound를 variational lower bound라고 부른다. 이때, 의심 많은 사람이라면 다음과 같은 질문을 제기할 수 있다 (필자는 절대 의심하지 않았다).</p>
+<center>
+<i>"Lower bound를 최대화한다고 해서 좌변이 최대화된다는 보장이 있어?"</i>
+</center>
+<br>
+<p>특정 조건에서 그렇다고 말할 수 있다. 특정 조건에서 부등식이 아닌 등호가 성립하며, 등호가 성립하기 때문에 우변을 최대화하면 좌변도 같이 최대화된다. 그 특정 조건이 무엇이냐면, 바로 우리의 variational distribution <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>와 실제 posterior <span class="math notranslate nohighlight">\(p(z|x_i)\)</span> 사이의 KL divergence가 0이 될 때이다.</p>
+<br>
+<p>위에서는 부등식을 조금 더 쉽게 유도하기 위하여 Jensen’s inequality를 사용했지만,  다시 한 번 등식만 사용하여 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>를 적어보자.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+\log p_\theta(x_i)
+ &amp; = &amp; \displaystyle \log p_\theta(x_i) \cdot \int_z q_{\phi}(z|x_i)  \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \log p_\theta(x_i)  \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \log \frac{p_\theta(x_i|z)p(z)}{p(z|x_i)} \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \log \frac{q_\phi(z|x_i) p_\theta(x_i|z)p(z)}{q_\phi(z|x_i) p(z|x_i)} \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \left( \log p_\theta(x_i|z) - \log \frac{q_{\phi}(z|x_i)}{p(z)} + \log\frac{q_{\phi}(z|x_i)}{p(z|x_i)}  \right) \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right] + D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right].
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>첫 번째 등호는 확률분포의 적분 값은 1인 것을 이용한 것이고, 두 번째 등호는 적분 변수가 <span class="math notranslate nohighlight">\(z\)</span>이기 때문에 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>는 상수로 간주되어 적분 안으로 들어온 것이다. 세 번째 등호는 Bayes’s theorem인 <span class="math notranslate nohighlight">\(P(A) = \frac{P(A|B) P(B)}{P(B|A)}\)</span>를 사용한 것이다. 네 번째 등호는 로그 안에 <span class="math notranslate nohighlight">\(1=\frac{q_\phi(z|x_i)}{q_\phi(z|x_i)}\)</span>을 곱해준 것이고, 다섯 번째 등호는 로그의 성질을 사용해서 관심 있는 항들로 분리해놓은 것이다. 마지막 등호는 KL divergence의 정의를 사용한 것이다.</p>
+<br>
+<p>Variational lower bound를 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>라고 적어주면, <span class="math notranslate nohighlight">\(\log p_\theta (x_i)\)</span>는 다음과 같이 표현될 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) = \mathcal{L}_i(\theta, \phi) + D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right].
+\]</div>
+<br>
+<p>KL divergence는 항상 양수 값을 갖는다. 따라서 우리가 이미 확인했던 부등식을 한 번 더 확인할 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) \ge \mathcal{L}_i(\theta, \phi).
+\]</div>
+<br>
+<p>만약 <span class="math notranslate nohighlight">\(D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right] = 0\)</span>이면, 다음 등식이 성립한다.</p>
+<div class="math notranslate nohighlight">
+\[\log p_\theta(x_i) = \mathcal{L}_i(\theta, \phi)\]</div>
+<br>
+<p>따라서 이때 우변을 최대화하면 좌변도 최대화가 된다. 그럼 똑똑한 사람이라면 다음과 같이 질문할 수 있다.</p>
+<center>
+그럼 variational lower bound만 줄일 것이 아니라 KL divergence도 0이 되도록 파라미터 업데이트를 해야 하는 것 아닌가요? 하지만 실제 posterior는 못 구한다면서요? </i>
+</center>
+<br>
+<p>다시 한 번 등식을 보자.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) = \mathcal{L}_i(\theta, \phi) + D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right].
+\]</div>
+<br>
+<p>파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>를 조절하여 variational lower bound <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>를 증가시키면, 등호가 성립하기 위해서 KL divergence 텀이 줄어들어야만 한다 (좌변은 <span class="math notranslate nohighlight">\(\phi\)</span>가 없기 때문에 값이 유지되기 때문이다). 즉, <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>을 최대화시키는 것만으로도 <span class="math notranslate nohighlight">\(D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right]\)</span>가 줄어드는 효과가 있는 셈이다.</p>
+<br>
+<p>따라서 <span class="math notranslate nohighlight">\(\phi\)</span>에 대해서 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>을 최대화하면 KL divergence가 0에 가까워질테고, KL divergence가 0에 가까우면 가까울수록 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>이 실제 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>에 가까워지고, 이때 <span class="math notranslate nohighlight">\(\theta\)</span>에 대해서 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>을 최대화하면 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>도 같이 커질 수 있다는 것이다.</p>
 <br>
 </section>
 <hr class="docutils" />
