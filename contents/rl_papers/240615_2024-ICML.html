@@ -642,8 +642,8 @@ If the authors do not want to use their figure/video, please email me.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{matrix}
-&amp; &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \Big( -\mathbb{1}(s\ne g) + \gamma V^*(s',g) - V(s,g)\Big)\right] \\
-&amp; = &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \Big( -\mathbb{1}(s\ne g) - \gamma \lVert \phi(s') - \phi(g) \rVert_2 + \lVert \phi(s) - \phi(g) \rVert_2 \Big)\right],
+&amp; &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \big( -\mathbb{1}(s\ne g) + \gamma V^*(s',g) - V^*(s,g)\big)\right] \\
+&amp; = &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \big( -\mathbb{1}(s\ne g) - \gamma \lVert \phi(s') - \phi(g) \rVert_2 + \lVert \phi(s) - \phi(g) \rVert_2 \big)\right],
 \end{matrix}
 \end{split}\]</div>
 <ul class="simple">
@@ -651,8 +651,12 @@ If the authors do not want to use their figure/video, please email me.</p>
 </ul>
 <br>
 <ul class="simple">
-<li><p><strong>The second phase</strong> trains a latent-conditioned policy <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span>.</p></li>
-<li><p>Coming soon!</p></li>
+<li><p><strong>The second phase</strong> trains a latent-conditioned policy <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span> with a intrnsic reward function defined as</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[r(s, z, s') = &lt;\phi(s') - \phi(s), z&gt;, \]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(z\)</span> is sampled uniformly from the set of unit vectors. To maximize such reward function, the policy <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span> must take an action that makes the next state <span class="math notranslate nohighlight">\(s'\)</span> as far as from <span class="math notranslate nohighlight">\(s\)</span> in the direction of <span class="math notranslate nohighlight">\(z\)</span>. Since <span class="math notranslate nohighlight">\(z\)</span> is arbitrary, HILP obtains a set of policies that span the latent span, capturing diverse behaviors from the unlabeled dataset.</p></li>
 </ul>
 <br>
 </section>
