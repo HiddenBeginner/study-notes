@@ -559,8 +559,8 @@ title="Print to PDF"
 <p>I found and listed up some RL papers accepted at 2024 ICML.
 Ths listed papers are selected based on my interest.
 I am mainly interested in (1) model-free off-policy algorithm for a continuous action space and (2) offline/online unsupervised RL.
-I prefer empirical papers to theoretical papers, because I have a poor mathematical background.
-For each paper below, I wrote the affiliation(s) of the first author (or authors with the equal contribution).
+I prefer empirical papers to theoretical papers, because I have a poor mathematical background.</p>
+<p>For each paper below, I wrote the affiliation(s) of the first author (or authors with the equal contribution).
 I borrowed a representative video/figure for each paper without author’s permission, but leave the related mention.
 If the authors do not want to use their figure/video, please email me.</p>
 <br>
@@ -622,7 +622,37 @@ If the authors do not want to use their figure/video, please email me.</p>
 </ul>
 <p><strong>Summary</strong></p>
 <ul class="simple">
-<li><p>It will be updated.</p></li>
+<li><p>HILP consists of two training phase. <strong>The first phase</strong> trains an encoder <span class="math notranslate nohighlight">\(\phi: \mathcal{S} \rightarrow \mathcal{Z}\)</span> that preserves the temporal distance (the minimum number of time steps from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(g\)</span>, denoted as <span class="math notranslate nohighlight">\(d^{*}(s, g))\)</span> between two states in the original state space, i.e., we want to find an encoder <span class="math notranslate nohighlight">\(\phi\)</span> that satisfies the following property</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[d^{*}(s, g) = \lVert \phi(s) - \phi(g) \rVert_2 \; \text{ for all } \; s, g\in\mathcal{S}.\]</div>
+<ul class="simple">
+<li><p>HILP learns such encoder in a very elegant way. They borrow the notion of optimal goal-conditioned value function. The optimal goal-conditioned value function has the following property:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[V^{*}(s, g) = - d^*(s, g) \; \text{ for all } \; s, g\in\mathcal{S}.\]</div>
+<ul class="simple">
+<li><p>Then, the encoder will satisfy the following:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[V^{*}(s, g) = - \lVert \phi(s) - \phi(g) \rVert_2.\]</div>
+<ul class="simple">
+<li><p>This implies that the optimal goal-conditioned value function can be implicitly defined by using the encoder. The encoder is trained using the following objective for each sample <span class="math notranslate nohighlight">\((s, s', g) \sim \mathcal{D}\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+&amp; &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \Big( -\mathbb{1}(s\ne g) + \gamma V^*(s',g) - V(s,g)\Big)\right] \\
+&amp; = &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \Big( -\mathbb{1}(s\ne g) - \gamma \lVert \phi(s') - \phi(g) \rVert_2 + \lVert \phi(s) - \phi(g) \rVert_2 \Big)\right],
+\end{matrix}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(\mathcal{l}^2_\tau(x) |\tau - \mathbb{1}(x&lt;0)|x^2\)</span> represents the expectile loss (i.e. they use IQL).</p></li>
+</ul>
+<br>
+<ul class="simple">
+<li><p><strong>The second phase</strong> trains a latent-conditioned policy <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span>.</p></li>
+<li><p>Coming soon!</p></li>
 </ul>
 <br>
 </section>
