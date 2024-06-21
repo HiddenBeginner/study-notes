@@ -569,15 +569,31 @@ If the authors do not want to use their figure/video, please email me.</p>
 <h2>Model-free RL &amp; Model-based RL<a class="headerlink" href="#model-free-rl-model-based-rl" title="Permalink to this headline">#</a></h2>
 <section id="ace-off-policy-actor-critic-with-causality-aware-entropy-regularization">
 <h3>ACE: Off-Policy Actor-Critic with Causality-Aware Entropy Regularization<a class="headerlink" href="#ace-off-policy-actor-critic-with-causality-aware-entropy-regularization" title="Permalink to this headline">#</a></h3>
+<figure class="align-default" id="icml-ace">
+<img alt="../../_images/240615_2024icml_ace.png" src="../../_images/240615_2024icml_ace.png" />
+</figure>
 <ul class="simple">
 <li><p>Tianying Ji, Yongyuan Liang, Yan Zeng, Yu Luo, Guowei Xu, Jiawei Guo, Ruijie Zheng, Furong Huang, Fuchun Sun, Huazhe Xu, <em>Tsinghua University, University of Maryland</em></p></li>
 <li><p>Keywords: Model-free RL</p></li>
 <li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2402.14528">https://arxiv.org/abs/2402.14528</a></p></li>
 <li><p>Project page: <a class="reference external" href="https://ace-rl.github.io/">https://ace-rl.github.io/</a></p></li>
 </ul>
-<p><strong>Summary</strong></p>
+<p><strong>Summary (Note that I partially understood this paper)</strong></p>
 <ul class="simple">
-<li><p>I haven’t read yet and it will be updated</p></li>
+<li><p>Let an action space <span class="math notranslate nohighlight">\(\mathcal{A} \subseteq \mathbb{R}^{d}\)</span> be given. Then, an action <span class="math notranslate nohighlight">\(\mathbf{a} = (a_1, a_2, \ldots, a_d)\)</span> is a <span class="math notranslate nohighlight">\(d\)</span>-dimensional vector.</p></li>
+<li><p><strong>Motivation:</strong> Over the course of training, the trained primitive behavior might be different. For example, if the task is to grasp a hammer and hit a screw (see the left figure above), then the agent would learn to lower its arm and grasp the hammer firmly in the early stage of training, Then, the agent learns to optimize its movement path to hit the screw (the right figure). For each primitive behavior, the relationship between each action dimension <span class="math notranslate nohighlight">\(a_i\)</span> and the corresponding reward <span class="math notranslate nohighlight">\(r\)</span> might be different (the middle figure). Thus, we should consider the causal effect of each action dimension and recieved reward.</p></li>
+<li><p>This paper propose to CausalSAC, which uses the causality-aware entropy <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> instead of the standard entropy:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}_c(\pi(\cdot|\mathbf{s})) = - \mathbb{E}_{\mathbf{a} \in \mathcal{A}}\left[ \sum_{i=1}^{d} \mathbf{B}_{a_i\rightarrow r | \mathbf{s}} \pi(a_i|\mathbf{s})\log \pi(a_i | \mathbf{s}) \right],\]</div>
+<ul class="simple">
+<li><p>where the weight <span class="math notranslate nohighlight">\(\mathbf{B}_{a_i\rightarrow r | \mathbf{s}}\)</span> is a causal effects from <span class="math notranslate nohighlight">\(a_i\)</span> to <span class="math notranslate nohighlight">\(r\)</span> given <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>, can be discovered by the DirectLiNGAM method.</p></li>
+<li><p>To prevent the overfitting due to excessive focus on certain behavior, this paper uses gradient-dormancy-based reset mechanism, i.e., they periodically add random intialized parameters to the curruent network parameters:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\theta_t = (1-\eta) \theta_{t-1} + \eta \phi_i, \phi \sim \text{initializer},\]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(\eta\)</span> is determined by the degree of gradient-dormancy.</p></li>
 </ul>
 <br>
 </section>
