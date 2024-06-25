@@ -564,6 +564,7 @@ I prefer empirical papers to theoretical papers, because I have a poor mathemati
 I borrowed a representative video/figure for each paper without author’s permission, but leave the related mention.
 If the authors do not want to use their figure/video, please email me.</p>
 <br>
+<p>Please note that my summaries of the listed paper may contain incorrect information. Please, let me know if you find any such misleading information.</p>
 <hr class="docutils" />
 <section id="model-free-rl-model-based-rl">
 <h2>Model-free RL &amp; Model-based RL<a class="headerlink" href="#model-free-rl-model-based-rl" title="Permalink to this headline">#</a></h2>
@@ -574,7 +575,7 @@ If the authors do not want to use their figure/video, please email me.</p>
 </figure>
 <ul class="simple">
 <li><p>Tianying Ji, Yongyuan Liang, Yan Zeng, Yu Luo, Guowei Xu, Jiawei Guo, Ruijie Zheng, Furong Huang, Fuchun Sun, Huazhe Xu, <em>Tsinghua University, University of Maryland</em></p></li>
-<li><p>Keywords: Model-free RL</p></li>
+<li><p>Keywords: Model-free RL, Causal effect of each action dimension to reward</p></li>
 <li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2402.14528">https://arxiv.org/abs/2402.14528</a></p></li>
 <li><p>Project page: <a class="reference external" href="https://ace-rl.github.io/">https://ace-rl.github.io/</a></p></li>
 </ul>
@@ -608,13 +609,24 @@ If the authors do not want to use their figure/video, please email me.</p>
 <center>Video from the author's project page</center>
 <ul class="simple">
 <li><p>Ignat Georgiev, Krishnan Srinivasan, Jie Xu, Eric Heiden, and Animesh Garg, <em>Georgia Institute of Technology</em></p></li>
-<li><p>Keywords: First-order model-based RL</p></li>
+<li><p>Keywords: First-order model-based RL, Differentiable simulation</p></li>
 <li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2405.17784">https://arxiv.org/abs/2405.17784</a></p></li>
 <li><p>Project page: <a class="reference external" href="https://adaptive-horizon-actor-critic.github.io/">https://adaptive-horizon-actor-critic.github.io/</a></p></li>
 </ul>
-<p><strong>Summary</strong></p>
+<p><strong>Summary (Note that I partially understood this paper)</strong></p>
 <ul class="simple">
-<li><p>I haven’t read yet and it will be updated</p></li>
+<li><p>The specific scope of this work is First-Order Model-Based RL (FO-MBRL), which optimizes the objective function by directly computing the gradient of returns:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\nabla_{\theta} J(\theta) := \mathbb{E}_{\pi_\theta}\left[ \nabla_\theta  R_H(s_1) \right], \; \text{ where } \; R_H(s_1) = \sum_{h=1}^{H} r(s_h, a_h).\]</div>
+<ul class="simple">
+<li><p>Computing this gradient involves the chain rule. For example, suppose that <span class="math notranslate nohighlight">\(H=3\)</span>. Then, the gradient of <span class="math notranslate nohighlight">\(r(s_3, a_3)\)</span> is as follows:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\nabla_\theta r(s_3, a_3) = \nabla_{a_3}r(s_3, a_3)\nabla_\theta \pi_\theta(a_3\mid s_3)+\nabla_{s_3}r(s_3, a_3) \nabla_\theta f(s_2, a_2).\]</div>
+<ul class="simple">
+<li><p>Assume the state <span class="math notranslate nohighlight">\(s_3\)</span> has stiff dynamics, i.e., <span class="math notranslate nohighlight">\(\lVert \nabla_\theta f(s_2, a_2) \rVert &gt; C\)</span> for some <span class="math notranslate nohighlight">\(C\)</span>. Then, the sampled gradient estimation has a large error. Thus, they want to truncated the trajectory at the point of stiff dynamics.</p></li>
+<li><p>They introduces a novel constrained objective for the actor with the constrained term <span class="math notranslate nohighlight">\(\lVert \nabla_\theta f(s_t, a_t) \rVert \le C, \forall t\in\left\{ 0,\ldots,H \right\}\)</span>. Thus, they reduces gradient error obtained from samples at stiff dynamics.</p></li>
 </ul>
 <br>
 </section>
