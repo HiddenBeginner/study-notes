@@ -739,6 +739,9 @@ that takes as a set of (state, action) pairs from an offline dataset and predict
 <hr class="docutils" />
 <section id="cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery">
 <h3>CeSD: Constrained Ensemble Exploration for Unsupervised Skill Discovery<a class="headerlink" href="#cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery" title="Permalink to this headline">#</a></h3>
+<figure class="align-default" id="icml-cesd">
+<img alt="../../_images/240615_2024icml_cesd.png" src="../../_images/240615_2024icml_cesd.png" />
+</figure>
 <ul class="simple">
 <li><p>Chenjia Bai, Rushuai Yang, Qiaosheng Zhang, Kang Xu, Yi Chen, Ting Xiao, Xuelong Li, <em>Shanghai Artificial Intelligence Laboratory</em></p></li>
 <li><p>Keywords: Online unsupervised skill discovery with exploration</p></li>
@@ -747,7 +750,10 @@ that takes as a set of (state, action) pairs from an offline dataset and predict
 </ul>
 <p><strong>Summary</strong></p>
 <ul class="simple">
-<li><p>I haven’t read yet. It will be updated soon.</p></li>
+<li><p><strong>Motivation</strong>: When training skill policies <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span>, different skills share the same value network, thus optimizing one skill can affect learning other skills, which results in a low diversity of behaviors. <span class="math notranslate nohighlight">\(\rightarrow\)</span> Using an ensemble of value functions.</p></li>
+<li><p>This paper learns <span class="math notranslate nohighlight">\(n\)</span> skills using an ensemble of <span class="math notranslate nohighlight">\(n\)</span> value functions.</p></li>
+<li><p>Each value function maximize the entropy of a subset of a state space <span class="math notranslate nohighlight">\(H(\mathcal{S}_i)\)</span> where <span class="math notranslate nohighlight">\(\mathcal{S}_i \subseteq \mathcal{S}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{S}_i \cap \mathcal{S}_j = \emptyset\)</span> for all <span class="math notranslate nohighlight">\(i \ne j\)</span>.</p></li>
+<li><p>A partition <span class="math notranslate nohighlight">\(\left\{ \mathcal{S}_1, \ldots, \mathcal{S}_n \right\}\)</span> of state spaces is implemented using Proto-RL</p></li>
 </ul>
 <br>
 </section>
