@@ -446,11 +446,6 @@ title="Print to PDF"
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#do-s-and-don-ts-learning-desirable-skills-with-instruction-videos">
-     Do’s and Don’ts: Learning Desirable Skills with Instruction Videos
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery">
      CeSD: Constrained Ensemble Exploration for Unsupervised Skill Discovery
     </a>
@@ -518,11 +513,6 @@ title="Print to PDF"
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#fre-unsupervised-zero-shot-reinforcement-learning-via-functional-reward-encodings">
      FRE: Unsupervised Zero-Shot Reinforcement Learning via Functional Reward Encodings
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#do-s-and-don-ts-learning-desirable-skills-with-instruction-videos">
-     Do’s and Don’ts: Learning Desirable Skills with Instruction Videos
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
@@ -703,36 +693,6 @@ If the authors do not want to use their figure/video, please email me.</p>
 that takes as a set of (state, action) pairs from an offline dataset and predicts their rewards.</p></li>
 <li><p>Here, reward functions are sampled from the one of goal-condition reward, random linear reward, and random MLP reward.</p></li>
 <li><p><strong>Strength:</strong> It requires very small number of <span class="math notranslate nohighlight">\((s, r)\)</span> pairs (specifically 32 pairs) to find the task vector, whereas prior methods (Forward-Backward method or Successor Features) required more than thousands pairs (specifically 5120 pairs).</p></li>
-</ul>
-<br>
-</section>
-<hr class="docutils" />
-<section id="do-s-and-don-ts-learning-desirable-skills-with-instruction-videos">
-<h3>Do’s and Don’ts: Learning Desirable Skills with Instruction Videos<a class="headerlink" href="#do-s-and-don-ts-learning-desirable-skills-with-instruction-videos" title="Permalink to this headline">#</a></h3>
-<center>
-<video class="center-block" width="100%" autoplay="" loop="" muted="" playsinline="" width="500px">
-    <source src="https://mynsng.github.io/dodont/img/DoDont_Quadruped.mp4" type="video/mp4">
-</video>
-</center>
-<center>Video from the author's project page</center>
-<ul class="simple">
-<li><p>Hyunseung Kim, Byungkun Lee, Hojoon Lee, Dongyoon Hwang, Donghu Kim, and Jaegul Choo, <em>KAIST</em></p></li>
-<li><p>Keywords: Learning human intention from action-free videos, followed by online unsupervised skill discovery</p></li>
-<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2406.00324">https://arxiv.org/abs/2406.00324</a></p></li>
-<li><p>Project page: <a class="reference external" href="https://mynsng.github.io/dodont/">https://mynsng.github.io/dodont/</a></p></li>
-</ul>
-<p><strong>Summary</strong></p>
-<ul class="simple">
-<li><p><strong>Motivation:</strong> Online unsupervised skill discovery (USD) agent without any human demonstration may learn unsafe behaviors. This paper propose a way to inject human intention using action-free videos before online USD phase.</p></li>
-<li><p>For video learning phase, this paper tries to learn an instruction network from action-free videos.</p></li>
-<li><p>Here, the instruction network <span class="math notranslate nohighlight">\(\hat{p}_\psi(s, s')\)</span> tries to predict whether a given pair of two states <span class="math notranslate nohighlight">\((s, s')\)</span> is a desired pair or not.</p></li>
-<li><p>After that, for online USD phase based on METRA algorithm, the instruction network is used to provide a distance between two states.</p></li>
-<li><p>Here, if two states have a high value of the instruction network, two states are regarded desirable so that provided with METRA’s intrinsic reward with a more weight:</p></li>
-</ul>
-<div class="math notranslate nohighlight">
-\[r_t = \hat{p}_\psi(s_t, s_{t+1}) (\phi(s_{t+1}) - \phi(s_t))^\top z\]</div>
-<ul class="simple">
-<li><p><strong>Strength:</strong> Only eight videos are enough to inject human intention into the online USD agent.</p></li>
 </ul>
 <br>
 </section>
