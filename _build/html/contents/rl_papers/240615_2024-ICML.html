@@ -1,0 +1,804 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>RL Papers at 2024 ICML &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Learning Invariant predictor with Selective Augmentation (LISA)" href="../domain_generalization/231219_lisa.html" />
+    <link rel="prev" title="Variational Intrinsic Successor Features (VISR)" href="240606_VISR.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-75JTHKY1C6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-75JTHKY1C6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/240423_variational_auto_encoder.html">
+   Variational Autoencoder (VAE)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230530_CQL.html">
+   Conservative Q-Learning (CQL)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="231021_reward_is_enough.html">
+   Reward Is Enough
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="231226_PLASTIC.html">
+   PLASTIC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="231227_Reset.html">
+   Primacy bias and Reset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="240109_high_variance_across_runs.html">
+   High variance across runs / failed runs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="240208_CrossQ.html">
+   CrossQ
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="240315_Proto-RL.html">
+   Proto-RL
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="240606_VISR.html">
+   Variational Intrinsic Successor Features (VISR)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   RL Papers at 2024 ICML
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Domain/OOD generalization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../domain_generalization/231219_lisa.html">
+   Learning Invariant predictor with Selective Augmentation (LISA)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/240615_2024-ICML.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/rl_papers/240615_2024-ICML.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-free-rl-model-based-rl">
+   Model-free RL &amp; Model-based RL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ace-off-policy-actor-critic-with-causality-aware-entropy-regularization">
+     ACE: Off-Policy Actor-Critic with Causality-Aware Entropy Regularization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ahac-adaptive-horizon-actor-critic-for-policy-learning-in-contact-rich-differentiable-simulation">
+     AHAC: Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#online-offline-unsupervised-rl">
+   Online/Offline Unsupervised RL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hilp-foundation-policies-with-hilbert-representations">
+     HILP: Foundation Policies with Hilbert Representations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fre-unsupervised-zero-shot-reinforcement-learning-via-functional-reward-encodings">
+     FRE: Unsupervised Zero-Shot Reinforcement Learning via Functional Reward Encodings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery">
+     CeSD: Constrained Ensemble Exploration for Unsupervised Skill Discovery
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#position-papers">
+   Position Papers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#position-open-endedness-is-essential-for-artificial-superhuman-intelligence">
+     Position: Open-Endedness Is Essential for Artificial Superhuman Intelligence
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>RL Papers at 2024 ICML</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#model-free-rl-model-based-rl">
+   Model-free RL &amp; Model-based RL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ace-off-policy-actor-critic-with-causality-aware-entropy-regularization">
+     ACE: Off-Policy Actor-Critic with Causality-Aware Entropy Regularization
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ahac-adaptive-horizon-actor-critic-for-policy-learning-in-contact-rich-differentiable-simulation">
+     AHAC: Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#online-offline-unsupervised-rl">
+   Online/Offline Unsupervised RL
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hilp-foundation-policies-with-hilbert-representations">
+     HILP: Foundation Policies with Hilbert Representations
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fre-unsupervised-zero-shot-reinforcement-learning-via-functional-reward-encodings">
+     FRE: Unsupervised Zero-Shot Reinforcement Learning via Functional Reward Encodings
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery">
+     CeSD: Constrained Ensemble Exploration for Unsupervised Skill Discovery
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#position-papers">
+   Position Papers
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#position-open-endedness-is-essential-for-artificial-superhuman-intelligence">
+     Position: Open-Endedness Is Essential for Artificial Superhuman Intelligence
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="rl-papers-at-2024-icml">
+<h1>RL Papers at 2024 ICML<a class="headerlink" href="#rl-papers-at-2024-icml" title="Permalink to this headline">#</a></h1>
+<p>I found and listed up some RL papers accepted at 2024 ICML.
+Ths listed papers are selected based on my interest.
+I am mainly interested in (1) model-free off-policy algorithm for a continuous action space and (2) offline/online unsupervised RL.
+I prefer empirical papers to theoretical papers, because I have a poor mathematical background.</p>
+<p>For each paper below, I wrote the affiliation(s) of the first author (or authors with the equal contribution).
+I borrowed a representative video/figure for each paper without author’s permission, but leave the related mention.
+If the authors do not want to use their figure/video, please email me.</p>
+<br>
+<p>Please note that my summaries of the listed paper may contain incorrect information. Please, let me know if you find any such misleading information.</p>
+<hr class="docutils" />
+<section id="model-free-rl-model-based-rl">
+<h2>Model-free RL &amp; Model-based RL<a class="headerlink" href="#model-free-rl-model-based-rl" title="Permalink to this headline">#</a></h2>
+<section id="ace-off-policy-actor-critic-with-causality-aware-entropy-regularization">
+<h3>ACE: Off-Policy Actor-Critic with Causality-Aware Entropy Regularization<a class="headerlink" href="#ace-off-policy-actor-critic-with-causality-aware-entropy-regularization" title="Permalink to this headline">#</a></h3>
+<figure class="align-default" id="icml-ace">
+<img alt="../../_images/240615_2024icml_ace.png" src="../../_images/240615_2024icml_ace.png" />
+</figure>
+<ul class="simple">
+<li><p>Tianying Ji, Yongyuan Liang, Yan Zeng, Yu Luo, Guowei Xu, Jiawei Guo, Ruijie Zheng, Furong Huang, Fuchun Sun, Huazhe Xu, <em>Tsinghua University, University of Maryland</em></p></li>
+<li><p>Keywords: Model-free RL, Causal effect of each action dimension to reward</p></li>
+<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2402.14528">https://arxiv.org/abs/2402.14528</a></p></li>
+<li><p>Project page: <a class="reference external" href="https://ace-rl.github.io/">https://ace-rl.github.io/</a></p></li>
+</ul>
+<p><strong>Summary (Note that I partially understood this paper)</strong></p>
+<ul class="simple">
+<li><p>Let an action space <span class="math notranslate nohighlight">\(\mathcal{A} \subseteq \mathbb{R}^{d}\)</span> be given. Then, an action <span class="math notranslate nohighlight">\(\mathbf{a} = (a_1, a_2, \ldots, a_d)\)</span> is a <span class="math notranslate nohighlight">\(d\)</span>-dimensional vector.</p></li>
+<li><p><strong>Motivation:</strong> Over the course of training, the trained primitive behavior might be different. For example, if the task is to grasp a hammer and hit a screw (see the left figure above), then the agent would learn to lower its arm and grasp the hammer firmly in the early stage of training, Then, the agent learns to optimize its movement path to hit the screw (the right figure). For each primitive behavior, the relationship between each action dimension <span class="math notranslate nohighlight">\(a_i\)</span> and the corresponding reward <span class="math notranslate nohighlight">\(r\)</span> might be different (the middle figure). Thus, we should consider the causal effect of each action dimension and recieved reward.</p></li>
+<li><p>This paper propose to CausalSAC, which uses the causality-aware entropy <span class="math notranslate nohighlight">\(\mathcal{C}\)</span> instead of the standard entropy:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\mathcal{H}_c(\pi(\cdot|\mathbf{s})) = - \mathbb{E}_{\mathbf{a} \in \mathcal{A}}\left[ \sum_{i=1}^{d} \mathbf{B}_{a_i\rightarrow r | \mathbf{s}} \pi(a_i|\mathbf{s})\log \pi(a_i | \mathbf{s}) \right],\]</div>
+<ul class="simple">
+<li><p>where the weight <span class="math notranslate nohighlight">\(\mathbf{B}_{a_i\rightarrow r | \mathbf{s}}\)</span> is a causal effects from <span class="math notranslate nohighlight">\(a_i\)</span> to <span class="math notranslate nohighlight">\(r\)</span> given <span class="math notranslate nohighlight">\(\mathbf{s}\)</span>, can be discovered by the DirectLiNGAM method.</p></li>
+<li><p>To prevent the overfitting due to excessive focus on certain behavior, this paper uses gradient-dormancy-based reset mechanism, i.e., they periodically add random intialized parameters to the curruent network parameters:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\theta_t = (1-\eta) \theta_{t-1} + \eta \phi_i, \phi \sim \text{initializer},\]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(\eta\)</span> is determined by the degree of gradient-dormancy.</p></li>
+</ul>
+<br>
+</section>
+<hr class="docutils" />
+<section id="ahac-adaptive-horizon-actor-critic-for-policy-learning-in-contact-rich-differentiable-simulation">
+<h3>AHAC: Adaptive Horizon Actor-Critic for Policy Learning in Contact-Rich Differentiable Simulation<a class="headerlink" href="#ahac-adaptive-horizon-actor-critic-for-policy-learning-in-contact-rich-differentiable-simulation" title="Permalink to this headline">#</a></h3>
+<center>
+<video id="teaser" autoplay="" muted="" loop="" playsinline="" width="500px" align>
+    <source src="https://adaptive-horizon-actor-critic.github.io/media/all_envs_trimmed.mp4" type="video/mp4">
+</video>
+</center>
+<center>Video from the author's project page</center>
+<ul class="simple">
+<li><p>Ignat Georgiev, Krishnan Srinivasan, Jie Xu, Eric Heiden, and Animesh Garg, <em>Georgia Institute of Technology</em></p></li>
+<li><p>Keywords: First-order model-based RL, Differentiable simulation</p></li>
+<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2405.17784">https://arxiv.org/abs/2405.17784</a></p></li>
+<li><p>Project page: <a class="reference external" href="https://adaptive-horizon-actor-critic.github.io/">https://adaptive-horizon-actor-critic.github.io/</a></p></li>
+</ul>
+<p><strong>Summary (Note that I partially understood this paper)</strong></p>
+<ul class="simple">
+<li><p>The specific scope of this work is First-Order Model-Based RL (FO-MBRL), which optimizes the objective function by directly computing the gradient of returns:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\nabla_{\theta} J(\theta) := \mathbb{E}_{\pi_\theta}\left[ \nabla_\theta  R_H(s_1) \right], \; \text{ where } \; R_H(s_1) = \sum_{h=1}^{H} r(s_h, a_h).\]</div>
+<ul class="simple">
+<li><p>Computing this gradient involves the chain rule. For example, suppose that <span class="math notranslate nohighlight">\(H=3\)</span>. Then, the gradient of <span class="math notranslate nohighlight">\(r(s_3, a_3)\)</span> is as follows:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\nabla_\theta r(s_3, a_3) = \nabla_{a_3}r(s_3, a_3)\nabla_\theta \pi_\theta(a_3\mid s_3)+\nabla_{s_3}r(s_3, a_3) \nabla_\theta f(s_2, a_2).\]</div>
+<ul class="simple">
+<li><p>Assume the state <span class="math notranslate nohighlight">\(s_3\)</span> has stiff dynamics, i.e., <span class="math notranslate nohighlight">\(\lVert \nabla_\theta f(s_2, a_2) \rVert &gt; C\)</span> for some <span class="math notranslate nohighlight">\(C\)</span>. Then, the sampled gradient estimation has a large error. Thus, they want to truncated the trajectory at the point of stiff dynamics.</p></li>
+<li><p>They introduces a novel constrained objective for the actor with the constrained term <span class="math notranslate nohighlight">\(\lVert \nabla_\theta f(s_t, a_t) \rVert \le C, \forall t\in\left\{ 0,\ldots,H \right\}\)</span>. Thus, they reduces gradient error obtained from samples at stiff dynamics.</p></li>
+</ul>
+<br>
+</section>
+</section>
+<hr class="docutils" />
+<section id="online-offline-unsupervised-rl">
+<h2>Online/Offline Unsupervised RL<a class="headerlink" href="#online-offline-unsupervised-rl" title="Permalink to this headline">#</a></h2>
+<section id="hilp-foundation-policies-with-hilbert-representations">
+<h3>HILP: Foundation Policies with Hilbert Representations<a class="headerlink" href="#hilp-foundation-policies-with-hilbert-representations" title="Permalink to this headline">#</a></h3>
+<center>
+<video class="center-block" width="100%" autoplay="" loop="" muted="" playsinline="" width="500px">
+    <source src="https://seohong.me/projects/hilp/img/qual.mp4" type="video/mp4">
+</video>
+</center>
+<center>Video from the author's project page</center>
+<ul class="simple">
+<li><p>Seohong Park, Tobias Kreiman, Sergey Levine, <em>UC Berkeley</em></p></li>
+<li><p>Unsupervised Offline RL</p></li>
+<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2402.15567">https://arxiv.org/abs/2402.15567</a></p></li>
+<li><p>Project page: <a class="reference external" href="https://seohong.me/projects/hilp/">https://seohong.me/projects/hilp/</a></p></li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul class="simple">
+<li><p>HILP consists of two training phase. <strong>The first phase</strong> trains an encoder <span class="math notranslate nohighlight">\(\phi: \mathcal{S} \rightarrow \mathcal{Z}\)</span> that preserves the temporal distance (the minimum number of time steps from <span class="math notranslate nohighlight">\(s\)</span> to <span class="math notranslate nohighlight">\(g\)</span>, denoted as <span class="math notranslate nohighlight">\(d^{*}(s, g))\)</span> between two states in the original state space, i.e., we want to find an encoder <span class="math notranslate nohighlight">\(\phi\)</span> that satisfies the following property</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[d^{*}(s, g) = \lVert \phi(s) - \phi(g) \rVert_2 \; \text{ for all } \; s, g\in\mathcal{S}.\]</div>
+<ul class="simple">
+<li><p>HILP learns such encoder in a very elegant way. They borrow the notion of optimal goal-conditioned value function. The optimal goal-conditioned value function has the following property:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[V^{*}(s, g) = - d^*(s, g) \; \text{ for all } \; s, g\in\mathcal{S}.\]</div>
+<ul class="simple">
+<li><p>Then, the encoder will satisfy the following:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[V^{*}(s, g) = - \lVert \phi(s) - \phi(g) \rVert_2.\]</div>
+<ul class="simple">
+<li><p>This implies that the optimal goal-conditioned value function can be implicitly defined by using the encoder. The encoder is trained using the following objective for each sample <span class="math notranslate nohighlight">\((s, s', g) \sim \mathcal{D}\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+&amp; &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \big( -\mathbb{1}(s\ne g) + \gamma V^*(s',g) - V^*(s,g)\big)\right] \\
+&amp; = &amp; \mathbb{E}_{(s, s', g) \sim \mathcal{D}} \left[ \mathcal{l}_\tau^2 \big( -\mathbb{1}(s\ne g) - \gamma \lVert \phi(s') - \phi(g) \rVert_2 + \lVert \phi(s) - \phi(g) \rVert_2 \big)\right],
+\end{matrix}
+\end{split}\]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(\mathcal{l}^2_\tau(x) |\tau - \mathbb{1}(x&lt;0)|x^2\)</span> represents the expectile loss (i.e. they use IQL).</p></li>
+</ul>
+<br>
+<ul class="simple">
+<li><p><strong>The second phase</strong> trains a latent-conditioned policy <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span> with a intrnsic reward function defined as</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[r(s, z, s') = &lt;\phi(s') - \phi(s), z&gt;, \]</div>
+<ul class="simple">
+<li><p>where <span class="math notranslate nohighlight">\(z\)</span> is sampled uniformly from the set of unit vectors. To maximize such reward function, the policy <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span> must take an action that makes the next state <span class="math notranslate nohighlight">\(s'\)</span> as far as from <span class="math notranslate nohighlight">\(s\)</span> in the direction of <span class="math notranslate nohighlight">\(z\)</span>. Since <span class="math notranslate nohighlight">\(z\)</span> is arbitrary, HILP obtains a set of policies that span the latent span, capturing diverse behaviors from the unlabeled dataset.</p></li>
+</ul>
+<br>
+</section>
+<hr class="docutils" />
+<section id="fre-unsupervised-zero-shot-reinforcement-learning-via-functional-reward-encodings">
+<h3>FRE: Unsupervised Zero-Shot Reinforcement Learning via Functional Reward Encodings<a class="headerlink" href="#fre-unsupervised-zero-shot-reinforcement-learning-via-functional-reward-encodings" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Kevin Frans, Seohong Park, Pieter Abbeel, Sergey Levine, <em>UC Berkeley</em></p></li>
+<li><p>Keywords: Unsupervised offline RL, followed by zero-shot deployment to a labeled offline RL</p></li>
+<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2402.17135">https://arxiv.org/abs/2402.17135</a></p></li>
+<li><p>Project page: <a class="reference external" href="https://github.com/kvfrans/fre">https://github.com/kvfrans/fre</a></p></li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul class="simple">
+<li><p>During the unsupervised offline RL phase, it learns Functional Reward Encoding (FRE), which is a Transformer-based encoder
+that takes as a set of (state, action) pairs from an offline dataset and predicts their rewards.</p></li>
+<li><p>Here, reward functions are sampled from the one of goal-condition reward, random linear reward, and random MLP reward.</p></li>
+<li><p><strong>Strength:</strong> It requires very small number of <span class="math notranslate nohighlight">\((s, r)\)</span> pairs (specifically 32 pairs) to find the task vector, whereas prior methods (Forward-Backward method or Successor Features) required more than thousands pairs (specifically 5120 pairs).</p></li>
+</ul>
+<br>
+</section>
+<hr class="docutils" />
+<section id="cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery">
+<h3>CeSD: Constrained Ensemble Exploration for Unsupervised Skill Discovery<a class="headerlink" href="#cesd-constrained-ensemble-exploration-for-unsupervised-skill-discovery" title="Permalink to this headline">#</a></h3>
+<figure class="align-default" id="icml-cesd">
+<img alt="../../_images/240615_2024icml_cesd.png" src="../../_images/240615_2024icml_cesd.png" />
+</figure>
+<ul class="simple">
+<li><p>Chenjia Bai, Rushuai Yang, Qiaosheng Zhang, Kang Xu, Yi Chen, Ting Xiao, Xuelong Li, <em>Shanghai Artificial Intelligence Laboratory</em></p></li>
+<li><p>Keywords: Online unsupervised skill discovery with exploration</p></li>
+<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2405.16030">https://arxiv.org/abs/2405.16030</a></p></li>
+<li><p>Project page: <a class="reference external" href="https://github.com/Baichenjia/CeSD">https://github.com/Baichenjia/CeSD</a></p></li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul class="simple">
+<li><p><strong>Motivation</strong>: When training skill policies <span class="math notranslate nohighlight">\(\pi(a|s, z)\)</span>, different skills share the same value network, thus optimizing one skill can affect learning other skills, which results in a low diversity of behaviors. <span class="math notranslate nohighlight">\(\rightarrow\)</span> Using an ensemble of value functions.</p></li>
+<li><p>This paper learns <span class="math notranslate nohighlight">\(n\)</span> skills using an ensemble of <span class="math notranslate nohighlight">\(n\)</span> value functions.</p></li>
+<li><p>Each value function maximize the entropy of a subset of a state space <span class="math notranslate nohighlight">\(H(\mathcal{S}_i)\)</span> where <span class="math notranslate nohighlight">\(\mathcal{S}_i \subseteq \mathcal{S}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{S}_i \cap \mathcal{S}_j = \emptyset\)</span> for all <span class="math notranslate nohighlight">\(i \ne j\)</span>.</p></li>
+<li><p>A partition <span class="math notranslate nohighlight">\(\left\{ \mathcal{S}_1, \ldots, \mathcal{S}_n \right\}\)</span> of state spaces is implemented using Proto-RL</p></li>
+</ul>
+<br>
+</section>
+</section>
+<hr class="docutils" />
+<section id="position-papers">
+<h2>Position Papers<a class="headerlink" href="#position-papers" title="Permalink to this headline">#</a></h2>
+<section id="position-open-endedness-is-essential-for-artificial-superhuman-intelligence">
+<h3>Position: Open-Endedness Is Essential for Artificial Superhuman Intelligence<a class="headerlink" href="#position-open-endedness-is-essential-for-artificial-superhuman-intelligence" title="Permalink to this headline">#</a></h3>
+<ul class="simple">
+<li><p>Edward Hughes, Michael Dennis, Jack Parker-Holder, Feryal Behbahani, Aditi Mavalankar, Yuge Shi, Tom Schaul, Tim Rocktäschel, <em>DeepMind</em></p></li>
+<li><p>Paper link: <a class="reference external" href="https://arxiv.org/abs/2406.04268">https://arxiv.org/abs/2406.04268</a></p></li>
+</ul>
+<p><strong>Summary</strong></p>
+<ul class="simple">
+<li><p>I haven’t read yet. It will be updated soon.</p></li>
+</ul>
+<br></section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/rl_papers"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="240606_VISR.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Variational Intrinsic Successor Features (VISR)</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../domain_generalization/231219_lisa.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Learning Invariant predictor with Selective Augmentation (LISA)</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

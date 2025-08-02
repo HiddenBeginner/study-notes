@@ -26,6 +26,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
@@ -61,6 +62,14 @@ const thebe_selector_output = ".output, .cell_output"
 
     <!-- Google Analytics -->
     
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-75JTHKY1C6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-75JTHKY1C6');
+                </script>
+
   </head>
   <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
 <!-- Checkboxes to toggle the left sidebar -->
@@ -116,24 +125,39 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  머신러닝/딥러닝 근본적 내용들
+  ML/DL 코어
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/beyond_batchnorm.html">
+  <a class="reference internal" href="../core/beyond_batchnorm.html">
    Beyond BatchNorm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../fundamental/230420_ulc.html">
+  <a class="reference internal" href="../core/230420_ulc.html">
    Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/240423_variational_auto_encoder.html">
+   Variational Autoencoder (VAE)
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  강화학습 논문 정리
+  강화학습
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -152,10 +176,57 @@ const thebe_selector_output = ".output, .cell_output"
    Dreamer
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/230530_CQL.html">
+   Conservative Q-Learning (CQL)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231021_reward_is_enough.html">
+   Reward Is Enough
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231226_PLASTIC.html">
+   PLASTIC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231227_Reset.html">
+   Primacy bias and Reset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/240109_high_variance_across_runs.html">
+   High variance across runs / failed runs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/240208_CrossQ.html">
+   CrossQ
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/240315_Proto-RL.html">
+   Proto-RL
+  </a>
+ </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  잡학사전
+  Domain/OOD generalization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../domain_generalization/231219_lisa.html">
+   Learning Invariant predictor with Selective Augmentation (LISA)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
  </span>
 </p>
 <ul class="nav bd-sidenav">
@@ -385,6 +456,11 @@ title="Print to PDF"
    Training DQN Agent
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation">
+   Evaluation
+  </a>
+ </li>
 </ul>
 
     </nav>
@@ -429,6 +505,11 @@ title="Print to PDF"
    Training DQN Agent
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#evaluation">
+   Evaluation
+  </a>
+ </li>
 </ul>
 
                         </nav>
@@ -441,7 +522,8 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="control-cartracing-v2-environment-using-dqn-from-scratch">
 <h1>Control CartRacing-v2 environment using DQN from scratch<a class="headerlink" href="#control-cartracing-v2-environment-using-dqn-from-scratch" title="Permalink to this headline">#</a></h1>
-<p>This tut</p>
+<p>In this tutorial, we will implement DQN algorithm for controllong CartRacing-v2 environment, which has the image observation space.
+We will focus more on how to convert a given raw environment into MDP environment, and we assume that the readers already have known DQN algorithm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -455,6 +537,8 @@ title="Print to PDF"
 </div>
 </div>
 </div>
+<br>
+<hr class="docutils" />
 <section id="carracing-v2-environment">
 <h2>CarRacing-v2 environment<a class="headerlink" href="#carracing-v2-environment" title="Permalink to this headline">#</a></h2>
 <p>Let’s first take a look at <code class="docutils literal notranslate"><span class="pre">CarRacing-v2</span></code> envrionment.
@@ -475,6 +559,7 @@ Action space:  Discrete(5)
 </div>
 </div>
 </div>
+<br>
 <p>Let’s see the initial state.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -495,6 +580,7 @@ Action space:  Discrete(5)
 <img alt="../../_images/2023-04-20_CartRacing-v2_DQN_5_1.png" src="../../_images/2023-04-20_CartRacing-v2_DQN_5_1.png" />
 </div>
 </div>
+<br>
 <p>It looks weird… It is not what we saw… What’s going on here?
 Let me do nothing (<code class="docutils literal notranslate"><span class="pre">no_op</span></code> action) for the next 50 steps.
 (You don’t need to write the following code)</p>
@@ -12616,6 +12702,7 @@ RUADgKcIaADw1P8D3bs3afrIuRQAAAAASUVORK5CYII=\
 </div><img alt="../../_images/2023-04-20_CartRacing-v2_DQN_7_1.png" src="../../_images/2023-04-20_CartRacing-v2_DQN_7_1.png" />
 </div>
 </div>
+<br>
 <p>We just saw that the game screen gradually zooms in for the first 50 steps. Of course, you can move the car during this zoom-in phase, but this zoom-in phase is a very small part of the overall game, which may hinder our agent from learning to control the car. Thus, we will not use the first 50 steps of the game.</p>
 <p>The second thing we have to know is that we are given only one current game frame for each step. This observation setting cannot satisfy the Markov property. We cannot guess if the car is moving forward or backward from only one frame, which means we cannot predict the next frame for given the current frame. Thus, we need to stack the previous <span class="math notranslate nohighlight">\(k=4\)</span> frames.</p>
 <p>Let’s read together some part of DQN paper.</p>
@@ -12651,6 +12738,7 @@ we also use a simple frame-skipping technique [3]. More precisely, the agent see
 </div>
 </div>
 </div>
+<br>
 <p>Now, we will change initial setting (<code class="docutils literal notranslate"><span class="pre">reset</span></code> method below) and observations (<code class="docutils literal notranslate"><span class="pre">step</span></code> method below).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -12703,6 +12791,7 @@ we also use a simple frame-skipping technique [3]. More precisely, the agent see
 </div>
 </div>
 </div>
+<br>
 <p>We can create our desired environment as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -12727,6 +12816,7 @@ we also use a simple frame-skipping technique [3]. More precisely, the agent see
 <img alt="../../_images/2023-04-20_CartRacing-v2_DQN_13_1.png" src="../../_images/2023-04-20_CartRacing-v2_DQN_13_1.png" />
 </div>
 </div>
+<br>
 <p>Let’s do <code class="docutils literal notranslate"><span class="pre">gas</span></code> action for the next 4 steps. You can see our car was moving forward!
 (The position of the car does not seem to change, but it is actually moving forward. See background)</p>
 <div class="cell docutils container">
@@ -12746,7 +12836,9 @@ we also use a simple frame-skipping technique [3]. More precisely, the agent see
 <img alt="../../_images/2023-04-20_CartRacing-v2_DQN_15_0.png" src="../../_images/2023-04-20_CartRacing-v2_DQN_15_0.png" />
 </div>
 </div>
+<br>
 </section>
+<hr class="docutils" />
 <section id="q-network">
 <h2>Q-network<a class="headerlink" href="#q-network" title="Permalink to this headline">#</a></h2>
 <p>Let’s read together some part of DQN paper.</p>
@@ -12777,7 +12869,9 @@ filters with stride 4 with the input image and applies a rectifier nonlinearity 
 </div>
 </div>
 </div>
+<br>
 </section>
+<hr class="docutils" />
 <section id="replay-buffer">
 <h2>Replay buffer<a class="headerlink" href="#replay-buffer" title="Permalink to this headline">#</a></h2>
 <p>For implementation of replay buffer, the pre-creation of the required arrays is more efficient than the use of <code class="docutils literal notranslate"><span class="pre">collections.queue</span></code>.
@@ -12819,7 +12913,9 @@ I referenced <a class="reference external" href="https://github.com/sfujim/TD3/b
 </div>
 </div>
 </div>
+<br>
 </section>
+<hr class="docutils" />
 <section id="dqn">
 <h2>DQN<a class="headerlink" href="#dqn" title="Permalink to this headline">#</a></h2>
 <p>DQN agent has four methods.</p>
@@ -12909,7 +13005,9 @@ I referenced <a class="reference external" href="https://github.com/sfujim/TD3/b
 </div>
 </div>
 </div>
+<br>
 </section>
+<hr class="docutils" />
 <section id="training-dqn-agent">
 <h2>Training DQN Agent<a class="headerlink" href="#training-dqn-agent" title="Permalink to this headline">#</a></h2>
 <p>We will train DQN agent until the total number of interactions with the environment reaches 2 millilons and evaluate our agent evry 10,000 steps. The below codes will take a very long time.</p>
@@ -12991,6 +13089,11 @@ I referenced <a class="reference external" href="https://github.com/sfujim/TD3/b
 <img alt="../../_images/2023-04-20_CartRacing-v2_DQN_25_0.png" src="../../_images/2023-04-20_CartRacing-v2_DQN_25_0.png" />
 </div>
 </div>
+<br>
+</section>
+<hr class="docutils" />
+<section id="evaluation">
+<h2>Evaluation<a class="headerlink" href="#evaluation" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">eval_env</span> <span class="o">=</span> <span class="n">gym</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="s1">&#39;CarRacing-v2&#39;</span><span class="p">,</span> <span class="n">continuous</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">render_mode</span><span class="o">=</span><span class="s1">&#39;rgb_array&#39;</span><span class="p">)</span>
@@ -13043,7 +13146,7 @@ I referenced <a class="reference external" href="https://github.com/sfujim/TD3/b
 </div>
 </div>
 </div>
-<p><img src='../img/CartRacing-v2_DQN.gif'></img></p>
+<p><img src='https://github.com/HiddenBeginner/study-notes/blob/main/contents/img/CartRacing-v2_DQN.gif?raw=true'></img></p>
 </section>
 </section>
 

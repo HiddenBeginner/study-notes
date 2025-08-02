@@ -3,7 +3,8 @@
 
 # # Control CartRacing-v2 environment using DQN from scratch
 # 
-# This tut
+# In this tutorial, we will implement DQN algorithm for controllong CartRacing-v2 environment, which has the image observation space. 
+# We will focus more on how to convert a given raw environment into MDP environment, and we assume that the readers already have known DQN algorithm.
 
 # In[1]:
 
@@ -17,6 +18,10 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
+# <br>
+# 
+# ---
+# 
 # ## CarRacing-v2 environment
 # 
 # Let's first take a look at `CarRacing-v2` envrionment. 
@@ -31,6 +36,8 @@ print("Observation space: ", env.observation_space)
 print("Action space: ", env.action_space)
 
 
+# <br>
+# 
 # Let's see the initial state.
 
 # In[3]:
@@ -45,6 +52,8 @@ plt.axis('off')
 plt.show()
 
 
+# <br>
+# 
 # It looks weird... It is not what we saw... What's going on here? 
 # Let me do nothing (`no_op` action) for the next 50 steps.
 # (You don't need to write the following code)
@@ -71,6 +80,8 @@ anim = matplotlib.animation.FuncAnimation(fig, animate, frames=len(frames))
 HTML(anim.to_jshtml())
 
 
+# <br>
+# 
 # We just saw that the game screen gradually zooms in for the first 50 steps. Of course, you can move the car during this zoom-in phase, but this zoom-in phase is a very small part of the overall game, which may hinder our agent from learning to control the car. Thus, we will not use the first 50 steps of the game.
 # 
 # The second thing we have to know is that we are given only one current game frame for each step. This observation setting cannot satisfy the Markov property. We cannot guess if the car is moving forward or backward from only one frame, which means we cannot predict the next frame for given the current frame. Thus, we need to stack the previous $k=4$ frames.
@@ -110,6 +121,8 @@ def preprocess(img):
     return img
 
 
+# <br>
+# 
 # Now, we will change initial setting (`reset` method below) and observations (`step` method below).
 
 # In[6]:
@@ -162,6 +175,8 @@ class ImageEnv(gym.Wrapper):
         return self.stacked_state, reward, terminated, truncated, info
 
 
+# <br>
+# 
 # We can create our desired environment as follows:
 
 # In[7]:
@@ -180,6 +195,8 @@ for i in range(4):
 plt.show()
 
 
+# <br>
+# 
 # Let's do `gas` action for the next 4 steps. You can see our car was moving forward!
 # (The position of the car does not seem to change, but it is actually moving forward. See background)
 
@@ -196,6 +213,10 @@ for i in range(4):
 plt.show()
 
 
+# <br>
+# 
+# ---
+# 
 # ## Q-network
 # 
 # Let's read together some part of DQN paper.
@@ -225,6 +246,10 @@ class CNNActionValue(nn.Module):
         return x
 
 
+# <br>
+# 
+# ---
+# 
 # ## Replay buffer
 # 
 # For implementation of replay buffer, the pre-creation of the required arrays is more efficient than the use of `collections.queue`.
@@ -266,6 +291,10 @@ class ReplayBuffer:
         )
 
 
+# <br>
+# 
+# ---
+# 
 # ## DQN
 # DQN agent has four methods.
 # - `__init__`() as usual
@@ -353,6 +382,10 @@ class DQN:
         return result
 
 
+# <br>
+# 
+# ---
+# 
 # ## Training DQN Agent
 # We will train DQN agent until the total number of interactions with the environment reaches 2 millilons and evaluate our agent evry 10,000 steps. The below codes will take a very long time.
 
@@ -428,6 +461,12 @@ while True:
         break
 
 
+# <br>
+# 
+# ---
+# 
+# ## Evaluation
+
 # In[18]:
 
 
@@ -477,4 +516,4 @@ def animate(imgs, video_name, _return=True):
 animate(frames)
 
 
-# <img src='../img/CartRacing-v2_DQN.gif'></img>
+# <img src='https://github.com/HiddenBeginner/study-notes/blob/main/contents/img/CartRacing-v2_DQN.gif?raw=true'></img>

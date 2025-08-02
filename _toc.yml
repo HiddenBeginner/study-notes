@@ -4,16 +4,32 @@
 format: jb-book
 root: contents/intro
 parts:
-- caption: 머신러닝/딥러닝 근본적 내용들
+- caption: ML/DL 코어
   chapters:
-  - file: contents/fundamental/beyond_batchnorm.md
-  - file: contents/fundamental/230420_ulc.md
-- caption: 강화학습 논문 정리
+  - file: contents/core/beyond_batchnorm.md
+  - file: contents/core/230420_ulc.md
+  - file: contents/core/230425_encouraging_loss.md
+  - file: contents/core/230523_folklore_constructions.md
+  - file: contents/core/240423_variational_auto_encoder.md
+- caption: 강화학습
   chapters:
   - file: contents/rl_papers/AlphaGoZero.md
   - file: contents/rl_papers/SUNRISE.md
   - file: contents/rl_papers/DreamerV1.md
-- caption: 잡학사전
+  - file: contents/rl_papers/230530_CQL.md
+  - file: contents/rl_papers/231021_reward_is_enough.md
+  - file: contents/rl_papers/231226_PLASTIC.md
+  - file: contents/rl_papers/231227_Reset.md
+  - file: contents/rl_papers/240109_high_variance_across_runs.md
+  - file: contents/rl_papers/240208_CrossQ.md
+  - file: contents/rl_papers/240315_Proto-RL.md
+  - file: contents/rl_papers/240606_VISR.md
+  - file: contents/rl_papers/240615_2024-ICML.md
+  - file: contents/rl_papers/250731_SmolVLA.md
+- caption: Domain/OOD generalization
+  chapters:
+  - file: contents/domain_generalization/231219_lisa.md
+- caption: 기타
   chapters:
   - file: contents/miscellaneous/define_and_by_run.md
   - file: contents/miscellaneous/wasserstein_distance.ipynb

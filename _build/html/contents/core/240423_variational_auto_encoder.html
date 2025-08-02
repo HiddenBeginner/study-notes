@@ -1,0 +1,829 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Variational Autoencoder (VAE) &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AlphaGo Zero" href="../rl_papers/AlphaGoZero.html" />
+    <link rel="prev" title="Elementary Folklore Construction" href="230523_folklore_constructions.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-75JTHKY1C6"></script>
+<script>
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){ dataLayer.push(arguments); }
+                    gtag('js', new Date());
+                    gtag('config', 'G-75JTHKY1C6');
+                </script>
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230523_folklore_constructions.html">
+   Elementary Folklore Construction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Variational Autoencoder (VAE)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/230530_CQL.html">
+   Conservative Q-Learning (CQL)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231021_reward_is_enough.html">
+   Reward Is Enough
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231226_PLASTIC.html">
+   PLASTIC
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/231227_Reset.html">
+   Primacy bias and Reset
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/240109_high_variance_across_runs.html">
+   High variance across runs / failed runs
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/240208_CrossQ.html">
+   CrossQ
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/240315_Proto-RL.html">
+   Proto-RL
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Domain/OOD generalization
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../domain_generalization/231219_lisa.html">
+   Learning Invariant predictor with Selective Augmentation (LISA)
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/core/240423_variational_auto_encoder.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/core/240423_variational_auto_encoder.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   문제 정의
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#latent-variable-model">
+   Latent Variable Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-inference">
+   Variational Inference
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-lower-bound">
+   Variational Lower Bound
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reparameterization-trick">
+   Reparameterization Trick
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#p-theta-x-i-z">
+     디코더
+     <span class="math notranslate nohighlight">
+      \(p_\theta(x_i|z)\)
+     </span>
+     학습
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q-phi-z-x-i">
+     인코더
+     <span class="math notranslate nohighlight">
+      \(q_\phi(z|x_i)\)
+     </span>
+     학습
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   학습 이후 데이터 생성
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Variational Autoencoder (VAE)</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   문제 정의
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#latent-variable-model">
+   Latent Variable Model
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-inference">
+   Variational Inference
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#variational-lower-bound">
+   Variational Lower Bound
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#reparameterization-trick">
+   Reparameterization Trick
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#p-theta-x-i-z">
+     디코더
+     <span class="math notranslate nohighlight">
+      \(p_\theta(x_i|z)\)
+     </span>
+     학습
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#q-phi-z-x-i">
+     인코더
+     <span class="math notranslate nohighlight">
+      \(q_\phi(z|x_i)\)
+     </span>
+     학습
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   학습 이후 데이터 생성
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="variational-autoencoder-vae">
+<h1>Variational Autoencoder (VAE)<a class="headerlink" href="#variational-autoencoder-vae" title="Permalink to this headline">#</a></h1>
+<p>맨날 헷갈리는 VAE 정리 =ㅅ=. Variational inference에 대한 개념 정리 위주이기 때문에 그림 없음 주의!</p>
+<br>
+<section id="id1">
+<h2>문제 정의<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p><span class="math notranslate nohighlight">\(\mathbf{X}=\left\{ x_i \in \mathbb{R}^{n} \right\}_{i=1}^{N}\)</span>을 <span class="math notranslate nohighlight">\(n\)</span>차원 데이터를 <span class="math notranslate nohighlight">\(N\)</span>개 모아놓은 집합이라고 하자.
+그리고 이 <span class="math notranslate nohighlight">\(N\)</span>개의 데이터는 어떤 알 수 없는 확률분포 <span class="math notranslate nohighlight">\(p\)</span>에서 독립적으로 샘플링되었다고 가정하자.
+우리의 목표는 뉴럴 네트워크를 사용하여 데이터를 생성시킨 확률분포 <span class="math notranslate nohighlight">\(p\)</span>를 근사하는 것이다.
+따라서 뉴럴 네트워크로 근사시킨 확률분포를 <span class="math notranslate nohighlight">\(p_\theta\)</span>로 표기할 것이다.
+우리의 maximum likelihood estimation (MLE) 목적함수는 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\operatorname*{maximize}_\theta \frac{1}{N}\sum_{i=1}^{N} \log p_\theta(x_i).\]</div>
+<br>
+</section>
+<hr class="docutils" />
+<section id="latent-variable-model">
+<h2>Latent Variable Model<a class="headerlink" href="#latent-variable-model" title="Permalink to this headline">#</a></h2>
+<p>여기서 우리는 latent variable model을 사용할 것이다.
+데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 생성하는 데 필요한 실질적인 정보가 어떤 latent variable <span class="math notranslate nohighlight">\(z\)</span>에 담겨져 있다고 가정하는 것이다.
+예컨데, 용의자의 몽타주를 그리기 위하여 용의자의 얼굴을 묘사할 때 “얼굴은 길고, 눈은 작으며 쌍커풀이 없다. 안경을 썼고, 코는 크며, 입은 얍실하게 생겼다.” (필자 얼굴 절대 아님) 등으로 묘사할 것이지 얼굴의 좌표마다 색상값을 알려주진 않을 것이다.
+얼굴의 좌표마다 색상값으로 나타난 것이 원래 이미지 <span class="math notranslate nohighlight">\(x_i\)</span>라고 생각하면 되고, 몽타주 묘사가 latent variable <span class="math notranslate nohighlight">\(z\)</span>라고 생각하면 된다.
+또한 같은 몽타주 묘사에서도 다양한 결과 사진이 생성되는 특징도 있을 것이다.
+실질적인 정보 <span class="math notranslate nohighlight">\(z\)</span>를 바탕으로 <span class="math notranslate nohighlight">\(x_i\)</span>를 생성하는 것이므로 우리가 근사할 확률 분포는 <span class="math notranslate nohighlight">\(p_{\theta}(x_i | z)\)</span>이 되며, VAE에서는 이를 디코더라고 부른다. 일반적으로 <span class="math notranslate nohighlight">\(z \in \mathbb{R}^m\)</span>를 <span class="math notranslate nohighlight">\(m\)</span>차원 벡터로 사용하며, <span class="math notranslate nohighlight">\(m\)</span>은 <span class="math notranslate nohighlight">\(n\)</span>보다 작게 설정하는 것이 국룰이다 <span class="math notranslate nohighlight">\((m &lt;&lt; n)\)</span>.</p>
+<br>
+<p>Latent variable을 도입하면 좋은 점 중 하나는 <span class="math notranslate nohighlight">\(p_{\theta}(x_i | z)\)</span>를 가우시안 분포 등 비교적 단순한 확률분포로 모델링하여도 최종적인 <span class="math notranslate nohighlight">\(p_{\theta}(x_i)\)</span>는 직접 계산이 불가능할 정도로 복잡한 확률분포가 된다는 것이다. Latent variable <span class="math notranslate nohighlight">\(z\)</span>를 도입하면 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>를 다음과 같이 다시 적어줄 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+p_\theta(x_i) 
+&amp; = &amp; \displaystyle \int_{z} p(x_i, z) \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_{z} p_\theta(x_i | z) p(z) \, dz.
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>첫 번째 등식은 joint distribution <span class="math notranslate nohighlight">\(p(x_i, z)\)</span>를 <span class="math notranslate nohighlight">\(z\)</span>에 대해 marginalization 해준 것이고, 두 번째 등식은 조건부 확률의 정의를 사용한 것이다. <span class="math notranslate nohighlight">\(p_\theta(x_i | z)\)</span>가 단순한 분포라 하더라고 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>는 적분으로 표현되기 때문에 계산할 수 없는 대상이 된다. VAE에서는 <span class="math notranslate nohighlight">\(p_\theta(x_i | z)\)</span>을 가우시안 분포로 모델링한다.</p>
+<div class="math notranslate nohighlight">
+\[
+p_\theta(x_i | z) = \mathcal{N}\left(\mu_\theta(z), \sigma^2_\theta(z)\right),
+\]</div>
+<br>
+<p>where <span class="math notranslate nohighlight">\(\mu_\theta(z) \in \mathbb{R}^n\)</span> and <span class="math notranslate nohighlight">\(\sigma_\theta(z) \in \mathbb{R}^n\)</span>.
+참고로 이는 <span class="math notranslate nohighlight">\(z\)</span>를 입력 받아서 2개의 벡터 <span class="math notranslate nohighlight">\(\mu_\theta(z) \in \mathbb{R}^n, \sigma_\theta(z)\in \mathbb{R}^n\)</span>를 출력하는 뉴럴 네트워크로 구현할 수 있다.
+그리고 엄밀히 말하면 공분산 행렬은 <span class="math notranslate nohighlight">\(\sigma^2_\theta(z)\)</span>를 대각성분으로 갖는 대각행렬인데, 표기의 간결함을 위하여 저렇게 적었다. 다시 돌아가서 위의 적분을 조금 더 변형해보자.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+p_\theta(x_i) 
+&amp; = &amp; \displaystyle \int_{z} p_\theta(x_i | z) p(z) \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_{z} \frac{p(z | x_i)}{p(z | x_i)} p_\theta(x_i | z) p(z) \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \mathbb{E}_{z\sim p(z|x_i)} \left[ \frac{p_\theta(x_i | z) p(z)}{p(z|x_i)}\right]. \\[1.0em]
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>두 번째 등식은 <span class="math notranslate nohighlight">\(p(z | x_i)\)</span>이 0이 아니라는 가정 하에 적분 안에 1을 곱해준 것 뿐이고, 세 번째 등식은 기댓값의 정의를 사용한 것이다. 양변에 로그를 취해보자.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+\log p_\theta(x_i) 
+&amp; = &amp; \displaystyle \log \mathbb{E}_{z\sim p(z|x_i)} \left[ \frac{p_\theta(x_i | z) p(z)}{p(z|x_i)}\right] \\[1.0em]
+&amp; \ge &amp; \displaystyle \mathbb{E}_{z\sim p(z|x_i)} \left[ \log  \frac{p_\theta(x_i | z) p(z)}{p(z|x_i)}\right]. \\[1.0em]
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>두 번째 부등식은 로그 함수가 위로 볼록하다는 성질 때문에 Jensen’s inequality 만족하기 때문에 성립한다. 이제 겉보기에는 적분 계산이 사라졌고, <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>가 기댓값으로 표현된다. 기댓값으로 표현되면 좋은 점은 다음과 같이 <span class="math notranslate nohighlight">\(z\)</span>를 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>에서 샘플링하여 표본평균으로 기댓값을 근사할 수 있다는 점이다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+\log p_\theta(x_i) 
+&amp; \ge &amp; \displaystyle \mathbb{E}_{z\sim p(z|x_i)} \left[ \log  \frac{p_\theta(x_i | z) p(z)}{p(z|x_i)}\right] \\[1.0em]
+&amp; \approx &amp; \displaystyle \frac{1}{K} \sum_{k=1}^{K} \log \frac{p_\theta(x_i | z_k) p(z_k)}{p(z_k|x_i)},
+\end{matrix}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(z_k \sim p(z|x_i)\)</span> for <span class="math notranslate nohighlight">\(k=1, 2, \ldots, K\)</span>.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="variational-inference">
+<h2>Variational Inference<a class="headerlink" href="#variational-inference" title="Permalink to this headline">#</a></h2>
+<p>여기서 문제는 posterior인 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>를 계산하는 것과 샘플링하는 것 모두 불가능하다. 따라서 우리는 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span>을 보다 더 쉬운 분포로 근사를 할 것이다. 예를 들어, <span class="math notranslate nohighlight">\(x_i\)</span>에 dependent한 가우시안 분포로 근사할 수 있을 것이다. 이는 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>를 입력 받아 가우시안 분포의 평균과 분산을 출력하는 뉴럴 네트워크로 구현 가능하다.</p>
+<div class="math notranslate nohighlight">
+\[q_{\phi}(z|x_i)=\mathcal{N}\left(\mu_\phi(x_i), \sigma_\phi^2(x_i) \right),\]</div>
+<br>
+<p>where <span class="math notranslate nohighlight">\(\mu_\phi(x_i) \in \mathbb{R}^m\)</span> and <span class="math notranslate nohighlight">\(\sigma_\phi(x_i) \in \mathbb{R}^m\)</span>. 이렇게 Bayesian inference를 할 때 계산이 불가능한 분포를 보다 더 쉬운 분포로 근사하여 inference를 하는 방법론을 variational inference라고 부르며, 근사에 사용되는 더 쉬운 분포인 <span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)\)</span>를 variational distribution이라고 부른다. 그리고 VAE에서는 <span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)\)</span>를 인코더라고 부른다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+\log p_\theta(x_i) 
+&amp; \ge &amp; \displaystyle \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  \frac{p_\theta(x_i | z) p(z)}{q_\phi(z|x_i)}\right]. \\[1.0em]
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>이렇게 바로 <span class="math notranslate nohighlight">\(p(z|x_i)\)</span> 대신 <span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)\)</span>으로 갈아 끼울 수 있는 이유는 기댓값으로 유도할 때 적분 안에 <span class="math notranslate nohighlight">\(1=\frac{p(z|x_i)}{p(z|x_i)}\)</span>을 곱해주는 대신 <span class="math notranslate nohighlight">\(1=\frac{q_{\phi}(z|x_i)}{q_{\phi}(z|x_i)}\)</span>을 곱해주면 되기 때문이다. 위 부등식을 조금 더 분해해보자.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+\log p_\theta(x_i) 
+&amp; \ge &amp; \displaystyle \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  \frac{p_\theta(x_i | z) p(z)}{q_\phi(z|x_i)}\right] \\[1.0em]
+&amp; = &amp; \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log \frac{q_\phi(z|x_i)}{p(z)} \right]  \\[1.0em]
+&amp; = &amp; \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right].
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>두 번째 항의 경우 <span class="math notranslate nohighlight">\(p(z)\)</span>를 가우시안 분포로 가정할 경우 <span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)\)</span>도 가우시안 분포이기 때문에 KL divergence 공식이 존재하여 쉽게 계산할 수 있다. 첫 번째 항의 경우 <span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)\)</span>에서 <span class="math notranslate nohighlight">\(z\)</span>를 샘플링하여 표본평균으로 기댓값을 근사시킨다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] \approx \frac{1}{K} \sum_{k=1}^{K} \log  p_\theta(x_i | z_k),
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(z_k \sim q_\phi(z|x_i)\)</span> for <span class="math notranslate nohighlight">\(k=1, 2, \ldots, K\)</span>.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="variational-lower-bound">
+<h2>Variational Lower Bound<a class="headerlink" href="#variational-lower-bound" title="Permalink to this headline">#</a></h2>
+<p>지금까지 우리는 다음과 같은 부등식을 얻었다. 부등식을 얻어서 어디에 사용할 것인가? 우리의 목표는 주어진 데이터셋 <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>에 대해서 좌변 값들의 평균을 최대화하는 <span class="math notranslate nohighlight">\(\theta\)</span>를 찾는 것이다. 문제는 latent variable을 도입하여 <span class="math notranslate nohighlight">\(p_\theta(x_i | z)\)</span>를 간단한 분포로 가져가는 대신 좌변의 <span class="math notranslate nohighlight">\(p_\theta(x_i)\)</span>는 계산하지 못하게 되었다는 것이다.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) \ge \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right].
+\]</div>
+<br>
+<p>따라서 우리의 전략은 좌변을 최대화하는 대신 부등식의 우변인 lower bound를 최대화하는 것이다. Variational inference에서 이 lower bound를 variational lower bound라고 부른다. 이때, 의심 많은 사람이라면 다음과 같은 질문을 제기할 수 있다 (필자는 절대 의심하지 않았다).</p>
+<center>
+<i>"Lower bound를 최대화한다고 해서 좌변이 최대화된다는 보장이 있어?"</i>
+</center>
+<br>
+<p>질문에 대한 답변을 하자면, 특정 조건에서 그렇다고 말할 수 있다. 그 특정 조건에서는 부등식이 아닌 등호가 성립하며, 등호가 성립하기 때문에 우변을 최대화하면 좌변도 같이 최대화된다. 그 특정 조건이 무엇이냐면, 바로 우리의 variational distribution <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>와 실제 posterior <span class="math notranslate nohighlight">\(p(z|x_i)\)</span> 사이의 KL divergence가 0이 될 때이다.</p>
+<br>
+<p>위에서는 부등식을 조금 더 쉽게 유도하기 위하여 Jensen’s inequality를 사용했지만,  다시 한 번 등식만 사용하여 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>를 적어보자.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+\log p_\theta(x_i)
+ &amp; = &amp; \displaystyle \log p_\theta(x_i) \cdot \int_z q_{\phi}(z|x_i)  \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \log p_\theta(x_i)  \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \log \frac{p_\theta(x_i|z)p(z)}{p(z|x_i)} \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \log \frac{q_\phi(z|x_i) p_\theta(x_i|z)p(z)}{q_\phi(z|x_i) p(z|x_i)} \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \int_z q_{\phi}(z|x_i) \left( \log p_\theta(x_i|z) - \log \frac{q_{\phi}(z|x_i)}{p(z)} + \log\frac{q_{\phi}(z|x_i)}{p(z|x_i)}  \right) \, dz \\[1.0em]
+&amp; = &amp; \displaystyle \mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right] + D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right].
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>첫 번째 등호는 확률분포의 적분 값은 1인 것을 이용한 것이고, 두 번째 등호는 적분 변수가 <span class="math notranslate nohighlight">\(z\)</span>이기 때문에 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>는 상수로 간주되어 적분 안으로 들어온 것이다. 세 번째 등호는 Bayes’s theorem인 <span class="math notranslate nohighlight">\(P(A) = \frac{P(A|B) P(B)}{P(B|A)}\)</span>를 사용한 것이다. 네 번째 등호는 로그 안에 <span class="math notranslate nohighlight">\(1=\frac{q_\phi(z|x_i)}{q_\phi(z|x_i)}\)</span>을 곱해준 것이고, 다섯 번째 등호는 로그의 성질을 사용해서 관심 있는 항들로 분리해놓은 것이다. 마지막 등호는 KL divergence의 정의를 사용한 것이다.</p>
+<br>
+<p>Variational lower bound를 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>라고 적어주면, <span class="math notranslate nohighlight">\(\log p_\theta (x_i)\)</span>는 다음과 같이 표현될 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) = \mathcal{L}_i(\theta, \phi) + D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right].
+\]</div>
+<br>
+<p>KL divergence는 항상 양수 값을 갖는다. 따라서 우리가 이미 확인했던 부등식을 한 번 더 확인할 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) \ge \mathcal{L}_i(\theta, \phi).
+\]</div>
+<br>
+<p>만약 <span class="math notranslate nohighlight">\(D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right] = 0\)</span>이면, 다음 등식이 성립한다.</p>
+<div class="math notranslate nohighlight">
+\[\log p_\theta(x_i) = \mathcal{L}_i(\theta, \phi)\]</div>
+<br>
+<p>따라서 이때 우변을 최대화하면 좌변도 최대화가 된다. 그럼 똑똑한 사람이라면 다음과 같이 질문할 수 있다.</p>
+<center>
+<i> 그럼 variational lower bound만 줄일 것이 아니라 KL divergence도 0이 되도록 파라미터 업데이트를 해야 하는 것 아닌가요? 하지만 실제 posterior는 못 구한다면서요? </i>
+</center>
+<br>
+<p>다시 한 번 등식을 보자.</p>
+<div class="math notranslate nohighlight">
+\[
+\log p_\theta(x_i) = \mathcal{L}_i(\theta, \phi) + D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right].
+\]</div>
+<br>
+<p>파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>를 조절하여 variational lower bound <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>를 증가시키면, 등호가 성립하기 위해서 KL divergence 텀이 줄어들어야만 한다 (좌변은 <span class="math notranslate nohighlight">\(\phi\)</span>가 없기 때문에 값이 유지되기 때문이다). 즉, <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>을 최대화시키는 것만으로도 <span class="math notranslate nohighlight">\(D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z|x_i)\right]\)</span>가 줄어드는 효과가 있는 셈이다.</p>
+<br>
+<p>따라서 <span class="math notranslate nohighlight">\(\phi\)</span>에 대해서 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>을 최대화하면 KL divergence가 0에 가까워질테고, KL divergence가 0에 가까우면 가까울수록 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>이 실제 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>에 가까워지고, 이때 <span class="math notranslate nohighlight">\(\theta\)</span>에 대해서 <span class="math notranslate nohighlight">\(\mathcal{L}_i(\theta, \phi)\)</span>을 최대화하면 <span class="math notranslate nohighlight">\(\log p_\theta(x_i)\)</span>도 같이 커질 수 있다는 것이다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="reparameterization-trick">
+<h2>Reparameterization Trick<a class="headerlink" href="#reparameterization-trick" title="Permalink to this headline">#</a></h2>
+<p>지금까지 내용의 결론은 아래의 variational lower bound를 최대화시킬 것이라는 것이다라는 것이다라는 것이다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_i(\theta, \phi)=
+\mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right].
+\]</div>
+<br>
+<section id="p-theta-x-i-z">
+<h3>디코더 <span class="math notranslate nohighlight">\(p_\theta(x_i|z)\)</span> 학습<a class="headerlink" href="#p-theta-x-i-z" title="Permalink to this headline">#</a></h3>
+<p>우선 디코더 <span class="math notranslate nohighlight">\(p_\theta(x_i|z)\)</span>의 파라미터 <span class="math notranslate nohighlight">\(\theta\)</span>는 첫 번째 항에만 있다. 기댓값으로 표현되는 첫 번째 항은 <span class="math notranslate nohighlight">\(z_k\)</span>를 인코더 <span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)=\mathcal{N}\left(\mu_\phi(x_i), \sigma_\phi^2(x_i) \right)\)</span>로부터 샘플링하여 <span class="math notranslate nohighlight">\(\log p_\theta(x_i | z_k)\)</span> 값을 계산하고 <span class="math notranslate nohighlight">\(\theta\)</span>에 대하여 backward를 진행하여 파라미터를 업데이트시키면 된다. 참고로 확률값은 디코더를 가우시안 분포로 모델링했기 때문에 가우시안의 PDF를 통해 계산할 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[
+J(\theta)=\frac{1}{K} \sum_{k=1}^{K} \log  p_\theta(x_i | z_k),
+\]</div>
+<br>
+<p>where <span class="math notranslate nohighlight">\(z_k \sim q_\phi(z|x_i)\)</span> for <span class="math notranslate nohighlight">\(k=1, 2, \ldots, K\)</span>.</p>
+<br>
+</section>
+<section id="q-phi-z-x-i">
+<h3>인코더 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span> 학습<a class="headerlink" href="#q-phi-z-x-i" title="Permalink to this headline">#</a></h3>
+<p>인코더 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>의 파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>는 variational lower bound의 두 항 모두에 들어있다. 우선 두 번째 항의 경우 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>와 <span class="math notranslate nohighlight">\(p(z)\)</span> 모두 가우시안 분포로 모델링하기 때문에 KL divergence 계산 공식을 따라 계산할 수 있다. 계산한 KL divergence를 <span class="math notranslate nohighlight">\(\phi\)</span>에 대해 backward하고 파라미터를 업데이트하면 된다.</p>
+<br>
+<p>문제는 첫 번째 텀이다. 첫 번째 텀의 기댓값의 확률변수 <span class="math notranslate nohighlight">\(z\)</span>가 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>에서 샘플링되기 때문이다. 하지만 이 기댓값을 직접 계산하는 것이 불가능하기 때문에 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>에서 <span class="math notranslate nohighlight">\(z_k\)</span>를 샘플링하여 표본평균으로 첫 번째 항을 근사시켰다:</p>
+<br>
+<div class="math notranslate nohighlight">
+\[
+J(\phi)=\frac{1}{K} \sum_{k=1}^{K} \log  p_\theta(x_i | z_k),
+\]</div>
+<br>
+<p>where <span class="math notranslate nohighlight">\(z_k \sim q_\phi(z|x_i)\)</span> for <span class="math notranslate nohighlight">\(k=1, 2, \ldots, K\)</span>. 문제는 그냥 샘플링은 말 그대로 확률분포에서 무작위로 추출하기 때문에 <span class="math notranslate nohighlight">\(z_k\)</span>에 파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>가 묻어 있지 않다 (연산 그래프가 유지되지 않는다는 의미). 샘플링을 한 순간 그냥 <span class="math notranslate nohighlight">\(z_k\)</span>는 값 그 자체이다. 따라서 지금 상태에서 <span class="math notranslate nohighlight">\(J(\phi)\)</span>를 <span class="math notranslate nohighlight">\(\phi\)</span>에 대해서 미분을 하면 그냥 0이 되어 버린다.</p>
+<br>
+<p>샘플링한 <span class="math notranslate nohighlight">\(z_k\)</span>의 계산 과정에 파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>를 포함시키기 위하여 reparametrization trick이라는 것을 사용한다. 방법은 아주 간단한데,<span class="math notranslate nohighlight">\(q_{\phi}(z|x_i)=\mathcal{N}\left(\mu_\phi(x_i), \sigma_\phi^2(x_i) \right)\)</span>에서 바로 <span class="math notranslate nohighlight">\(z_k\)</span>를 샘플링하는 대신 <span class="math notranslate nohighlight">\(\mathcal{N}\left( \mathbf{0}, I \right)\)</span>에서 <span class="math notranslate nohighlight">\(\epsilon_k\)</span>를 샘플링하고, <span class="math notranslate nohighlight">\(z_k^{\phi}=\sigma_\phi(x_i) * \epsilon_k+ \mu_\phi(x_i)\)</span>으로 계산한다. 여기서 <span class="math notranslate nohighlight">\(*\)</span>는 elementwise곱이다. 이렇게 되면 <span class="math notranslate nohighlight">\(\log  p_\theta(x_i | z_k^\phi)\)</span> 값 계산에 파라미터 <span class="math notranslate nohighlight">\(\phi\)</span>가 포함되게 되어 <span class="math notranslate nohighlight">\(J(\phi)\)</span>을 <span class="math notranslate nohighlight">\(\phi\)</span>에 대하여 역전파를 할 수 있게 된다.</p>
+<br>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h2>학습 이후 데이터 생성<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>우리가 variational lower bound를 최대화하면서 한 것은 주어진 입력 이미지 <span class="math notranslate nohighlight">\(x\)</span>에 대해서 latent variable <span class="math notranslate nohighlight">\(z \sim q_\phi(z|x)\)</span>을 샘플링하고, 이를 디코더에 넣었을 때 다시 <span class="math notranslate nohighlight">\(x\)</span>가 나올 확률의 로그 값을 높여주는 방식이었다. 즉, <span class="math notranslate nohighlight">\(x\)</span>의 정보를 최대한 <span class="math notranslate nohighlight">\(z\)</span>에 인코딩하고 이를 다시 디코딩했을 때 원래 이미지 <span class="math notranslate nohighlight">\(x\)</span>가 나올 확률을 높인 것이다. 따라서 variational lower bound의 첫 번째 텀을 reconstruction term이라고도 부른다.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}_i(\theta, \phi)=
+\mathbb{E}_{z\sim q_\phi(z|x_i)} \left[ \log  p_\theta(x_i | z)\right] - D_{\text{KL}}\left[ q_\phi(z|x_i) \| p(z)\right].
+\]</div>
+<br>
+<p>한편, 데이터를 생성할 때는 <span class="math notranslate nohighlight">\(p(z)\)</span>에서 <span class="math notranslate nohighlight">\(z\)</span>를 하나 샘플링하여 이를 디코더 <span class="math notranslate nohighlight">\(p_\theta(\cdot|z)\)</span>에 입력하여 얻은 가우시안 분포 <span class="math notranslate nohighlight">\(\mathcal{N}\left(\mu_\theta(z), \sigma^2_\theta(z)\right)\)</span>에서 데이터를 생성한다. 더 이상 인코더는 사용되지 않는다. 이는 두 번째 항을 통해 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>를 <span class="math notranslate nohighlight">\(p(z)\)</span>와 최대한 비슷하게 만들어주었기 때문에 가능한 일이다. 훈련 데이터와 비슷한 그럴싸한 데이터가 나올 로그확률 값 <span class="math notranslate nohighlight">\(\log  p_\theta(x_i | z)\)</span>이 높아진 latent variable의 분포는 어디까지나 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>이었다. 따라서 만약  <span class="math notranslate nohighlight">\(p(z)\)</span>가 <span class="math notranslate nohighlight">\(q_\phi(z|x_i)\)</span>와 달랐더라면 그럴싸한 이미지가 나올 확률이 높다는 보장이 없었을 것이다.</p>
+<br>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/core"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="230523_folklore_constructions.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Elementary Folklore Construction</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../rl_papers/AlphaGoZero.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">AlphaGo Zero</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>

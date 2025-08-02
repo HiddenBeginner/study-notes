@@ -1,0 +1,584 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Elementary Folklure Construction &#8212; 공부 기록</title>
+    
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
+
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="AlphaGo Zero" href="../rl_papers/AlphaGoZero.html" />
+    <link rel="prev" title="Encouraging Loss" href="230425_encouraging_loss.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../../index.html">
+      
+        <!-- `logo` is deprecated in Sphinx 4.0, so remove this when we stop supporting 3 -->
+        
+      
+      
+      <img src="../../_static/logo.png" class="logo" alt="logo">
+      
+      
+      <h1 class="site-logo" id="site-title">공부 기록</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    공부 기록
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  ML/DL 코어
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="beyond_batchnorm.html">
+   Beyond BatchNorm
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230420_ulc.html">
+   Uncertainty-aware Label Correction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="230425_encouraging_loss.html">
+   Encouraging Loss
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Elementary Folklure Construction
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  강화학습
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
+   AlphaGo Zero
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/SUNRISE.html">
+   SUNRISE
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../rl_papers/DreamerV1.html">
+   Dreamer
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  기타
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/define_and_by_run.html">
+   Define-and-run vs Define-by-run
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/wasserstein_distance.html">
+   Wasserstein distance 구현하기
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../miscellaneous/quantile_regression.html">
+   Quantile Regression
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  튜토리얼
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../tutorials/2023-04-20_CartRacing-v2_DQN.html">
+   Control CartRacing-v2 environment using DQN from scratch
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
+            
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+            </div>
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/fundamental/230523_folklure_constructions.html&body=Your%20issue%20content%20here."
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="bottom"
+title="Open an issue"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+
+</a>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../../_sources/contents/fundamental/230523_folklure_constructions.md"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.md</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Elementary Folklure Construction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   증명
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   마무리하며,
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   참고 문헌
+  </a>
+ </li>
+</ul>
+
+    </nav>
+</div>
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Elementary Folklure Construction</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Elementary Folklure Construction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   증명
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   마무리하며,
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id4">
+   참고 문헌
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
+              <div>
+                
+  <section class="tex2jax_ignore mathjax_ignore" id="elementary-folklure-construction">
+<h1>Elementary Folklure Construction<a class="headerlink" href="#elementary-folklure-construction" title="Permalink to this headline">#</a></h1>
+<p>Universal Approximation Theorem 시리즈 1탄.
+딥러닝을 공부하는 사람이라면 한번쯤 Universal Approximation Theorem (UAT)을 들어보았을 것이다. 그리고 내용도 어렴풋이라도 알고 있을 것이다. 다층 퍼셉트론으로 이 세상의 모든 함수를 근사할 수 있다는 정도의 내용으로 알고 있을 것이다. 하지만, UAT의 정확한 statement나 증명까지 아는 사람은 거의 없을 것이다. 그도 그럴 것이 정말 많은 버전의 UAT가 있기도 하고, 증명도 복잡할 뿐만 아니라, 사실 몰라도 딥러닝을 사용하는데 큰 문제가 되지 않기 때문이다.</p>
+<p>그래도 엄연히 인공지능대학원에서 학위 과정을 밟고 있는데, UAT를 알고 있으면 좋을 것 같아서 이를 공부해서 정리해볼 예정이다. 워낙에 내용이 많을 것 같아서 여러 글에 나눠서 적을 예정이다. 많은 내용을 교내의 &lt;딥러닝 이론&gt; 강의를 참고하여 작성했다.</p>
+<p>첫 번째 내용은 비전공자도 쉽게 이해할 수 있는 버전이다. 어떠한 Lipschitz 연속 함수가 주어져도 이를 근사할 수 있는 2-layer network가 존재한다는 내용이다.</p>
+<br>
+<hr class="docutils" />
+<section id="id1">
+<h2>Elementary Folklure Construction<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h2>
+<p>다음 proposition에 더 명확한 statement가 담겨있다.</p>
+<div class="proof proposition admonition" id="folklure-constructions">
+<p class="admonition-title"><span class="caption-number">Proposition 1 </span></p>
+<section class="proposition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(f:[0, 1] \rightarrow \mathbb{R}\)</span> be a <span class="math notranslate nohighlight">\(L\)</span>-Lipschitz continuous function and <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>.
+Then, there exists a 2-layer network <span class="math notranslate nohighlight">\(\tilde{f}\)</span> whose hidden layer has <span class="math notranslate nohighlight">\(\lceil \frac{L}{\epsilon} \rceil\)</span> neurons with unit activation function such that</p>
+<div class="math notranslate nohighlight">
+\[\sup_{x \in [0, 1]}|\tilde{f}(x) - f(x)| \le \epsilon.\]</div>
+</section>
+</div><p>구간 <span class="math notranslate nohighlight">\([0, 1]\)</span>에서 정의된 <span class="math notranslate nohighlight">\(L\)</span>-Lipschitz 연속 함수 <span class="math notranslate nohighlight">\(f\)</span>와 양수 <span class="math notranslate nohighlight">\(\epsilon\)</span>이 주어진 상황이다. 함수 <span class="math notranslate nohighlight">\(f\)</span>는 우리가 근사하고 싶은 타겟 함수이다. <span class="math notranslate nohighlight">\(L\)</span>-Lipschitz 연속 함수는 다음 성질을 만족한다. 구간 <span class="math notranslate nohighlight">\([0 ,1]\)</span>에서 아무 두 숫자 <span class="math notranslate nohighlight">\(x\)</span>와 <span class="math notranslate nohighlight">\(y\)</span>를 잡았을 때, 두 함수값의 차이 <span class="math notranslate nohighlight">\(|f(x) - f(y)|\)</span>가 비상식적으로 차이나지 않는다는 것이다.</p>
+<div class="math notranslate nohighlight">
+\[| f(x) - f(y) | \le L |x - y|, \quad \forall x, y \in [0, 1].\]</div>
+<br>
+<p><span class="math notranslate nohighlight">\(\epsilon\)</span>은 우리가 허용할 오차의 크기로서, 0.000001과 같이 아주 작은 양수라고 생각하면 된다. Proposition이 말하는 바는 타겟 함수와 <span class="math notranslate nohighlight">\(\epsilon\)</span>보다 작게 차이나는 2-layer network를 찾을 수 있다는 것이다. 그 network는 <span class="math notranslate nohighlight">\(\lceil \frac{L}{\epsilon} \rceil\)</span> 히든 노드를 가지며, 이때 activation function으로 unit function을 사용한다.</p>
+<br>
+<p>2-layer network는 hidden layer 1개 output layer 1개로 구성된 네트워크이다. 동일한 표현으로 1-hidden layer MLP라고 할 수 있다. 식으로 나타내면 다음과 같다.</p>
+<div class="math notranslate nohighlight">
+\[\tilde{f}(x) = \sum_{i=1}^{m} a_i \sigma(w_i x + b_i).\]</div>
+<figure class="align-default" id="network">
+<a class="reference internal image-reference" href="../../_images/230523_network.jpeg"><img alt="../../_images/230523_network.jpeg" src="../../_images/230523_network.jpeg" style="width: 500px;" /></a>
+</figure>
+<br>
+<p><span class="math notranslate nohighlight">\(w_i\)</span>와 <span class="math notranslate nohighlight">\(b_i\)</span>는 입력층에서 은닉층으로 가는 가중치와 편향이고, <span class="math notranslate nohighlight">\(a_i\)</span>는 은닉층에서 출력층으로 가는 가중치이다. <span class="math notranslate nohighlight">\(\sigma\)</span>는 활성화 함수이며, 여기서는 unit function이다. unit function은 다음과 같이 정의된다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\sigma(z) = \begin{cases} 1 &amp; z \ge 0,  \\ 0 &amp; z &lt; 0. \end{cases}\end{split}\]</div>
+<figure class="align-default" id="unit-function">
+<a class="reference internal image-reference" href="../../_images/230523_unit_function.jpeg"><img alt="../../_images/230523_unit_function.jpeg" src="../../_images/230523_unit_function.jpeg" style="width: 500px;" /></a>
+</figure>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h2>증명<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>존재성을 보여야 하는 증명의 경우, 직접 대상을 하나 찾아내는 방식의 by construction 증명을 많이 사용한다. 하나 찾아내도 존재는 하는거니깐.</p>
+<p>먼저, <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>이 주어졌다고 하자. 그리고, <span class="math notranslate nohighlight">\(m=\lceil \frac{L}{\epsilon} \rceil\)</span>이라고 하자. 구간 <span class="math notranslate nohighlight">\([0 ,1]\)</span>을 <span class="math notranslate nohighlight">\(m\)</span>등분을 하자. 즉, <span class="math notranslate nohighlight">\(0=b_0 &lt; b_1 &lt; b_2 &lt; \ldots &lt; b_m = 1\)</span>이고 <span class="math notranslate nohighlight">\([b_i, b_{i+1})=[\frac{i\epsilon}{L}, \frac{(i+1)\epsilon}{L})\)</span> for <span class="math notranslate nohighlight">\(i=0, 1, \ldots, m-1\)</span>이다. 다음으로 각 구간의 왼쪽 끝점의 함수값을 높이로 갖는 step function을 <span class="math notranslate nohighlight">\(\tilde{f}\)</span>라고 하자.</p>
+<figure class="align-default" id="step-function">
+<a class="reference internal image-reference" href="../../_images/230523_step_function.jpeg"><img alt="../../_images/230523_step_function.jpeg" src="../../_images/230523_step_function.jpeg" style="width: 400px;" /></a>
+</figure>
+<p>예시 그림을 보면 위와 같다. 파란색이 타겟 함수 <span class="math notranslate nohighlight">\(f\)</span>이고 검은색이 우리의 approximator인 <span class="math notranslate nohighlight">\(\tilde{f}\)</span>이다. 지금은 구간 <span class="math notranslate nohighlight">\([0, 1]\)</span>을 5등분 했기 때문에 step function과 타겟 함수가 많이 달라보이지만, 더 잘게 등분할 수록 step function이 타겟 함수에 점점 근사하게 될 것이다.</p>
+<p>이 step function을 식으로 표현할 것이다. 이 step function을 unit function들의 합으로 나타낼 것이다.</p>
+<figure class="align-default" id="unit-functions">
+<img alt="../../_images/230523_unit_functions.jpeg" src="../../_images/230523_unit_functions.jpeg" />
+</figure>
+<p>위 그림의 가운데 그림은 구간 <span class="math notranslate nohighlight">\([b_0, b_1)\)</span>에서의 step function을 만들어내기 위한 unit function이다. unit function이 <span class="math notranslate nohighlight">\(b_0\)</span>만큼 평행이동되었고, <span class="math notranslate nohighlight">\(f(b_0)\)</span>배만큼 스케일링되었기 때문에 해당 unit function의 식은 <span class="math notranslate nohighlight">\(f(b_0) \sigma(x - b_0)\)</span>이다. 오른쪽 그림은 마찬가지로 unit function <span class="math notranslate nohighlight">\(f(b_1) \sigma(x - b_1)\)</span>을 그린 것이다.</p>
+<br>
+<p>이 두 unit functions을 더하면 두번째 구간까지의 step function이 완성될 것 같다. 하지만, 두 unit functions을 단순히 더하면 <span class="math notranslate nohighlight">\(b_2\)</span>부터 step function의 함수값이 <span class="math notranslate nohighlight">\(f(b_0) + f(b_1)\)</span>이 될 것이다. 첫 번째 unit function으로 인해 이미 함수값이 <span class="math notranslate nohighlight">\(f(b_0)\)</span>만큼 있기 때문에 다음으로 더해줘야 할 unit function의 높이는  함수값의 차이인 <span class="math notranslate nohighlight">\(f(b_1) - f(b_2)\)</span>이 되어야 한다. 즉, <span class="math notranslate nohighlight">\(b_1\)</span>부터 함수값이 <span class="math notranslate nohighlight">\(f(b_1)\)</span>이 되기 위해서는 <span class="math notranslate nohighlight">\(f(b_0) \sigma(x - b_0)\)</span>와 <span class="math notranslate nohighlight">\((f(b_1) - f(b_2)) \sigma(x - b_1)\)</span>을 더해줘야 한다.</p>
+<figure class="align-default" id="unit-functions2">
+<img alt="../../_images/230523_unit_functions2.jpeg" src="../../_images/230523_unit_functions2.jpeg" />
+</figure>
+<p>이 과정을 반복해주면 step function <span class="math notranslate nohighlight">\(\tilde{f}\)</span>를 다음과 같이 적어줄 수 있다.</p>
+<div class="math notranslate nohighlight">
+\[\tilde{f}(x) = \sum_{i=0}^{m-1} a_i \sigma(x - b_i).\]</div>
+<br>
+<p>그리고, 이 step function은 다음과 같은 가중치와 편향을 갖는 2-layer network가 수행할 수 있는 연산이다.</p>
+<ul class="simple">
+<li><p>입력층<span class="math notranslate nohighlight">\(\rightarrow\)</span>은닉층의 가중치 <span class="math notranslate nohighlight">\(w_i = 1\)</span> for <span class="math notranslate nohighlight">\(i=0, 1, \ldots, m-1\)</span>,</p></li>
+<li><p>입력층<span class="math notranslate nohighlight">\(\rightarrow\)</span>은닉층의 편향 <span class="math notranslate nohighlight">\(b_i = -\frac{i\epsilon}{L}\)</span> for <span class="math notranslate nohighlight">\(i=0, 1, \ldots, m-1\)</span>,</p></li>
+<li><p>히든층<span class="math notranslate nohighlight">\(\rightarrow\)</span>출력층의 가중치 <span class="math notranslate nohighlight">\(a_0 = f(b_0)\)</span>, <span class="math notranslate nohighlight">\(a_i=f(b_i) - f(b_{i-1})\)</span> for <span class="math notranslate nohighlight">\(i=1, 2, \ldots, m-1\)</span>.</p></li>
+</ul>
+<br>
+<p>구간 [0, 1] 안의 점 <span class="math notranslate nohighlight">\(x\)</span>에서의 step function과 타겟 함수 <span class="math notranslate nohighlight">\(f\)</span> 사이의 오차를 계산해보자. <span class="math notranslate nohighlight">\(x\)</span>가 속한 구간 <span class="math notranslate nohighlight">\([b_k, b_{k+1})\)</span> for some <span class="math notranslate nohighlight">\(k=0, 1,\ldots, m-1\)</span>을 찾을 수 있을 것이다.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{matrix}
+    |f(x) - \tilde{f}(x)| &amp; \le &amp; |f(x) - f(b_k)| + |f(b_k) - \tilde{f}(b_k)| + |\tilde{f}(b_k) - \tilde{f}(x)| \\
+    &amp; \le &amp;  L | x - b_k| + \Big|f(b_k) - \sum\limits_{i=0}^{k}a_i \Big| + 0\\
+    &amp; \le &amp; L \frac{\epsilon}{L} + \Big| f(b_k) - f(0) - \sum\limits_{i=1}^{k} \left( f(b_i) - f(b_{i-1})\right)\Big|  \\
+    &amp; = &amp; \epsilon.
+\end{matrix}
+\end{split}\]</div>
+<br>
+<p>첫 번째 부등식은 triangle inequality에 의해 성립한다. 두 번째 부등식의 첫 번째 텀은 타겟 함수의 <span class="math notranslate nohighlight">\(L\)</span>-Lipschitz 성질에 의해 <span class="math notranslate nohighlight">\(L|x-b_k|\)</span>보다 작게 된다. 세 번째 텀은 step function은 구간 <span class="math notranslate nohighlight">\(b_k \le x &lt; b_{k+1}\)</span>에서 모두 같은 값을 갖기 때문에 0이 된다. 두 번째 텀의 <span class="math notranslate nohighlight">\(\tilde{f}(b_k)=\sum_{i=0}^{m-1} a_i \sigma(x - b_i)\)</span>이다. <span class="math notranslate nohighlight">\(\sigma(b_k-b_i)\)</span>가 <span class="math notranslate nohighlight">\(b_k\)</span>가 <span class="math notranslate nohighlight">\(b_i\)</span>일 때만 1이기 떄문에 <span class="math notranslate nohighlight">\(k\)</span>번 째까지의 <span class="math notranslate nohighlight">\(a_i\)</span>를 더해준 것으로 남게 된다.</p>
+<p>세 번째 부등식의 첫 번째 텀은 구간 <span class="math notranslate nohighlight">\([b_k, b_{k+1})\)</span>의 길이 <span class="math notranslate nohighlight">\(\frac{\epsilon}{L}\)</span>가 항상 더 크다는 사실이 사용되었고, 두 번쨰 텀은 <span class="math notranslate nohighlight">\(a_i\)</span>의 정의를 사용해서 <span class="math notranslate nohighlight">\(\sum_{i=1}^{k}를 전개해보면 0이 된다. 따라서 \)</span>x\in[0,1]<span class="math notranslate nohighlight">\(에서의 오차가 \)</span>\epsilon$보다 작게 된다.</p>
+<p>위 사실은 구간 <span class="math notranslate nohighlight">\([0, 1]\)</span> 내 모든 <span class="math notranslate nohighlight">\(x\)</span>에 대해서 성립하므로</p>
+<div class="math notranslate nohighlight">
+\[\sup_{x \in [0, 1]}|\tilde{f}(x) - f(x)| \le \epsilon.\]</div>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id3">
+<h2>마무리하며,<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>위 증명을 요약하자면, 아무런 <span class="math notranslate nohighlight">\([0, 1]\)</span>에서 정의된 <span class="math notranslate nohighlight">\(L\)</span>-Lipschitz 연속 함수와 원하는 오차 <span class="math notranslate nohighlight">\(\epsilon\)</span>이 주어져도, 그 함수와 <span class="math notranslate nohighlight">\(\epsilon\)</span>만큼만 차이나는 2-layer network이 적어도 하나 존재한다는 것이다. 해당 2-layer network는 <span class="math notranslate nohighlight">\(\lceil \frac{L}{\epsilon} \rceil\)</span>개의 은닉 노드를 갖으며 활성화 함수로 unit function을 사용한다.</p>
+<p>사실, 타겟 함수의 차원이 1차원이라는 점과 활성화 함수가 불연속점이 있는 unit function인 것이 우리가 실제 다루는 MLP와는 다르기 때문에 실용적인 proposition은 아닐 수 있다. 하지만, 많은 UAT의 증명 과정이 이 proposition의 증명 과정과 비슷하다. 먼저 도메인을 작게 나누고, 각 구간마다 동일한 함수값을 갖는 함수를 만들어낸 후, 그 함수가 타겟 함수와 <span class="math notranslate nohighlight">\(\epsilon\)</span>만큼 차이난다는 것을 보인다.</p>
+<p>언제 돌아올지는 모르겠지만, 만약 다시 돌아온다면 ReLU 활성화 함수를 갖는 2-layer network로 연속 함수를 근사시키는 이론 정리해볼 것이다.</p>
+<br>
+</section>
+<hr class="docutils" />
+<section id="id4">
+<h2>참고 문헌<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h2>
+<p>[1] Matus Telgarsky, Deep learning theory lecture notes, 2021. <a class="reference external" href="https://mjt.cs.illinois.edu/dlt/">https://mjt.cs.illinois.edu/dlt/</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./contents/fundamental"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+    <a class='left-prev' id="prev-link" href="230425_encouraging_loss.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Encouraging Loss</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="../rl_papers/AlphaGoZero.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">AlphaGo Zero</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
+</div>
+            </footer>
+        </div>
+    </div>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By 재야의 숨은 초보<br/>
+  
+      &copy; Copyright 2022.<br/>
+</p>
+        </footer>
+    </div>
+    
+</div>
+
+
+      </div>
+    </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
+
+  </body>
+</html>
