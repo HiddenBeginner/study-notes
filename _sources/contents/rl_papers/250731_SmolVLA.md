@@ -1,8 +1,9 @@
-# SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics
-
+# SmolVLA
 
 - **제목:** SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics
 - **저자:** Mustafa Shukor et al., *Sorbonne University & Hugging Face*
+
+<br>
 
 ---
 
@@ -33,6 +34,8 @@ name: 250731_SmolVLA_image
 ---
 ``` 
 
+<br>
+
 ---
 
 ## Introduction
@@ -53,6 +56,8 @@ name: 250731_SmolVLA_image
 - Impactful한 VLA 모델들의 경우, model은 공개되어 있어도 데이터셋, 훈련 디테일, 중요한 방법론들은 공유되지 않은 경우가 많다.
 - NLP나 CV 분야처럼 발전하기 위해서는 **transparent, reproducible open-source model과 training recipes 공유**가 중요하다.
 - 기존의 open-sourced VLA는 너무 크고 resource-intensive하며 비싼 robotic platforms이 필요하다.
+
+<br>
 
 ---
 
@@ -80,6 +85,8 @@ name: 250731_SmolVLA_image_
 **출력 데이터**
 
 - Action sequence
+
+<br>
 
 ---
 
@@ -109,6 +116,9 @@ name: 250731_SmolVLA_image2
 - Pretraining 기법으로는 SigLIP (Google Research, 2023) 사용
     - CLIP처럼 visual features와 text features를 contrastive learning로 alignment 해주는 기법
 
+
+<br>
+
 ---
 
 ### Action Expert: Flow matching Transformer
@@ -133,6 +143,8 @@ name: 250731_SmolVLA_image2
 - Practitioners들이 모은 데이터셋
 - 연구소에서 규격화된 환경에서 수집한 데이터셋과 다르게 자연히 다양한 로봇 형태, 제어 스키마, 카메라 각도, 테스크, real-world 주변 환경 등을 통해 다양성이 확보됨
 - **HuggingFace에 공유된 481개의 데이터셋 (22.9K 에피소드, 10.6M frames)을 사용하여 사전훈련**
+
+<br>
 
 ---
 

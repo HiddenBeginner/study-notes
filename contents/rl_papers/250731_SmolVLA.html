@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics &#8212; 공부 기록</title>
+    <title>SmolVLA &#8212; 공부 기록</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,7 +55,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Learning Invariant predictor with Selective Augmentation (LISA)" href="../domain_generalization/231219_lisa.html" />
+    <link rel="next" title="Q-Learning with Action Chunking (Q-LAC)" href="250811_QLAC.html" />
     <link rel="prev" title="RL Papers at 2024 ICML" href="240615_2024-ICML.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -224,7 +224,12 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics
+   SmolVLA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="250811_QLAC.html">
+   Q-Learning with Action Chunking (Q-LAC)
   </a>
  </li>
 </ul>
@@ -483,7 +488,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics</h1>
+                <h1>SmolVLA</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -559,12 +564,13 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="smolvla-a-vision-language-action-model-for-affordable-and-efficient-robotics">
-<h1>SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics<a class="headerlink" href="#smolvla-a-vision-language-action-model-for-affordable-and-efficient-robotics" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="smolvla">
+<h1>SmolVLA<a class="headerlink" href="#smolvla" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
 <li><p><strong>제목:</strong> SmolVLA: A Vision-Language-Action Model for Affordable and Efficient Robotics</p></li>
 <li><p><strong>저자:</strong> Mustafa Shukor et al., <em>Sorbonne University &amp; Hugging Face</em></p></li>
 </ul>
+<br>
 <hr class="docutils" />
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
@@ -609,6 +615,7 @@ title="Print to PDF"
 <figure class="align-default" id="smolvla-image">
 <img alt="../../_images/250731_SmolVLA_image.png" src="../../_images/250731_SmolVLA_image.png" />
 </figure>
+<br>
 </section>
 <hr class="docutils" />
 <section id="introduction">
@@ -630,6 +637,7 @@ title="Print to PDF"
 <li><p>NLP나 CV 분야처럼 발전하기 위해서는 <strong>transparent, reproducible open-source model과 training recipes 공유</strong>가 중요하다.</p></li>
 <li><p>기존의 open-sourced VLA는 너무 크고 resource-intensive하며 비싼 robotic platforms이 필요하다.</p></li>
 </ul>
+<br>
 </section>
 <hr class="docutils" />
 <section id="smolvla-small-efficient-and-capable">
@@ -654,6 +662,7 @@ title="Print to PDF"
 <ul class="simple">
 <li><p>Action sequence</p></li>
 </ul>
+<br>
 </section>
 <hr class="docutils" />
 <section id="vlm-smolvlm-2-hugging-face-2025">
@@ -685,6 +694,7 @@ title="Print to PDF"
 </ul>
 </li>
 </ul>
+<br>
 </section>
 <hr class="docutils" />
 <section id="action-expert-flow-matching-transformer">
@@ -714,6 +724,7 @@ title="Print to PDF"
 <li><p>연구소에서 규격화된 환경에서 수집한 데이터셋과 다르게 자연히 다양한 로봇 형태, 제어 스키마, 카메라 각도, 테스크, real-world 주변 환경 등을 통해 다양성이 확보됨</p></li>
 <li><p><strong>HuggingFace에 공유된 481개의 데이터셋 (22.9K 에피소드, 10.6M frames)을 사용하여 사전훈련</strong></p></li>
 </ul>
+<br>
 </section>
 <hr class="docutils" />
 <section id="asynchronous-inference">
@@ -819,10 +830,10 @@ title="Print to PDF"
             <p class="prev-next-title">RL Papers at 2024 ICML</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="../domain_generalization/231219_lisa.html" title="next page">
+    <a class='right-next' id="next-link" href="250811_QLAC.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Learning Invariant predictor with Selective Augmentation (LISA)</p>
+        <p class="prev-next-title">Q-Learning with Action Chunking (Q-LAC)</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

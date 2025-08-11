@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Beyond BatchNorm &#8212; 공부 기록</title>
+    <title>Q-Learning with Action Chunking (Q-LAC) &#8212; 공부 기록</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -55,8 +55,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Uncertainty-aware Label Correction" href="230420_ulc.html" />
-    <link rel="prev" title="공부 기록" href="../intro.html" />
+    <link rel="next" title="Learning Invariant predictor with Selective Augmentation (LISA)" href="../domain_generalization/231219_lisa.html" />
+    <link rel="prev" title="SmolVLA" href="250731_SmolVLA.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -129,29 +129,29 @@ const thebe_selector_output = ".output, .cell_output"
   ML/DL 코어
  </span>
 </p>
-<ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../core/beyond_batchnorm.html">
    Beyond BatchNorm
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="230420_ulc.html">
+  <a class="reference internal" href="../core/230420_ulc.html">
    Uncertainty-aware Label Correction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="230425_encouraging_loss.html">
+  <a class="reference internal" href="../core/230425_encouraging_loss.html">
    Encouraging Loss
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="230523_folklore_constructions.html">
+  <a class="reference internal" href="../core/230523_folklore_constructions.html">
    Elementary Folklore Construction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="240423_variational_auto_encoder.html">
+  <a class="reference internal" href="../core/240423_variational_auto_encoder.html">
    Variational Autoencoder (VAE)
   </a>
  </li>
@@ -161,74 +161,74 @@ const thebe_selector_output = ".output, .cell_output"
   강화학습
  </span>
 </p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/AlphaGoZero.html">
+  <a class="reference internal" href="AlphaGoZero.html">
    AlphaGo Zero
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/SUNRISE.html">
+  <a class="reference internal" href="SUNRISE.html">
    SUNRISE
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/DreamerV1.html">
+  <a class="reference internal" href="DreamerV1.html">
    Dreamer
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/230530_CQL.html">
+  <a class="reference internal" href="230530_CQL.html">
    Conservative Q-Learning (CQL)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/231021_reward_is_enough.html">
+  <a class="reference internal" href="231021_reward_is_enough.html">
    Reward Is Enough
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/231226_PLASTIC.html">
+  <a class="reference internal" href="231226_PLASTIC.html">
    PLASTIC
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/231227_Reset.html">
+  <a class="reference internal" href="231227_Reset.html">
    Primacy bias and Reset
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/240109_high_variance_across_runs.html">
+  <a class="reference internal" href="240109_high_variance_across_runs.html">
    High variance across runs / failed runs
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/240208_CrossQ.html">
+  <a class="reference internal" href="240208_CrossQ.html">
    CrossQ
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/240315_Proto-RL.html">
+  <a class="reference internal" href="240315_Proto-RL.html">
    Proto-RL
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/240606_VISR.html">
+  <a class="reference internal" href="240606_VISR.html">
    Variational Intrinsic Successor Features (VISR)
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/240615_2024-ICML.html">
+  <a class="reference internal" href="240615_2024-ICML.html">
    RL Papers at 2024 ICML
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/250731_SmolVLA.html">
+  <a class="reference internal" href="250731_SmolVLA.html">
    SmolVLA
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../rl_papers/250811_QLAC.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Q-Learning with Action Chunking (Q-LAC)
   </a>
  </li>
@@ -342,7 +342,7 @@ title="Fullscreen mode"
   </span>
 
 </button>
-<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/core/beyond_batchnorm.html&body=Your%20issue%20content%20here."
+<a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontents/rl_papers/250811_QLAC.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="bottom"
@@ -364,7 +364,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../../_sources/contents/core/beyond_batchnorm.md"
+        <a href="../../_sources/contents/rl_papers/250811_QLAC.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -424,23 +424,23 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#introduction">
    Introduction
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stable-forward-propagation">
-   Stable Forward Propagation
+  <a class="reference internal nav-link" href="#id3">
+   Q-Learning with Action Chunking (Q-LAC)
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#informative-forward-propagation">
-   Informative Forward Propagation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stable-backward-propagation">
-   Stable Backward Propagation
+  <a class="reference internal nav-link" href="#experiment">
+   Experiment
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -457,7 +457,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Beyond BatchNorm</h1>
+                <h1>Q-Learning with Action Chunking (Q-LAC)</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -468,23 +468,23 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview">
+   Overview
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#introduction">
    Introduction
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stable-forward-propagation">
-   Stable Forward Propagation
+  <a class="reference internal nav-link" href="#id3">
+   Q-Learning with Action Chunking (Q-LAC)
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#informative-forward-propagation">
-   Informative Forward Propagation
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#stable-backward-propagation">
-   Stable Backward Propagation
+  <a class="reference internal nav-link" href="#experiment">
+   Experiment
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -502,81 +502,188 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="beyond-batchnorm">
-<h1>Beyond BatchNorm<a class="headerlink" href="#beyond-batchnorm" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="q-learning-with-action-chunking-q-lac">
+<h1>Q-Learning with Action Chunking (Q-LAC)<a class="headerlink" href="#q-learning-with-action-chunking-q-lac" title="Permalink to this headline">#</a></h1>
 <ul class="simple">
-<li><p>제목: Beyond BatchNorm: Towards a Unified Understanding of Normalization in Deep Learning</p></li>
-<li><p>저자: Lubana, Ekdeep S, Robert Dick, and Hidenori Tanaka</p></li>
-<li><p>연도: 2021년</p></li>
-<li><p>학술대회: NeurIPS</p></li>
-<li><p>링크: <a class="reference external" href="https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html">https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html</a></p></li>
-<li><p>키워드: Batch normalization, group normalization</p></li>
+<li><p><strong>제목:</strong> Sample-Efficient Reinforcement Learning with Action Chunking</p></li>
+<li><p><strong>저자:</strong> Qiyang Li, Zhiyuan Zhou, Sergey Levine, <em>UC Berkeley</em>.</p></li>
+<li><p><strong>학회:</strong> Exploration in AI Today Workshop at ICML 2025</p></li>
 </ul>
 <br>
+<hr class="docutils" />
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p><strong>Target task:</strong> Offline2Online, sample efficient RL, Exploration</p></li>
+<li><p><strong>Algorithm class:</strong> FQL (Flow Q-learning; <span id="id1">[<a class="reference internal" href="#id7" title="Seohong Park, Qiyang Li, and Sergey Levine. Flow q-learning. 2025.">PLL25</a>]</span>) with an extended action space</p></li>
+<li><p><strong>Motivation</strong></p>
+<ol class="simple">
+<li><p>slow 1-step TD backups</p></li>
+<li><p>temporally incoherent actions for exploration</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>[Comment]</strong> Offline2online에서 발생하는 문제점을 해결하는 논문은 아니다. 1번은 sample efficient RL과 연관되고, 2번은 exploration과 연관되기 때문에 일반적인 online RL 분야에서 발생하는 문제를 다루는 논문</p></li>
+</ul>
+</li>
+<li><p><strong>Solution: Action chunking</strong></p>
+<ul>
+<li><p>현재 시점의 행동만 출력하는 기존 정책 대신 <strong>현재부터 <span class="math notranslate nohighlight">\(h\)</span> steps 동안 사용할 action sequence를 출력하는 정책 사용</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+        \pi_\psi(\mathbf{a}_{t:t+h-1} \mid s_t) \quad\text{where}\quad \mathbf{a}_{t:t+h-1}= [\overbrace{a_t \;\; a_{t+1} \;\;  \ldots \;\;  a_{t+h-1}}^{h \;\text{times}}]^\top
+        \]</div>
+</li>
+<li><p><strong>Open-loop control:</strong> <span class="math notranslate nohighlight">\(s_t\)</span>만 보고 <span class="math notranslate nohighlight">\(a_t\)</span>부터 <span class="math notranslate nohighlight">\(a_{t+h-1}\)</span>을 순서대로 환경과 상호작용</p></li>
+</ul>
+<figure class="align-default" id="qlac-image">
+<img alt="../../_images/250811_qlac_image.png" src="../../_images/250811_qlac_image.png" />
+</figure>
+</li>
+</ul>
+<br>
+</section>
 <hr class="docutils" />
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">#</a></h2>
-<p>BatchNorm, LayerNorm, InstanceNorm, GroupNorm 등 normalization layers을 이해하기 위한 많은 연구들이 있었다. 하지만 해당 연구들은 normalization layer들의 일반적인 원리와 효과를 설명하기 보다는 개별 normalization layer를 분석하는데 지나지 않았다.</p>
-<p>Normalization layers는 크게 2가지로 분류될 수 있다.</p>
-<ol class="simple">
-<li><p>Activation-based normalizers</p>
+<p><strong>가장 큰 motivation</strong></p>
 <ul class="simple">
-<li><p>Activation space (레이어의 입력)에 적용되는 normalizers로서, BatchNorm, LayerNorm, InstanceNorm, GroupNorm 등이 이에 속한다.</p></li>
+<li><p>최근 imitation learning (IL) 분야에서 action chunking을 사용한 연구 등장 (ALOHA 논문; <span id="id2">[<a class="reference internal" href="#id8" title="Tony Z Zhao, Vikash Kumar, Sergey Levine, and Chelsea Finn. Learning fine-grained bimanual manipulation with low-cost hardware. 2023.">ZKLF23</a>]</span>)</p></li>
 </ul>
-</li>
-<li><p>Parametric-based normalizers</p>
+<p>❓ Action chunking이 IL 분야에서는 사용되지만 RL에서는 사용되지 않은 이유</p>
 <ul class="simple">
-<li><p>네트워크 파라미터에 적용되는 normalizers로서 Weight Normalization, Scaled Weight Standardization 등이 이에 해당한다.</p></li>
+<li><p>IL 데이터셋 (특히 인간이 직접 수집한 데이터셋)은 non-Markovian behavior을 포함하고 있을 수 있음</p></li>
+<li><p>하지만 MDP로 문제를 formulate하는 RL의 경우 optimal policy가 Markovian poilcy이기 때문에 action chunking policy는 suboptimal하다.</p></li>
 </ul>
-</li>
-</ol>
+<p>💡 하지만 online RL에서 action chunking이 효과적일 수도 있는 이유</p>
+<ul class="simple">
+<li><p>Optimal policy을 찾기 위해 꼭 필요한 과정인 exploration의 경우 non-Markovian 성격을 띠며 temporally extended actions가 더 효과적일 수 있다고 주장</p></li>
+<li><p>1-step TD의 경우 value backup가 느려 sample inefficient하다.</p></li>
+</ul>
 <br>
-<p>이 논문에서는 잘 알려진 BatchNorm의 성질을 다른 normalization layers로 확장하여 이해하는 것을 목표로 한다. 논문에서 다음 세 가지 성질을 분석하였다.</p>
-<ol class="simple">
-<li><p>Stable Forward Propagation</p>
-<ul class="simple">
-<li><p>Activation-based normalizers들은  ResNets에서 activations들의 분산이 무작정 커지는 것을 방지할 수 있었다. 이는 parametric normalizers에서는 볼 수 없는 성질이다.</p></li>
-</ul>
-</li>
-<li><p>Informative Forward Propagation</p>
-<ul class="simple">
-<li><p>다른 입력 데이터에 대해서는 다른 activation을 만드는 능력이 있다. 즉, 데이터를 잘 구분되게 만드는 능력이 있다. GroupNorm의 group 수에 따라 이 정도가 달라진다.</p></li>
-</ul>
-</li>
-<li><p>Stable Backward Propagation</p>
-<ul class="simple">
-<li><p>InstanceNorm와 같이 단일 데이터 또는 단일 채널 (feature) 내에서 normalization을 하는 방법은 gradient explosion을 겪을 수 있다.</p></li>
-</ul>
-</li>
-</ol>
 </section>
 <hr class="docutils" />
-<section id="stable-forward-propagation">
-<h2>Stable Forward Propagation<a class="headerlink" href="#stable-forward-propagation" title="Permalink to this headline">#</a></h2>
-<p>Normalization layers를 사용하면 레이어를 통과함에 따라 activations의 variance가 지수적으로 증폭되는 것을 방지할 수 있다고 한다. Activations을 계속 normalization 해주니 평범한 CNN에 대해서는 당연한 사실이다. 하지만, ResNet에 대해서는 residual path 때문에 당연하지 않을 수 있다. 다른 논문에서는 레이어를 지남에 따라 activations의 평균 분산이 지수적으로 증가하지만 않으면 stable 순전파가 가능하다는 것이 입증되었고, 이 논문에서는 activation-based normalizers을 사용하면 ResNet에서 레이어를 지남에 따라 activations의 분산이 선형적으로 증가하는 것을 보였다. 이는 parametric-based normalizers는 없는 기능이다.</p>
-</section>
-<hr class="docutils" />
-<section id="informative-forward-propagation">
-<h2>Informative Forward Propagation<a class="headerlink" href="#informative-forward-propagation" title="Permalink to this headline">#</a></h2>
-<p>이 section은 normalization layers가 유용한 정보를 순전파할 수 있다는 것에 관해 설명한다. 유용한 정보가 무엇인지 설명하기 위해 딥러닝이 겪는 <strong>rank collapse</strong> 문제를 먼저 설명하면 좋을 것 같다. Rank collapse란 서로 다른 입력 데이터가 레이어를 통과할 수록 서로 비슷한 activation를 갖게 되는 문제이다. 이 문제를 경험적으로 보이기 위하여 다양한 CNN의 linear classifier 직전 레이어의 activations 사이의 코사인 유사도와 학습 성능을 시각화하면 다음과 같았다. Activations 사이의 코사인 유사도가 높을수록 모델의 훈련 성능이 떨어지는 것을 확인할 수 있었다. 훈련 성능을 보여준 이유는 rank collapse에 의한 평균 훈련 속도가 저하되는 것을 보이기 위함이다 (그림 설명 참조).</p>
-<a class="reference internal image-reference" href="../../_images/beyond_bn_fig5.png"><img alt="fig5" class="align-center" src="../../_images/beyond_bn_fig5.png" style="width: 250px;" /></a>
+<section id="id3">
+<h2>Q-Learning with Action Chunking (Q-LAC)<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<ul>
+<li><p>현재 시점의 행동만 출력하는 기존 정책 대신 <strong>현재부터 <span class="math notranslate nohighlight">\(h\)</span> steps 동안 사용할 action sequence를 출력하는 정책 사용</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+    \pi_\psi(\mathbf{a}_{t:t+h-1} \mid s_t) \quad\text{where}\quad \mathbf{a}_{t:t+h-1}= [\overbrace{a_t \;\; a_{t+1} \;\;  \ldots \;\;  a_{t+h-1}}^{h \;\text{times}}]^\top
+    \]</div>
+</li>
+<li><p><strong>Open-loop control:</strong> <span class="math notranslate nohighlight">\(s_t\)</span>만 보고 <span class="math notranslate nohighlight">\(a_t\)</span>부터 <span class="math notranslate nohighlight">\(a_{t+h-1}\)</span>을 순서대로 환경과 상호작용</p></li>
+</ul>
+<figure class="align-default" id="id4">
+<img alt="../../_images/250811_qlac_image.png" src="../../_images/250811_qlac_image.png" />
+</figure>
+<ul>
+<li><p>이 decision process를 기존 Markov decision process (MDP)로부터 다시 formulation 가능</p>
+<ul>
+<li><p>기존 MDP <span class="math notranslate nohighlight">\(\mathcal{M}=(\mathcal{S}, \mathcal{A}, r, p, \gamma)\)</span> ⇒ 새로운 MDP <span class="math notranslate nohighlight">\(\bar{\mathcal{M}}=(\mathcal{S}, \bar{\mathcal{A}}, \bar{r}, \bar{p}, \gamma^h)\)</span></p></li>
+<li><p>원래 행동공간 <span class="math notranslate nohighlight">\(\mathcal{A}\subseteq\mathbb{R}^{d_a}\)</span> 대신 extended action space</p>
+<div class="math notranslate nohighlight">
+\[
+        \bar{\mathcal{A}}\subseteq\mathbb{R}^{\overbrace{d_a \times d_a \times \ldots \times d_a}^{h \, \text{times}}}
+        \]</div>
+</li>
+<li><p>보상함수 (<span class="math notranslate nohighlight">\(h\)</span> steps 동안 받은 보상의 discounted sum)</p>
+<div class="math notranslate nohighlight">
+\[
+        \bar{r}(s_t, \mathbf{a}_{t:t+h-1})=\sum_{k=0}^{h-1}\gamma^{k} r(s_{t+k},a_{t+k})
+        \]</div>
+</li>
+<li><p>전이확률분포 (<span class="math notranslate nohighlight">\(s_t\)</span>의 다음 상태가 <span class="math notranslate nohighlight">\(s_{t+h}\)</span>이 됨)</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+    \bar{p}(s_{t+h}|s_t, \mathbf{a}_{t:t+h-1})=\prod_{k=0}^{h-1}p(s_{t+k+1}|s_{t+k},a_{t+k})
+    \]</div>
+</li>
+<li><p>매 <span class="math notranslate nohighlight">\(h\)</span> steps마다 transition <span class="math notranslate nohighlight">\((s, a, r, s')\)</span> 을 저장하는 방식으로 쉽게 구현됨</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{D}=\left\{ \left(s_t,\mathbf{a}_{t:t+h-1},\sum_{k=0}^{h-1}\gamma^{k} r_{t+k}, s_{t+h}\right) : t=1, h,2h,\ldots, T.\right\}
+\]</div>
+<ul class="simple">
+<li><p>위 transition을 사용하면 다음과 같은 critic loss와 actor loss 를 얻음</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\theta)=\mathbb{E}_{\mathcal{D}}\left[ \left( Q_\theta(s_t,\mathbf{a}_{t:t+h-1}) -   \sum_{k=0}^{h-1}\gamma^{k} r_{t+k} -\gamma^hQ_{\bar{\theta}}(s_{t+h},\mathbf{a}_{t+h:t+2h-1}) \right)^2 \right]
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\psi)= - \operatorname*{\mathbb{E}}_{s_t\sim\mathcal{D},  \mathbf{a}_{t:t+h-1}^\pi\sim\pi(\cdot|s_t)} \left[ Q_\theta(s_t, \mathbf{a}_{t:t+h-1}^\pi) \right]
+\]</div>
+<ul>
+<li><p>Offline2online을 할 때 일반적인 online RL알고리즘을 선택하고 위처럼 학습하면 성능이 오히려 떨어진다.  (문제의 원인 설명 부족)</p>
+<ul>
+<li><p>RLPD (Reinforcement Learning with Prior Data): replay buffer에 offline dataset 넣고 online RL하는 offline2online 기법.</p>
+<figure class="align-default" id="qlac-image1">
+<img alt="../../_images/250811_qlac_image1.png" src="../../_images/250811_qlac_image1.png" />
+</figure>
+</li>
+</ul>
+</li>
+<li><p><span class="math notranslate nohighlight">\(\pi_\psi(\mathbf{a}_{t:t+h-1} \mid s_t)\)</span>이 충분히 복잡한 분포면 좋겠음 <strong>⇒ FQL 손실함수 사용</strong></p>
+<ul>
+<li><p>FQL 손실함수: offline dataset으로부터 behavior cloning한 pretrained flow matching network와 <span class="math notranslate nohighlight">\(\pi_\psi(\mathbf{a}_{t:t+h-1} \mid s_t)\)</span>의 behavior constrained term 추가된 형태</p>
+<figure class="align-default" id="qlac-image2">
+<img alt="../../_images/250811_qlac_image2.png" src="../../_images/250811_qlac_image2.png" />
+</figure>
+</li>
+</ul>
+</li>
+</ul>
 <br>
-<p>Normalization layers가 서로 다른 입력 데이터에 대해서 서로 다른 activations을 만드는 효과가 있다고 한다. BatchNorm에 대해서는 이미 이 효과가 입증되었다고 한다 [2]. BatchNorm은 임의 초기화된 네트워크의 classifier 직전 레이어의 activations들의 covariance matrix <span class="math notranslate nohighlight">\(Y Y^\top\)</span>가 최소 <span class="math notranslate nohighlight">\(\Omega(\sqrt{\textit{width}})\)</span>만큼 큰 rank를 갖는다는 것이 증명되었다. 여기서 width는 fc layer이전 CNN 레이어의 너비 (채널 수)를 의미한다. 선형대수에 의하면 Covariance matrix의 rank는 correlation matrix <span class="math notranslate nohighlight">\(Y^\top Y\)</span>와 같기 때문에 correlation matrix의 rank 또한 크다는 것이다. 참고로 rank가 크다는 것은 해당 matrix의 basis가 서로 다른 방향을 갖고 있는 것을 의미한다. 즉, BatchNorm은 다양한 activations 만들어내는 효과가 있다.</p>
-<p>위 내용은 다른 논문에서 BatchNorm에 대해서만 증명된 것이고, 이 논문에서는 이를 확장하여 GroupNorm에 대해서도 비슷한 성질이 있는 것을 증명하였다. GroupNorm에 대해서는 fc layer 직전 레이어의 activations들의 covarianace matrix가  최소 <span class="math notranslate nohighlight">\(\Omega(\sqrt{\textit{width}/\textit{Group Size}})\)</span>의 랭크를 갖는다고 한다.</p>
 </section>
 <hr class="docutils" />
-<section id="stable-backward-propagation">
-<h2>Stable Backward Propagation<a class="headerlink" href="#stable-backward-propagation" title="Permalink to this headline">#</a></h2>
-<p>이전 두 섹션은 normalization layers들의 장점에 대해 다뤘다면, 이번 섹션은 normalization layer가 겪는 문제에 대해서 다룬다. 이 부분도 정말 신기하다. 최근에 입증된 사실로, BatchNorm을 사용하는 네트워크의 경우 학습 초기에 네트워크가 깊을수록 앞단 레이어의 gradient의 norm이 exploding 할 수 있다는 것이다.</p>
-<p>BatchNorm이 있을 경우 로스에 대한 한 레이어의 activation의 그레디언트에 activation의 표준 편차의 역수텀이 붙게 된다. 네트워크 파라미터가 평균이 0인 Gaussian 분포에서 샘플링되었을 경우 학습 초기 activations의 표준 편차가 1보다 작다고 한다. 그러면 표준편차의 역수를 1보다 커진다. 매 레이어마다 그레디언트가 역전파되면서 1보다 큰 값이 곱해져서 네트워크의 앞단의 그레디언트가 증폭되게 된다고 한다.</p>
-<p>이 논문에 따르면 GroupNorm의 group size가 클수록 이 문제가 완화된다고 한다. 따라서 Gropu size가 1인 케이스인 InstanceNorm의 경우 깊은 네트워크일수록 학습이 굉장히 불안정해지게 된다고 한다.</p>
+<section id="experiment">
+<h2>Experiment<a class="headerlink" href="#experiment" title="Permalink to this headline">#</a></h2>
+<p><strong>Benchmark environment:</strong></p>
+<ul class="simple">
+<li><p>OGBench에서 5개 domain <span class="math notranslate nohighlight">\(\times\)</span> 각 domain에서 2개 tasks</p></li>
+<li><p>Robomimic에서 2개 tasks</p></li>
+</ul>
+<figure class="align-default" id="qlac-image3">
+<img alt="../../_images/250811_qlac_image3.png" src="../../_images/250811_qlac_image3.png" />
+</figure>
+<br>
+<p><strong>Learning curves</strong></p>
+<figure class="align-default" id="qlac-image4">
+<img alt="../../_images/250811_qlac_image4.png" src="../../_images/250811_qlac_image4.png" />
+</figure>
+<br>
+<p><strong>Ablations studies</strong></p>
+<figure class="align-default" id="qlac-image5">
+<img alt="../../_images/250811_qlac_image5.png" src="../../_images/250811_qlac_image5.png" />
+</figure>
+<ul class="simple">
+<li><p>왼쪽: Chunk size에 따른 ablation</p></li>
+<li><p>오른쪽: Action chunking이 exploration을 잘했다는 증거</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">cube-triple</span></code> 도메인에서 FQL 알고리즘과 Q-LAC 알고리즘을 사용하여 각각 1M steps 동안 offline pretraining한 후 데이터 1M 개 수집. <span class="math notranslate nohighlight">\(\mathcal{D}_1, \mathcal{D}_5\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{D}_1^{\text{comp}}=\)</span> Offline dataset + <span class="math notranslate nohighlight">\(\mathcal{D}_1\)</span>, <span class="math notranslate nohighlight">\(\mathcal{D}_5^{\text{comp}}=\)</span> Offline dataset + <span class="math notranslate nohighlight">\(\mathcal{D}_5\)</span> 으로 다시 offline ptraining한 결과</p></li>
+</ul>
+</li>
+</ul>
+<br>
 </section>
 <hr class="docutils" />
 <section id="reference">
 <h2>Reference<a class="headerlink" href="#reference" title="Permalink to this headline">#</a></h2>
-<p>[1] Lubana, Ekdeep S, Robert Dick, and Hidenori Tanaka. “Beyond BatchNorm: Towards a Unified Understanding of Normalization in Deep Learning.” In Advances in Neural Information Processing Systems, 34:4778–91. Curran Associates, Inc., 2021. <a class="reference external" href="https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html">https://proceedings.neurips.cc/paper/2021/hash/2578eb9cdf020730f77793e8b58e165a-Abstract.html</a>.</p>
-<p>[2] Daneshmand, Hadi, Jonas Kohler, Francis Bach, Thomas Hofmann, and Aurelien Lucchi. “Batch Normalization Provably Avoids Ranks Collapse for Randomly Initialised Deep Networks.” In Advances in Neural Information Processing Systems, edited by H. Larochelle, M. Ranzato, R. Hadsell, M. F. Balcan, and H. Lin, 33:18387–98. Curran Associates, Inc., 2020. <a class="reference external" href="https://proceedings.neurips.cc/paper/2020/file/d5ade38a2c9f6f073d69e1bc6b6e64c1-Paper.pdf">https://proceedings.neurips.cc/paper/2020/file/d5ade38a2c9f6f073d69e1bc6b6e64c1-Paper.pdf</a>.</p>
-</section>
+<div class="docutils container" id="id5">
+<dl class="citation">
+<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">PLL25</a></span></dt>
+<dd><p>Seohong Park, Qiyang Li, and Sergey Levine. Flow q-learning. 2025.</p>
+</dd>
+<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id2">ZKLF23</a></span></dt>
+<dd><p>Tony Z Zhao, Vikash Kumar, Sergey Levine, and Chelsea Finn. Learning fine-grained bimanual manipulation with low-cost hardware. 2023.</p>
+</dd>
+</dl>
+</div>
+<br></section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -592,7 +699,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./contents/core"
+            path: "./contents/rl_papers"
         },
         predefinedOutput: true
     }
@@ -606,17 +713,17 @@ title="Print to PDF"
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="250731_SmolVLA.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">공부 기록</p>
+            <p class="prev-next-title">SmolVLA</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="230420_ulc.html" title="next page">
+    <a class='right-next' id="next-link" href="../domain_generalization/231219_lisa.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Uncertainty-aware Label Correction</p>
+        <p class="prev-next-title">Learning Invariant predictor with Selective Augmentation (LISA)</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
